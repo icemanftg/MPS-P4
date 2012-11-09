@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ro.mps</groupId>
+    <artifactId>layout-analysis</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>layout-analysis</name>
+    <url>http://maven.apache.org</url>
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <url>http://repo1.maven.org/maven2/org/eclipse/swt/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <goals>
+                    <goal>exec</goal>
+                </goals>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <classpath/>
+                        <argument>ro.mps.LayoutAnalysis</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <developers>
+        <developer>
+            <email>radu.stoe@gmail.com</email>
+            <id>radu</id>
+            <name>Radu Stoenescu</name>
+            <organization>MPS</organization>
+            <roles>
+                <role>Project Manager</role>
+            </roles>
+            <timezone>GMT+2</timezone>
+        </developer>
+        <developer>
+            <email>aburghelea@rosedu.org</email>
+            <id>aburghelea</id>
+            <name>Alexandru-George Burghelea</name>
+            <organization>MPS</organization>
+            <roles>
+                <role>Team Leader</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>GMT+2</timezone>
+        </developer>
+        <developer>
+            <email>bogdanmavrodin@gmail.com</email>
+            <id>bogdan</id>
+            <name>Bogdan Mavrodin</name>
+            <organization>MPS</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>GMT+2</timezone>
+        </developer>
+        <developer>
+            <email>lapadus.razvan@gmail.com</email>
+            <id>razvan</id>
+            <name>Razvan Lapadus</name>
+            <organization>MPS</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>GMT+2</timezone>
+        </developer>
+        <developer>
+            <email>alexandra.ghecenco@gmail.com</email>
+            <id>alexandra</id>
+            <name>Alexandra Ghecenco</name>
+            <organization>MPS</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>GMT+2</timezone>
+        </developer>
+        <developer>
+            <email>silviu.petria@gmail.com</email>
+            <id>silviu</id>
+            <name>Silviu Petria</name>
+            <organization>MPS</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>GMT+2</timezone>
+        </developer>
+        <developer>
+            <email>banila.eduard@gmail.com</email>
+            <id>eduard</id>
+            <name>Eduar Banila</name>
+            <organization>MPS</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>GMT+2</timezone>
+        </developer>
+    </developers>
+
+</project>
