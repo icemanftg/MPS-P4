@@ -1,10 +1,21 @@
-package properties;
+package ro.mps.properties;
 
 public enum Properties {
 
-	APP_TITLE;
+	APP_TITLE("Layout Analysis"),
+	OUTPUT_FORMAT("jpg");
 	
-	private String name, value;
+	private String value;
 	
-	public Properties()
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	Properties(String value) {
+		this.value = value;
+	}
 }

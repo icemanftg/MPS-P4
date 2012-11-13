@@ -3,6 +3,7 @@ package ro.mps.layout;
 import javax.swing.*;
 
 
+@SuppressWarnings("serial")
 public class UserInterface extends JFrame{
 
 
