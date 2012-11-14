@@ -1,4 +1,4 @@
-package ro.mps.gui
+package ro.mps.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
