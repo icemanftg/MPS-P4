@@ -1,3 +1,5 @@
+package ro.mps.smart.textbox;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JComponent;

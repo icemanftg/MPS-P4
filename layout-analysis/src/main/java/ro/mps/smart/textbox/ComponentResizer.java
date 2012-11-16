@@ -1,3 +1,4 @@
+package ro.mps.smart.textbox;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,7 +13,7 @@ public class ComponentResizer extends MouseAdapter {
 			new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 	private static Map<Integer, Integer> cursors = new HashMap<Integer, Integer>();
 
-	{
+	static {
 		cursors.put(1, Cursor.N_RESIZE_CURSOR);
 		cursors.put(2, Cursor.W_RESIZE_CURSOR);
 		cursors.put(4, Cursor.S_RESIZE_CURSOR);
