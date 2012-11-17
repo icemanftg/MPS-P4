@@ -1,5 +1,7 @@
 package ro.mps.gui;
 
+import ro.mps.gui.base.Screen;
+
 import javax.swing.*;
 
 /**
@@ -10,5 +12,13 @@ import javax.swing.*;
 public class TabbedPannel extends JTabbedPane {
 
     public TabbedPannel() {
+        super();
+        setVisible(true);
+        setSize(500, 500);
     }
+
+    public void addPane(Screen panel){
+        this.addTab(panel.getWindowTitle(), panel);
+    }
+
 }

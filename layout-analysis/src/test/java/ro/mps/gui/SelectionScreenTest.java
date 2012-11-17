@@ -2,12 +2,9 @@ package ro.mps.gui;
 
 
 import junit.framework.TestCase;
-import org.junit.Assert;
-import ro.mps.properties.Properties;
+import ro.mps.gui.screens.SelectionScreen;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 /**
  * User: Alexandru Burghelea
@@ -28,7 +25,7 @@ public class SelectionScreenTest extends TestCase {
                 SelectionScreen ss = new SelectionScreen();
             }
         });
-        while(true);
+//        while(true);
 //        Assert.assertTrue("GUI not loaded", true);
     }
 }

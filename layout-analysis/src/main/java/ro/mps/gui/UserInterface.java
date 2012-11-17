@@ -1,5 +1,10 @@
 package ro.mps.gui;
 
+import ro.mps.gui.base.Screen;
+import ro.mps.gui.screens.CharacterEditingScreen;
+import ro.mps.gui.screens.LinesEditingScreen;
+import ro.mps.gui.screens.SelectionScreen;
+
 import javax.swing.*;
 
 
@@ -17,23 +22,35 @@ public class UserInterface extends JFrame{
      */
     private void init(){
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setSize(600, 600);
+        this.setSize(Screen.WINDOW_WIDTH, Screen.WINDOW_HEIGHT);
         this.setVisible(true);
 
-        JTabbedPane jTabbedPane = new JTabbedPane();
-
-        JPanel jp1 = new JPanel();
-        JPanel jp2 = new JPanel();
-        JLabel label1 = new JLabel();
-        label1.setText("You are in area of Tab1");
-        JLabel label2 = new JLabel();
-        label2.setText("You are in area of Tab2");
-        jp1.add(label1);
-        jp2.add(label2);
-        jTabbedPane.addTab("Tab1", jp1);
-        jTabbedPane.addTab("Tab2", jp2);
-
-        getContentPane().add(jTabbedPane);
+//        try {
+//            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedLookAndFeelException e) {
+//            e.printStackTrace();
+//        }
+        addTabbedPannel();
     }
+
+    /**
+     * Builds the initial tabbed pannel.
+     */
+    private void addTabbedPannel() {
+        TabbedPannel tabbedPannel = new TabbedPannel();
+        tabbedPannel.addPane(new LinesEditingScreen());
+        tabbedPannel.addPane(new SelectionScreen());
+        tabbedPannel.addPane(new CharacterEditingScreen());
+
+        getContentPane().add(tabbedPannel);
+    }
+
+
 
 }

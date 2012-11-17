@@ -1,4 +1,6 @@
-package ro.mps.gui;
+package ro.mps.gui.screens;
+
+import ro.mps.gui.base.Screen;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -7,16 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class SelectionScreen extends JFrame implements Screen {
+public class SelectionScreen extends Screen {
     /* Strings */
-    String windowTitle = "Unnamed screentin";
+    String windowTitle = "Selection Screen";
 
     static final String checkboxesTitle = "Select what to edit";
 
     static final String selectTitle = "Select your input file (XML/IMG)";
-
-
-    static final int TEXT_BOX_WIDTH = 50;
 
     /* File selection text field */
     private JTextField filename = new JTextField(TEXT_BOX_WIDTH);
@@ -34,53 +33,62 @@ public class SelectionScreen extends JFrame implements Screen {
 
     /* Constructor */
     public SelectionScreen() {
+        super();
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle(windowTitle);
-        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        this.setVisible(true);
         /* Add button listeners */
         browse.addActionListener(new OpenL());
         analyze.addActionListener(new AnalyzeL());
+
 
         /* Text field settings */
         filename.setText("Path to input...");
         filename.setEditable(false);
         filename.setBackground(bg);
 
+        setLayout(new FlowLayout(FlowLayout.CENTER));
         /* Add first section - filename text field and "Browse" button */
-        Container cp = getContentPane();
-        JPanel p = new JPanel();
-        p.setBackground(bg);
-        p.add(filename);
-        p.add(browse);
-        p.setBorder(BorderFactory.createTitledBorder(null, selectTitle,
-                TitledBorder.CENTER, TitledBorder.ABOVE_TOP));
-        cp.add(p, BorderLayout.NORTH);
-
+        add(buildBrowsePanel());
         /* Add second section - checkboxes */
-        p = new JPanel();
-        p.setBackground(bg);
-        JPanel flow = new JPanel(new GridLayout(3, 1));
-        flow.setBackground(bg);
-        flow.add(characters);
-        flow.add(lines);
-        flow.add(blocks);
+        add(buildCheckboxPanel());
+        /* Add third section - "Analyze" button */
+        add(buildAnalyzePanel());
+
+        this.setVisible(true);
+    }
+
+    private JPanel buildAnalyzePanel() {
+        JPanel analizePanel = new JPanel();
+        analizePanel.setLayout(new BoxLayout(analizePanel,BoxLayout.X_AXIS));
+        analizePanel.add(analyze);
+        return analizePanel;
+    }
+
+    private JPanel buildCheckboxPanel() {
+        JPanel checkboxPanel = new JPanel(new GridLayout(3, 1));
+        checkboxPanel.setBackground(bg);
+        checkboxPanel.add(characters);
+        checkboxPanel.add(lines);
+        checkboxPanel.add(blocks);
         characters.setBackground(bg);
         lines.setBackground(bg);
         blocks.setBackground(bg);
-        flow.setBorder(BorderFactory.createTitledBorder(checkboxesTitle));
-        p.add(flow);
-        cp.add(p, BorderLayout.CENTER);
+        checkboxPanel.setBorder(BorderFactory.createTitledBorder(checkboxesTitle));
+        return checkboxPanel;
+    }
 
-        /* Add third section - "Analyze" button */
-        p = new JPanel();
-        p.setBackground(bg);
-        flow = new JPanel(new FlowLayout());
-        analyze.setPreferredSize(new Dimension(100, 30));
-        flow.add(analyze);
-        p.add(flow);
-        cp.add(p, BorderLayout.SOUTH);
+    private JPanel buildBrowsePanel() {
+        JPanel browserPannel = new JPanel();
+        browserPannel.setBackground(bg);
+        browserPannel.add(filename);
+        browserPannel.add(browse);
+        browserPannel.setBorder(BorderFactory.createTitledBorder(null, selectTitle,
+                TitledBorder.CENTER, TitledBorder.ABOVE_TOP));
+        return browserPannel;
+    }
+
+    @Override
+    public String getWindowTitle() {
+        return windowTitle;
     }
 
     /* "Browse" function uses JFileChooser */
