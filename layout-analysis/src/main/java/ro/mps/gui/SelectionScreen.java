@@ -7,19 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class SelectionScreen extends JFrame {
-
-    /* Some window and component size parameters */
-    private static final int TEXT_BOX_WIDTH = 50;
-    private static final int WINDOW_WIDTH = 650, WINDOW_HEIGHT = 450;
-
+public class SelectionScreen extends JFrame implements Screen {
     /* Strings */
-    private static final String windowTitle = "Layout Analysis - Selecting";
-    private static final String selectTitle = "Select your input file (XML/IMG)";
-    private static final String checkboxesTitle = "Select what to edit";
+    String windowTitle = "Unnamed screentin";
 
-    /* Background color */
-    private static final Color bg = Color.WHITE;
+    static final String checkboxesTitle = "Select what to edit";
+
+    static final String selectTitle = "Select your input file (XML/IMG)";
+
+
+    static final int TEXT_BOX_WIDTH = 50;
 
     /* File selection text field */
     private JTextField filename = new JTextField(TEXT_BOX_WIDTH);

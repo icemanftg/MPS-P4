@@ -1,6 +1,6 @@
 package ro.mps;
 
-import ro.mps.layout.UserInterface;
+import ro.mps.gui.UserInterface;
 
 /**
  * Hello world!
