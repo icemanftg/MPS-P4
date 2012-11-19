@@ -13,10 +13,11 @@ import java.awt.event.ActionListener;
  */
 public class LinesEditingScreen extends CharacterEditingScreen {
 
-    public static final String MERGE_WITH_NEXT_LINE = "Merge with next line";
-    public static final String MERGE_WITH_PREVIOUS_LINE = "Merge with previous line";
-    public static final String SPLIT_AT_POSITION = "Split at position";
-    public static final String EDIT_LINES = "Edit lines";
+    private static final String WINDOW_TITLE = "Edit lines in blocks";
+    private static final String MERGE_WITH_NEXT_LINE = "Merge with next line";
+    private static final String MERGE_WITH_PREVIOUS_LINE = "Merge with previous line";
+    private static final String SPLIT_AT_POSITION = "Split at position";
+    private static final String EDIT_LINES = "Edit lines";
 
     class RightClickActionListener implements ActionListener {
 
@@ -47,11 +48,6 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     private JPopupMenu popupMenu;
 
-    @Override
-    public String getWindowTitle() {
-        return "Edit lines in blocks";
-    }
-
     public LinesEditingScreen() {
         super();
         for (JTextField textLine : textLines) {
@@ -72,7 +68,6 @@ public class LinesEditingScreen extends CharacterEditingScreen {
         JMenu splitAt = new JMenu(SPLIT_AT_POSITION);
         splitAt.add(new PositionSpinner());
         popupMenu.add(splitAt);
-        JSpinner js = new JSpinner();
         popupMenu.addSeparator();
 
 
@@ -91,5 +86,10 @@ public class LinesEditingScreen extends CharacterEditingScreen {
      */
     public JPopupMenu getRightClickMenu() {
         return popupMenu != null ? popupMenu : buildPopupMenu();
+    }
+
+    @Override
+    public String getWindowTitle() {
+        return WINDOW_TITLE;
     }
 }

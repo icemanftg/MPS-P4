@@ -3,6 +3,7 @@ package ro.mps.gui;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.CharacterEditingScreen;
 import ro.mps.gui.screens.LinesEditingScreen;
+import ro.mps.gui.screens.ParagraphEditingScreen;
 import ro.mps.gui.screens.SelectionScreen;
 
 import javax.swing.*;
@@ -44,6 +45,7 @@ public class UserInterface extends JFrame{
      */
     private void addTabbedPannel() {
         TabbedPannel tabbedPannel = new TabbedPannel();
+        tabbedPannel.addPane(new ParagraphEditingScreen());
         tabbedPannel.addPane(new LinesEditingScreen());
         tabbedPannel.addPane(new SelectionScreen());
         tabbedPannel.addPane(new CharacterEditingScreen());
