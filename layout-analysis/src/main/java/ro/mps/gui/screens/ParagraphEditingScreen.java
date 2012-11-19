@@ -6,9 +6,9 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,8 +34,29 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     public ParagraphEditingScreen() {
         super(WINDOW_TITLE);
         addParagraphs();
+        super.addBottomPane();
+    }
 
-//        super.addBottomPane();
+    /**
+     * Generate a container that has a textarea and a checkbox
+     * @param text
+     * @return
+     */
+    private JPanel makeInnerContainer(String text) {
+        JTextArea textArea = makeJTextArea(text);
+        textArea.setColumns(40);
+        textArea.setRows(5);
+        JPanel innerContainer = new JPanel();
+        innerContainer.setLayout(new FlowLayout());
+        JCheckBox checkBox = new JCheckBox();
+
+        innerContainer.add(checkBox);
+        innerContainer.add(textArea);
+
+        checkBoxes.add(checkBox);
+        paragraphs.add(textArea);
+
+        return innerContainer;
     }
 
     /**
@@ -46,18 +67,12 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         checkBoxes = new LinkedList<JCheckBox>();
 
         JPanel containingPanel = new JPanel();
-        containingPanel.setSize(Screen.WINDOW_WIDTH - 50, Screen.WINDOW_HEIGHT -150);
+        containingPanel.setSize(Screen.WINDOW_WIDTH - 50, Screen.WINDOW_HEIGHT - 150);
         containingPanel.setLayout(new BoxLayout(containingPanel, BoxLayout.Y_AXIS));
 
         for (int i = 0; i < NUMBER_OF_PARAGRAPHS; i++) {
-            JTextArea textArea = makeJTextArea(String.valueOf(i));
-            JCheckBox checkBox = new JCheckBox();
-
-            containingPanel.add(textArea);
-            containingPanel.add(checkBox);
-
-            checkBoxes.add(checkBox);
-            paragraphs.add(textArea);
+            String text = String.valueOf(i);
+            containingPanel.add(makeInnerContainer(text));
         }
 
         containingPanel.setBorder(BorderFactory.createTitledBorder("Paragraphs"));
