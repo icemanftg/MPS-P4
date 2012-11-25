@@ -1,10 +1,12 @@
 package ro.mps.gui;
 
 import ro.mps.gui.base.Screen;
-import ro.mps.gui.screens.CharacterEditingScreen;
-import ro.mps.gui.screens.LinesEditingScreen;
-import ro.mps.gui.screens.ParagraphEditingScreen;
-import ro.mps.gui.screens.SelectionScreen;
+import ro.mps.gui.screens.*;
+import ro.mps.gui.screens.lines.CharacterEditingScreen;
+import ro.mps.gui.screens.lines.LinesEditingScreen;
+import ro.mps.gui.screens.lines.LinesTextGenerator;
+import ro.mps.gui.screens.paragraph.ParagraphEditingScreen;
+import ro.mps.gui.screens.paragraph.ParagraphsTextGenerator;
 
 import javax.swing.*;
 
@@ -26,17 +28,6 @@ public class UserInterface extends JFrame{
         this.setSize(Screen.WINDOW_WIDTH, Screen.WINDOW_HEIGHT);
         this.setVisible(true);
 
-//        try {
-//            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (UnsupportedLookAndFeelException e) {
-//            e.printStackTrace();
-//        }
         addTabbedPannel();
     }
 
@@ -45,10 +36,10 @@ public class UserInterface extends JFrame{
      */
     private void addTabbedPannel() {
         TabbedPannel tabbedPannel = new TabbedPannel();
-        tabbedPannel.addPane(new ParagraphEditingScreen());
-        tabbedPannel.addPane(new LinesEditingScreen());
+        tabbedPannel.addPane(new ParagraphEditingScreen(ParagraphsTextGenerator.getParagraphsText(30)));
+        tabbedPannel.addPane(new LinesEditingScreen(LinesTextGenerator.getLinesText(100)));
         tabbedPannel.addPane(new SelectionScreen());
-        tabbedPannel.addPane(new CharacterEditingScreen());
+        tabbedPannel.addPane(new CharacterEditingScreen(LinesTextGenerator.getLinesText(100)));
 
         getContentPane().add(tabbedPannel);
     }

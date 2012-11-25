@@ -57,6 +57,14 @@ public class BottomPaneTemplate extends Screen {
     }
 
     /**
+     * repaints the scroll pane
+     */
+    public void repaintScrollPane() {
+        scrollPane.repaint();
+        scrollPane.revalidate();
+    }
+
+    /**
      * Adds the page number label and spinner
      */
     private void addPageNumber() {
