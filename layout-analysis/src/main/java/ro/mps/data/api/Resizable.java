@@ -1,4 +1,4 @@
-package ro.mps.data;
+package ro.mps.data.api;
 
 
 public interface Resizable extends Moveable {

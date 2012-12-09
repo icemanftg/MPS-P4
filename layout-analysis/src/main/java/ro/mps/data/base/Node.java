@@ -1,6 +1,11 @@
-package ro.mps.data;
+package ro.mps.data.base;
 
 import java.awt.Point;
+
+import ro.mps.data.api.HasLabel;
+import ro.mps.data.api.HasPosition;
+import ro.mps.data.api.Moveable;
+import ro.mps.data.api.Resizable;
 
 /**
  * Generic class for layout elements.
@@ -8,10 +13,11 @@ import java.awt.Point;
  * @author radu
  *
  */
-public abstract class Node implements HasPosition, Resizable, Moveable {
+public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel {
 
 	private int x,y;
 	private int width, height;
+	private String label;
 	
 	/**
 	 * Constructor that sets position coordinates 
@@ -21,11 +27,12 @@ public abstract class Node implements HasPosition, Resizable, Moveable {
 	 * @param height
 	 * @param width
 	 */
-	public Node(int x, int y, int height, int width) {
+	public Node(String label, int x, int y, int height, int width) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.label = label;
 	}
 
 	@Override
@@ -101,6 +108,16 @@ public abstract class Node implements HasPosition, Resizable, Moveable {
 	@Override
 	public boolean isContainedBy(HasPosition p) {
 		return p.contains(this);
+	}
+	
+	@Override
+	public String getLabel() {
+		return label;
+	}
+	
+	@Override
+	public void setLabel(String newLabel) {
+		label = newLabel;
 	}
 	
 }
