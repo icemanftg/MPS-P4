@@ -2,8 +2,18 @@ package ro.mps.data;
 
 import java.awt.Point;
 
-public interface Positionable {
-
+/**
+ * Interface implemented by classes that occupy space and a position in the document
+ * 
+ * @author radu
+ *
+ */
+public interface HasPosition {
+	
+	/**
+	 * Get the origin (upper left corner) of the node
+	 * @return
+	 */
 	Point getLeftUpperCorner();
 	
 	/**
@@ -16,7 +26,7 @@ public interface Positionable {
 	 * Get the Y coordinate of the upper left corner
 	 * @return
 	 */
-	int getRightUpperCornerY();
+	int getLeftUpperCornerY();
 	
 	/**
 	 * Get the width of the element
@@ -37,5 +47,18 @@ public interface Positionable {
 	 */
 	boolean inside(Point p);
 	boolean inside(int x,int y);
+	
+	/**
+	 * Checks if this positionable contains the param positionable
+	 * @param p
+	 * @return
+	 */
+	boolean contains(HasPosition p);
+	/**
+	 * Checks if current positionable is within the boundries of the param positionable
+	 * @param p
+	 * @return
+	 */
+	boolean isContainedBy(HasPosition p);
 	
 }

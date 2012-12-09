@@ -8,7 +8,7 @@ import java.awt.Point;
  * @author radu
  *
  */
-public abstract class Node implements Positionable, Resizable {
+public abstract class Node implements HasPosition, Resizable, Moveable {
 
 	private int x,y;
 	private int width, height;
@@ -44,7 +44,7 @@ public abstract class Node implements Positionable, Resizable {
 	}
 	
 	@Override
-	public int getRightUpperCornerY() {
+	public int getLeftUpperCornerY() {
 		return y;
 	}
 	
@@ -88,6 +88,19 @@ public abstract class Node implements Positionable, Resizable {
 	@Override
 	public void setUpperLeftCorner(Point p) {
 		setUpperLeftCorner(p.x, p.y);
+	}
+	
+	@Override
+	public boolean contains(HasPosition p) {
+		return
+				inside(p.getLeftUpperCorner()) &&
+				p.getLeftUpperCornerX() + p.getWidth() < x + width &&
+				p.getLeftUpperCornerY() + p.getHeight() < y + height;
+	}
+	
+	@Override
+	public boolean isContainedBy(HasPosition p) {
+		return p.contains(this);
 	}
 	
 }
