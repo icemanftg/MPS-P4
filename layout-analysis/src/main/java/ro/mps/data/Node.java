@@ -8,7 +8,7 @@ import java.awt.Point;
  * @author radu
  *
  */
-public abstract class Node implements Positionable {
+public abstract class Node implements Positionable, Resizable {
 
 	private int x,y;
 	private int width, height;
@@ -65,6 +65,29 @@ public abstract class Node implements Positionable {
 	@Override
 	public boolean inside(Point p) {
 		return inside(p.x, p.y);
+	}
+	
+	@Override
+	public void move(int deltaX, int deltaY) {
+		x += deltaX;
+		y += deltaY;
+	}
+	
+	@Override
+	public void resize(int deltaH, int deltaW) {
+		width += deltaW;
+		height += deltaH;
+	}
+	
+	@Override
+	public void setUpperLeftCorner(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	@Override
+	public void setUpperLeftCorner(Point p) {
+		setUpperLeftCorner(p.x, p.y);
 	}
 	
 }
