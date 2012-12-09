@@ -20,3 +20,5 @@ nbproject/private/
 build/
 target/
 adhoc/
+
+.*
