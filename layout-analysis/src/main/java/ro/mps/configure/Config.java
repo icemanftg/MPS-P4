@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public enum Config {
 
-    CONFIGS;
+    ENVIRONMENT;
 
     private final String CONFIG_FILE = "config.properties";
     private final Map<String, String> propeties;
@@ -25,6 +25,12 @@ public enum Config {
         propeties = getProperties();
     }
 
+    /**
+     * Reads from the bundle all the properties that are found in the config file.
+     * Properties must be in the following format: <strong>property_name</strong><em>=</em><strong>property_value</strong>
+     *
+     * @return Map cu proprietatile
+     */
     private Map<String, String> getProperties() {
         Map<String, String> properties = new HashMap<String, String>();
         String line;
@@ -44,6 +50,11 @@ public enum Config {
         }
     }
 
+    /**
+     * Reads and checks the existence of the config file.
+     *
+     * @return RandomAccessFile of the config
+     */
     private RandomAccessFile getConfigBundle() {
         try {
             File configFile = new File(CONFIG_FILE);
@@ -53,23 +64,34 @@ public enum Config {
         }
     }
 
+    /**
+     * Gets the size of the properties bundle
+     *
+     * @return
+     */
     public int size() {
         return propeties.size();
     }
 
+    /**
+     * Gets a specific property
+     *
+     * @param key property name
+     * @return property value
+     */
     public String get(String key) {
         return propeties.get(key);
     }
 
-    public String getExecsFolder(){
+    public String getExecsFolder() {
         return get("execs");
     }
 
-    public String getSchemaFolder(){
+    public String getSchemaFolder() {
         return get("xsd");
     }
 
-    public String getOutputFolder(){
+    public String getOutputFolder() {
         return get("output");
     }
 }

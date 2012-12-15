@@ -15,7 +15,7 @@ public class ConfigTest {
 
     @Before
     public void setUp() throws Exception {
-        environment = Config.CONFIGS;
+        environment = Config.ENVIRONMENT;
     }
 
 

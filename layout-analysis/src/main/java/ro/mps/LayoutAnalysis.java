@@ -9,9 +9,11 @@ import ro.mps.layout.UserInterface;
  */
 public class LayoutAnalysis
 {
+    Config configs = Config.ENVIRONMENT;
+
     public static void main( String[] args )
     {
         UserInterface layoutGUI = new UserInterface();
-        Config configs = Config.CONFIGS;
+
     }
 }
