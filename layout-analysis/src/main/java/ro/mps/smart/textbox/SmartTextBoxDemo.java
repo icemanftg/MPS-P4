@@ -28,7 +28,11 @@ public class SmartTextBoxDemo {
             }
         });
         
-        box.setText("Hey there!");
+        String z = "";
+        for(int i = 0; i < 10; ++i) {
+            z += "line " + i + "\n";
+        }
+        box.setText(z);
         
         frame.add(box);
         frame.add(buton);

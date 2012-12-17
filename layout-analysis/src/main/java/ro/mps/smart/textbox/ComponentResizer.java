@@ -201,7 +201,7 @@ public class ComponentResizer extends MouseAdapter {
 
 		Component source = e.getComponent();
 		source.setCursor(sourceCursor);
-
+                
 		if (source instanceof JComponent) {
 			((JComponent) source).setAutoscrolls(autoscrolls);
 		}
@@ -271,6 +271,11 @@ public class ComponentResizer extends MouseAdapter {
 		source.setPreferredSize(new Dimension(width, height));
 		source.setLocation(x, y);
 		source.validate();
+                
+                if(source instanceof SmartTextBox) {
+                    ((SmartTextBox)source).handleResize();
+                }
+
 	}
 
 	private int getDragDistance(int larger, int smaller, int snapSize) {

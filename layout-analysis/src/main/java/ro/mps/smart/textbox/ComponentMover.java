@@ -7,7 +7,7 @@ import javax.swing.SwingUtilities;
 
 public class ComponentMover extends MouseAdapter
 {
-	private Insets dragInsets = new Insets(0, 0, 0, 0);
+	private Insets moveDragInsets = new Insets(0, 0, 0, 0);
 	private Dimension snapSize = new Dimension(1, 1);
 	private Insets edgeInsets = new Insets(0, 0, 0, 0);
 	private boolean changeCursor = true;
@@ -64,12 +64,12 @@ public class ComponentMover extends MouseAdapter
 
 	public Insets getDragInsets()
 	{
-		return dragInsets;
+		return moveDragInsets;
 	}
 
-	public void setDragInsets(Insets dragInsets)
+	public void setDragInsets(Insets moveDragInsets)
 	{
-		this.dragInsets = dragInsets;
+		this.moveDragInsets = moveDragInsets;
 	}
 
 	public Insets getEdgeInsets()
@@ -112,9 +112,9 @@ public class ComponentMover extends MouseAdapter
 	public void mousePressed(MouseEvent e)
 	{
 		source = e.getComponent();
-		int width  = source.getSize().width  - dragInsets.left - dragInsets.right;
-		int height = source.getSize().height - dragInsets.top - dragInsets.bottom;
-		Rectangle r = new Rectangle(dragInsets.left, dragInsets.top, width, height);
+		int width  = source.getSize().width  - moveDragInsets.left - moveDragInsets.right;
+		int height = source.getSize().height - moveDragInsets.top - moveDragInsets.bottom;
+		Rectangle r = new Rectangle(moveDragInsets.left, moveDragInsets.top, width, height);
 
 		if (r.contains(e.getPoint()))
 			setupForDragging(e);
