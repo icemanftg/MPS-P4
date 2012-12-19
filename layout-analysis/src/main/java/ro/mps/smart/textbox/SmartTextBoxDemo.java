@@ -4,11 +4,10 @@
  */
 package ro.mps.smart.textbox;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import ro.mps.smart.frame.SmartFrame;
 
 /**
  *
@@ -16,7 +15,7 @@ import javax.swing.JFrame;
  */
 public class SmartTextBoxDemo {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Smart TextBox Demo");
+        SmartFrame frame = new SmartFrame("Smart TextBox Demo");
         final SmartTextBox box = new SmartTextBox(200, 300);
         JButton buton = new JButton("Clear text");
         
@@ -32,14 +31,15 @@ public class SmartTextBoxDemo {
         for(int i = 0; i < 10; ++i) {
             z += "line " + i + "\n";
         }
-        box.setText(z);
+        
+//        box.setBounds(100, 200, 200, 300);
         
         frame.add(box);
         frame.add(buton);
         
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLayout(new FlowLayout());
-        frame.setVisible(true);
+        box.setText(z);
+        
+        frame.getFrame().setSize(800, 600);
+        frame.getFrame().setVisible(true);
     }
 }
