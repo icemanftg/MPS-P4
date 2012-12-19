@@ -20,3 +20,6 @@ nbproject/private/
 build/
 target/
 adhoc/
+
+*classpath
+*/bin/*
