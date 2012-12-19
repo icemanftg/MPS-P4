@@ -12,7 +12,7 @@ public abstract class Screen extends JPanel {
 
     /* Some window and component size parameters */
 
-    public static int WINDOW_WIDTH = 600 , WINDOW_HEIGHT = 600;
+    public static int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 600;
 
     public static final int TEXT_BOX_WIDTH = 50;
 

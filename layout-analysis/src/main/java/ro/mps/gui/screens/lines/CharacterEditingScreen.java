@@ -34,8 +34,8 @@ public class CharacterEditingScreen extends BottomPaneTemplate {
     private void addLines(List<String> textLines) {
         lines = new LinkedList<JTextField>();
         containingPanel = new JPanel();
-        containingPanel.setSize(Screen.WINDOW_WIDTH,Screen.WINDOW_HEIGHT);
-        containingPanel.setLayout(new BoxLayout(containingPanel,BoxLayout.Y_AXIS));
+        containingPanel.setSize(Screen.WINDOW_WIDTH, Screen.WINDOW_HEIGHT);
+        containingPanel.setLayout(new BoxLayout(containingPanel, BoxLayout.Y_AXIS));
 
         for (String textLine : textLines) {
             JTextField textField = new JTextField(textLine);
@@ -49,6 +49,7 @@ public class CharacterEditingScreen extends BottomPaneTemplate {
 
     /**
      * Returns the index of a component from the panel
+     *
      * @param searchedComponent
      * @return index
      */
@@ -57,7 +58,7 @@ public class CharacterEditingScreen extends BottomPaneTemplate {
         int counter = 0;
 
         for (Component component : components) {
-            if ( searchedComponent == component ) {
+            if (searchedComponent == component) {
                 return counter;
             }
             counter++;
@@ -68,6 +69,7 @@ public class CharacterEditingScreen extends BottomPaneTemplate {
 
     /**
      * Returns the number of components
+     *
      * @return
      */
     public int getNumberOfComponents() {

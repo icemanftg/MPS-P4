@@ -29,6 +29,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     /**
      * Returns right click menu
+     *
      * @return
      */
     public JPopupMenu getRightClickMenu() {
@@ -37,6 +38,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     /**
      * Merge a line with the previous one
+     *
      * @param index of line
      */
     public void mergeWithPreviousLine(int index) {
@@ -50,6 +52,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     /**
      * Merge a line with the next one
+     *
      * @param index of line
      */
     public void mergeWithNextLine(int index) {
@@ -64,14 +67,15 @@ public class LinesEditingScreen extends CharacterEditingScreen {
     /**
      * Splits a line at a given word number.
      * Line is selected through index.
+     *
      * @param wordNumber word number
-     * @param index of line
+     * @param index      of line
      */
     public void splitAtWord(int wordNumber, int index) {
         JTextField currentTextField = lines.get(index);
         String text = currentTextField.getText();
 
-        if ( wordNumber < getNumberOfWords(text) ) {
+        if (wordNumber < getNumberOfWords(text)) {
             currentTextField.setText(getFirstPartOfSplit(text, wordNumber));
             addTextLine(getLastPartOfSplit(text, wordNumber), index + 1);
         }
@@ -79,6 +83,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     /**
      * Adds a text line at a given position
+     *
      * @param text
      * @param positionIndex
      */
@@ -92,6 +97,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     /**
      * Returns the first part of the text split by a wordNumber
+     *
      * @param paragraphText
      * @param wordNumber
      * @return
@@ -103,6 +109,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     /**
      * Returns the second part of the text split by a wordNumber
+     *
      * @param paragraphText
      * @param wordNumber
      * @return
@@ -114,6 +121,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     /**
      * Returns the index where splitting should start
+     *
      * @param paragraphText
      * @param lineNumber
      * @return
@@ -121,7 +129,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
     private int getIndexForSplitting(String paragraphText, int lineNumber) {
         int position = 0;
 
-        for ( int i = 0; i < lineNumber; i++ ) {
+        for (int i = 0; i < lineNumber; i++) {
             position = paragraphText.indexOf(' ', position) + 1;
         }
 
@@ -130,6 +138,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
 
     /**
      * Counts the number of words in a text
+     *
      * @param text text
      * @return number of words
      */
@@ -137,7 +146,7 @@ public class LinesEditingScreen extends CharacterEditingScreen {
         int numberOfAppearances = 0;
 
         for (int i = 0; i < text.length(); i++) {
-            if ( text.charAt(i) == ' ' ) {
+            if (text.charAt(i) == ' ') {
                 numberOfAppearances++;
             }
         }

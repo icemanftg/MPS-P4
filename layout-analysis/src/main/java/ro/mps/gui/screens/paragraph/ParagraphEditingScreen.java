@@ -51,6 +51,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Sets a popup menu to a text area
+     *
      * @param textArea with the popup menu set
      */
     private void setPopupMenuToJTextArea(JTextArea textArea) {
@@ -59,6 +60,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Returns the paragraph entry that are checked
+     *
      * @return
      */
     public List<ParagraphEntry> getCheckedParagraphs() {
@@ -77,6 +79,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Removes paragraphs from the container
+     *
      * @param paragraphsToBeRemoved
      */
     public void removeParagraphsFromContainer(List<ParagraphEntry> paragraphsToBeRemoved) {
@@ -88,6 +91,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Sets text to a paragraph entry
+     *
      * @param paragraph
      * @param textToBeAdded
      */
@@ -98,6 +102,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Merges paragraphs entry content
+     *
      * @param paragraphs with merged content
      */
     public void mergeParagraphEntryContent(List<ParagraphEntry> paragraphs) {
@@ -122,6 +127,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Splits paragraphs entries content
+     *
      * @param lineNumber
      */
     public void splitParagraphEntriesContent(int lineNumber) {
@@ -134,6 +140,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Split paragraph entry content
+     *
      * @param checkedParagraph
      * @param lineNumber
      */
@@ -141,7 +148,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         JTextArea textArea = checkedParagraph.getTextArea();
         String paragraphText = textArea.getText();
 
-        if ( lineNumber < getNumberOfLines(paragraphText) ) {
+        if (lineNumber < getNumberOfLines(paragraphText)) {
             textArea.setText(getFirstLines(paragraphText, lineNumber));
             ParagraphEntry newParagraph = new ParagraphEntry(getLastLines(paragraphText, lineNumber));
             int index = getParagraphEntryIndex(checkedParagraph) + 1;
@@ -154,12 +161,13 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Gets the paragraphEntry index from paragraphs entries list
+     *
      * @param paragraphEntry
      * @return
      */
     private int getParagraphEntryIndex(ParagraphEntry paragraphEntry) {
         for (int i = 0; i < paragraphs.size(); i++) {
-            if ( paragraphs.get(i) == paragraphEntry ) {
+            if (paragraphs.get(i) == paragraphEntry) {
                 return i;
             }
         }
@@ -169,6 +177,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Returns the number of lines of a text
+     *
      * @param text
      * @return
      */
@@ -176,7 +185,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         int numberOfAppearances = 0;
 
         for (int i = 0; i < text.length(); i++) {
-            if ( text.charAt(i) == '\n' ) {
+            if (text.charAt(i) == '\n') {
                 numberOfAppearances++;
             }
         }
@@ -186,6 +195,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Returns lines from 0 to lineNumber
+     *
      * @param paragraphText
      * @param lineNumber
      * @return
@@ -197,6 +207,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Returns lines from lineNumber to number of lines
+     *
      * @param paragraphText
      * @param lineNumber
      * @return
@@ -208,6 +219,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Returns the index where the split should start
+     *
      * @param paragraphText
      * @param lineNumber
      * @return
@@ -215,7 +227,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     private int getIndexForSplitting(String paragraphText, int lineNumber) {
         int position = 0;
 
-        for ( int i = 0; i < lineNumber; i++ ) {
+        for (int i = 0; i < lineNumber; i++) {
             position = paragraphText.indexOf('\n', position) + 1;
         }
 
@@ -224,11 +236,12 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     /**
      * Appends newline character if text is not empty
+     *
      * @param text
      * @return
      */
     private String addNewLineCharacter(String text) {
-        if ( !text.isEmpty() ) {
+        if (!text.isEmpty()) {
             text += "\n";
         }
 

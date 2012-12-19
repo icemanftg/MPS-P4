@@ -7,13 +7,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
-public class XmlToTree
-{
+public class XmlToTree {
 
-     private String _fName;
+    private String _fName;
 
     public Node getNode(String tagName, NodeList nodes) {
-        for ( int x = 0; x < nodes.getLength(); x++ ) {
+        for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
                 return node;
@@ -22,24 +21,24 @@ public class XmlToTree
         return null;
     }
 
-    public String getNodeValue( Node node ) {
+    public String getNodeValue(Node node) {
         NodeList childNodes = node.getChildNodes();
-        for (int x = 0; x < childNodes.getLength(); x++ ) {
+        for (int x = 0; x < childNodes.getLength(); x++) {
             Node data = childNodes.item(x);
-            if ( data.getNodeType() == Node.TEXT_NODE )
+            if (data.getNodeType() == Node.TEXT_NODE)
                 return data.getNodeValue();
         }
         return "";
     }
 
-    public String getNodeValue(String tagName, NodeList nodes ) {
-        for ( int x = 0; x < nodes.getLength(); x++ ) {
+    public String getNodeValue(String tagName, NodeList nodes) {
+        for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
                 NodeList childNodes = node.getChildNodes();
-                for (int y = 0; y < childNodes.getLength(); y++ ) {
+                for (int y = 0; y < childNodes.getLength(); y++) {
                     Node data = childNodes.item(y);
-                    if ( data.getNodeType() == Node.TEXT_NODE )
+                    if (data.getNodeType() == Node.TEXT_NODE)
                         return data.getNodeValue();
                 }
             }
@@ -47,9 +46,9 @@ public class XmlToTree
         return "";
     }
 
-    public String getNodeAttr(String attrName, Node node ) {
+    public String getNodeAttr(String attrName, Node node) {
         NamedNodeMap attrs = node.getAttributes();
-        for (int y = 0; y < attrs.getLength(); y++ ) {
+        for (int y = 0; y < attrs.getLength(); y++) {
             Node attr = attrs.item(y);
             if (attr.getNodeName().equalsIgnoreCase(attrName)) {
                 return attr.getNodeValue();
@@ -58,15 +57,15 @@ public class XmlToTree
         return "";
     }
 
-    public String getNodeAttr(String tagName, String attrName, NodeList nodes ) {
-        for ( int x = 0; x < nodes.getLength(); x++ ) {
+    public String getNodeAttr(String tagName, String attrName, NodeList nodes) {
+        for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
                 NodeList childNodes = node.getChildNodes();
-                for (int y = 0; y < childNodes.getLength(); y++ ) {
+                for (int y = 0; y < childNodes.getLength(); y++) {
                     Node data = childNodes.item(y);
-                    if ( data.getNodeType() == Node.ATTRIBUTE_NODE ) {
-                        if ( data.getNodeName().equalsIgnoreCase(attrName) )
+                    if (data.getNodeType() == Node.ATTRIBUTE_NODE) {
+                        if (data.getNodeName().equalsIgnoreCase(attrName))
                             return data.getNodeValue();
                     }
                 }
@@ -76,20 +75,20 @@ public class XmlToTree
         return "";
     }
 
-    public XmlToTree  (String fName){
+    public XmlToTree(String fName) {
         _fName = fName;
     }
-    public Document getTree (){
-    try {
-        DOMParser parser = new DOMParser();
-        parser.parse(_fName);
-        return parser.getDocument();
+
+    public Document getTree() {
+        try {
+            DOMParser parser = new DOMParser();
+            parser.parse(_fName);
+            return parser.getDocument();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    catch ( Exception e ) {
-    e.printStackTrace();
-    }
-    return null;
-}
 
 }
 

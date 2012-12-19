@@ -25,7 +25,5 @@ public class SelectionScreenTest extends TestCase {
                 SelectionScreen ss = new SelectionScreen();
             }
         });
-//        while(true);
-//        Assert.assertTrue("GUI not loaded", true);
     }
 }

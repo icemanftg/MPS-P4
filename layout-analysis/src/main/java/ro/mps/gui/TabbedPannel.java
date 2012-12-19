@@ -17,7 +17,7 @@ public class TabbedPannel extends JTabbedPane {
         setSize(500, 500);
     }
 
-    public void addPane(Screen panel){
+    public void addPane(Screen panel) {
         this.addTab(panel.getWindowTitle(), panel);
     }
 

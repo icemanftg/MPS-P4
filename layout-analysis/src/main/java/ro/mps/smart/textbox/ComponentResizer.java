@@ -1,12 +1,13 @@
 package ro.mps.smart.textbox;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
 public class ComponentResizer extends MouseAdapter {
 
@@ -25,6 +26,7 @@ public class ComponentResizer extends MouseAdapter {
         cursors.put(6, Cursor.SW_RESIZE_CURSOR);
         cursors.put(12, Cursor.SE_RESIZE_CURSOR);
     }
+
     private Insets dragInsets;
     private Dimension snapSize;
     private int direction;
@@ -274,7 +276,7 @@ public class ComponentResizer extends MouseAdapter {
         source.setBounds(x, y, width, height);
         source.setPreferredSize(new Dimension(width, height));
         source.setLocation(x, y);
-        
+
         if (source instanceof SmartTextBox) {
             SmartTextBox tb = ((SmartTextBox) source);
             tb.handleResize();

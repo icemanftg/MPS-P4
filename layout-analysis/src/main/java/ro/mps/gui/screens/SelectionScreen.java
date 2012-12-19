@@ -10,23 +10,33 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 public class SelectionScreen extends Screen {
-    /** Constant title strings */
+    /**
+     * Constant title strings
+     */
     public static final String SELECTION_SCREEN = "Selection Screen";
     public static final String SELECT_WHAT_TO_EDIT = "Select what to edit";
     public static final String SELECT_INPUT_FILE = "Select your input file (XML/IMG)";
 
-    /** File selection text field */
+    /**
+     * File selection text field
+     */
     private JTextField filename = new JTextField(TEXT_BOX_WIDTH);
 
-    /** Buttons */
+    /**
+     * Buttons
+     */
     private JButton browse = new JButton("Browse"), analyze = new JButton("Analyze");
 
-    /** Checkboxes */
+    /**
+     * Checkboxes
+     */
     private JCheckBox characters = new JCheckBox("Characters"),
             lines = new JCheckBox("Lines of characters"),
             blocks = new JCheckBox("Blocks of lines");
 
-    /** A reference to the file we choose - for further use */
+    /**
+     * A reference to the file we choose - for further use
+     */
     private File inputFile;
 
     public SelectionScreen() {
@@ -55,13 +65,13 @@ public class SelectionScreen extends Screen {
     }
 
     /**
-    * Builds the panel that contains the Analyze button
-    *
-    * @return JPanel
-    */
+     * Builds the panel that contains the Analyze button
+     *
+     * @return JPanel
+     */
     private JPanel buildAnalyzePanel() {
         JPanel analyzePanel = new JPanel();
-        analyzePanel.setLayout(new BoxLayout(analyzePanel,BoxLayout.X_AXIS));
+        analyzePanel.setLayout(new BoxLayout(analyzePanel, BoxLayout.X_AXIS));
         analyzePanel.add(analyze);
         return analyzePanel;
     }
@@ -69,7 +79,7 @@ public class SelectionScreen extends Screen {
     /**
      * Builds the panel that contains checkboxes
      *
-     *@ return JPanel
+     * @ return JPanel
      */
     private JPanel buildCheckboxPanel() {
         JPanel checkboxPanel = new JPanel(new GridLayout(3, 1));
@@ -83,11 +93,12 @@ public class SelectionScreen extends Screen {
         checkboxPanel.setBorder(BorderFactory.createTitledBorder(SELECT_WHAT_TO_EDIT));
         return checkboxPanel;
     }
+
     /**
-    * Builds the panel that contains the Browse button and textfield
-    *
-    * @return JPanel
-    */
+     * Builds the panel that contains the Browse button and textfield
+     *
+     * @return JPanel
+     */
     private JPanel buildBrowsePanel() {
         JPanel browserPanel = new JPanel();
         browserPanel.setBackground(bg);
@@ -121,6 +132,7 @@ public class SelectionScreen extends Screen {
 
         }
     }
+
     /**
      * Retains a reference to the file chosen to work with
      *

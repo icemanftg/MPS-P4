@@ -28,6 +28,7 @@ public class LinesPopupMenu {
 
     /**
      * Returns the Popup Menu
+     *
      * @return popup menu
      */
     public JPopupMenu getRightClickMenu() {
@@ -46,6 +47,7 @@ public class LinesPopupMenu {
 
         /**
          * Returns the component that triggerd the envent
+         *
          * @param event
          * @return
          */
@@ -70,11 +72,11 @@ public class LinesPopupMenu {
             int index = linesEditingScreen.getComponentIndex(componentInvoker);
             int numberOfComponents = linesEditingScreen.getNumberOfComponents();
 
-            if ( e.getActionCommand().equals(MERGE_WITH_PREVIOUS_LINE) && index != 0) {
+            if (e.getActionCommand().equals(MERGE_WITH_PREVIOUS_LINE) && index != 0) {
                 linesEditingScreen.mergeWithPreviousLine(index);
             }
 
-            if ( e.getActionCommand().equals(MERGE_WITH_NEXT_LINE) && index != numberOfComponents - 1 ) {
+            if (e.getActionCommand().equals(MERGE_WITH_NEXT_LINE) && index != numberOfComponents - 1) {
                 linesEditingScreen.mergeWithNextLine(index);
             }
 
@@ -123,6 +125,7 @@ public class LinesPopupMenu {
 
     /**
      * Builds a panel that contains a spinner and a button
+     *
      * @return panel
      */
     private JPanel getSplitContainer(LinesEditingScreen linesEditingScreen) {
@@ -149,6 +152,7 @@ public class LinesPopupMenu {
 
         /**
          * Returns the component that triggered the event
+         *
          * @param event
          * @return
          */
@@ -163,6 +167,7 @@ public class LinesPopupMenu {
 
         /**
          * Splits the text content when split button is pressed
+         *
          * @param e
          */
         @Override

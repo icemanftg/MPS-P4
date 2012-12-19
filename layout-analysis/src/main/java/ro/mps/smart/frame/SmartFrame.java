@@ -4,16 +4,16 @@
  */
 package ro.mps.smart.frame;
 
-import java.awt.Component;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import ro.mps.data.base.Node;
 import ro.mps.smart.textbox.SmartTextBox;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * @author Alexandra
  */
 public class SmartFrame {

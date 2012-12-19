@@ -21,6 +21,7 @@ public class ParagraphEntry {
 
     /**
      * Generate a container that has a textarea and a checkbox
+     *
      * @param text
      * @return
      */

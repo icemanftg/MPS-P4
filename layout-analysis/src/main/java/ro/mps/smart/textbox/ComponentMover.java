@@ -1,11 +1,11 @@
 package ro.mps.smart.textbox;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
 public class ComponentMover extends MouseAdapter {
 
@@ -220,8 +220,8 @@ public class ComponentMover extends MouseAdapter {
                 destination.validate();
             }
         }
-        
-        if(destination instanceof SmartTextBox) {
+
+        if (destination instanceof SmartTextBox) {
             try {
                 ((SmartTextBox) destination).handleMove();
             } catch (Exception ex) {

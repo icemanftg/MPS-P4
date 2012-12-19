@@ -1,7 +1,7 @@
 package ro.mps.gui;
 
 import ro.mps.gui.base.Screen;
-import ro.mps.gui.screens.*;
+import ro.mps.gui.screens.SelectionScreen;
 import ro.mps.gui.screens.lines.CharacterEditingScreen;
 import ro.mps.gui.screens.lines.LinesEditingScreen;
 import ro.mps.gui.screens.lines.LinesTextGenerator;
@@ -12,10 +12,10 @@ import javax.swing.*;
 
 
 @SuppressWarnings("serial")
-public class UserInterface extends JFrame{
+public class UserInterface extends JFrame {
 
 
-    public UserInterface(){
+    public UserInterface() {
 
         this.init();
     }
@@ -23,7 +23,7 @@ public class UserInterface extends JFrame{
     /**
      * Initializeaza fereastra principala
      */
-    private void init(){
+    private void init() {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(Screen.WINDOW_WIDTH, Screen.WINDOW_HEIGHT);
         this.setVisible(true);
@@ -43,7 +43,6 @@ public class UserInterface extends JFrame{
 
         getContentPane().add(tabbedPannel);
     }
-
 
 
 }

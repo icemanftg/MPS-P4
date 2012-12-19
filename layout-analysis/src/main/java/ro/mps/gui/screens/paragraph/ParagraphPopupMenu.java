@@ -56,6 +56,7 @@ public class ParagraphPopupMenu {
 
     /**
      * Builds a panel that contains a spinner and a button
+     *
      * @return panel
      */
     private JPanel getSplitContainer(ParagraphEditingScreen paragraphEditingScreen) {

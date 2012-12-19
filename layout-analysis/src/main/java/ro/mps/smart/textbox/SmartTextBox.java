@@ -4,32 +4,22 @@ package ro.mps.smart.textbox;/*
  */
 
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
 import ro.mps.data.api.Compound;
 import ro.mps.data.base.Node;
 import ro.mps.data.concrete.Block;
 import ro.mps.data.concrete.Line;
 import ro.mps.smart.frame.SmartFrame;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * @author alexandra
  */
 public class SmartTextBox extends Box {
@@ -180,7 +170,7 @@ public class SmartTextBox extends Box {
                     lines.get(i - 1).getLeftUpperCornerY() + lines.get(i - 1).getHeight(),
                     rendered ? lineWidth(lineContents[i]) : textArea.getWidth(),
                     rendered ? lineHeight(lineContents[i]) : textArea.getHeight()
-                    );
+            );
             l.setParent(lines.get(i - 1).getParent());
             l.getParent().getChildren().add(l);
             l.setContent(lineContents[i]);

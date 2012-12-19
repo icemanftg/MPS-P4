@@ -72,7 +72,7 @@ public class BottomPaneTemplate extends Screen {
         pageNumberLabel = new JLabel(PAGINA_NR);
         pageNumberSpinner = new JSpinner(pageNumberSpinner());
         pageNumber.add(pageNumberLabel, BorderLayout.WEST);
-        pageNumber.add(pageNumberSpinner,BorderLayout.EAST);
+        pageNumber.add(pageNumberSpinner, BorderLayout.EAST);
         pageNumber.setAlignmentX(Component.LEFT_ALIGNMENT);
         bottomPane.add(pageNumber);
     }
@@ -88,14 +88,16 @@ public class BottomPaneTemplate extends Screen {
 
     /**
      * Create a spinner model with range between 1 and 100
+     *
      * @return SpinnerModel representing the pageNumber;
      */
-    private SpinnerModel pageNumberSpinner(){
+    private SpinnerModel pageNumberSpinner() {
         return pageNumberSpinner(100);
     }
 
     /**
      * Create a spinner model with range between 1 and <code>max</code>
+     *
      * @param max The maximum number of pages
      * @return SpinnerModel representing the pageNumber;
      */
@@ -103,7 +105,7 @@ public class BottomPaneTemplate extends Screen {
         int initialValue = 1;
         int minimumValue = 1;
         int stepSize = 1;
-        return  new SpinnerNumberModel(initialValue, minimumValue,max, stepSize);
+        return new SpinnerNumberModel(initialValue, minimumValue, max, stepSize);
 
     }
 
