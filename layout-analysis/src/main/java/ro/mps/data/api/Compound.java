@@ -9,13 +9,16 @@ import java.util.List;
  *
  * @author radu
  */
-public interface Compound {
+public interface Compound<T extends Node> {
 
     /**
      * Returns the children list
      *
      * @return
      */
-    List<Node> getChildren();
+    List<T> getChildren();
 
+    void removeChildren(List<T> children);
+
+    void removeChild(T child);
 }

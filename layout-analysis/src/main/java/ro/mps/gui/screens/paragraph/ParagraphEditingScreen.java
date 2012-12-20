@@ -2,6 +2,7 @@ package ro.mps.gui.screens.paragraph;
 
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
+import ro.mps.data.concrete.Root;
 
 import javax.swing.*;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     private static final String WINDOW_TITLE = "Edit Blocks";
     private List<ParagraphEntry> paragraphs;
+    private Root root;
     private JPanel containingPanel;
     private ParagraphPopupMenu popupMenu;
 
@@ -25,6 +27,11 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         setPanel();
         addParagraphs(paragraphsText);
         super.addBottomPane();
+    }
+
+    public ParagraphEditingScreen(Root root) {
+        this(root.getTextFromParagraphs());
+        this.root = root;
     }
 
     private void setPanel() {
@@ -84,8 +91,10 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
      */
     public void removeParagraphsFromContainer(List<ParagraphEntry> paragraphsToBeRemoved) {
         for (ParagraphEntry paragraphToBeRemoved : paragraphsToBeRemoved) {
+            int paragraphEntryIndex = getParagraphEntryIndex(paragraphToBeRemoved);
             containingPanel.remove(paragraphToBeRemoved.getContainer());
             paragraphs.remove(paragraphToBeRemoved);
+            root.removeChild(paragraphEntryIndex);
         }
     }
 

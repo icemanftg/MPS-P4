@@ -34,6 +34,22 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
         this.label = label;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     @Override
     public int getHeight() {
         return height;
@@ -119,4 +135,11 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
         label = newLabel;
     }
 
+    public void setDimensionsAfterMerge(Node node) {
+        x = Math.min(x, node.getLeftUpperCornerX());
+        y = Math.min(y, node.getLeftUpperCornerY());
+
+        width = Math.max(width, node.getWidth());
+        height = height + node.getHeight();
+    }
 }

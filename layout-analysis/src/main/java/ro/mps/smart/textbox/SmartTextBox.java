@@ -281,7 +281,7 @@ public class SmartTextBox extends Box {
         }
     }
 
-    public void add(Compound textAreaound) {
+    public void add(Compound<Node> textAreaound) {
         for (Node node : textAreaound.getChildren()) {
             add(node);
         }

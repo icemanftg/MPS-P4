@@ -42,7 +42,4 @@ public class Line extends Node implements HasContent, HasParent {
     public void setContent(String content) {
         this.content = content;
     }
-
-    ;
-
 }

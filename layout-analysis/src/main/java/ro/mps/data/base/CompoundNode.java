@@ -3,7 +3,7 @@ package ro.mps.data.base;
 import ro.mps.data.api.Compound;
 import ro.mps.data.api.HasParent;
 
-public abstract class CompoundNode extends OrphanCompoundNode implements HasParent {
+public abstract class CompoundNode<T extends Node> extends OrphanCompoundNode<T> implements HasParent {
 
     private Compound parent;
 
