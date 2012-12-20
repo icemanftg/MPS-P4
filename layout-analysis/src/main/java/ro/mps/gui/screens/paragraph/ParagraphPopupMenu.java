@@ -12,7 +12,8 @@ import java.awt.event.ActionListener;
  * Time: 13:38
  */
 public class ParagraphPopupMenu {
-    private static final String MERGE_SELECTED = "Merge selected";
+    private static final String MERGE_WITH_PREVIOUS = "Merge with previous paragraph";
+    private static final String MERGE_WITH_NEXT = "Merge with next paragraph";
     private static final String SPLIT_AT_LINE = "Split at line";
     private static final String DELETE_SELECTED = "Delete selected";
     private static final String EDIT_PARAGRAPH = "Edit paragraph";
@@ -38,7 +39,11 @@ public class ParagraphPopupMenu {
         rightClickMenu = new JPopupMenu(EDIT_PARAGRAPH);
         JMenuItem menuItem;
 
-        menuItem = new JMenuItem(MERGE_SELECTED);
+        menuItem = new JMenuItem(MERGE_WITH_PREVIOUS);
+        menuItem.addActionListener(new RightClickActionListener(paragraphEditingScreen));
+        rightClickMenu.add(menuItem);
+
+        menuItem = new JMenuItem(MERGE_WITH_NEXT);
         menuItem.addActionListener(new RightClickActionListener(paragraphEditingScreen));
         rightClickMenu.add(menuItem);
 
@@ -100,14 +105,43 @@ public class ParagraphPopupMenu {
             paragraphEditingScreen.repaintScrollPane();
         }
 
+        /**
+         * Returns the component that triggered the event
+         *
+         * @param event
+         * @return
+         */
+        private Component getInvoker(ActionEvent event) {
+            JMenuItem source = (JMenuItem) event.getSource();
+            JPopupMenu jPopupMenu = (JPopupMenu) source.getParent();
+
+            return jPopupMenu.getInvoker().getParent();
+        }
+
+        private void mergeParagraphs(int indexOfFirstParagraph, int indexOfSecondParagraph) {
+            ParagraphEntry firstParagraphEntry = paragraphEditingScreen.getParagraphAtIndex(indexOfFirstParagraph);
+            ParagraphEntry secondParagraphEntry = paragraphEditingScreen.getParagraphAtIndex(indexOfSecondParagraph);
+            paragraphEditingScreen.mergeTwoParagraphEntryContent(firstParagraphEntry, secondParagraphEntry);
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
+            Component jPopupMenu = getInvoker(e);
+            JPanel containingPanel = paragraphEditingScreen.getContainingPanel();
+            int componentIndex = getComponentIndex(containingPanel.getComponents(), jPopupMenu);
+
             if (e.getActionCommand().equals(DELETE_SELECTED)) {
-                paragraphEditingScreen.removeParagraphsFromContainer(paragraphEditingScreen.getCheckedParagraphs());
+                paragraphEditingScreen.removeParagraphs(paragraphEditingScreen.getCheckedParagraphs());
             }
 
-            if (e.getActionCommand().equals(MERGE_SELECTED)) {
-                paragraphEditingScreen.mergeParagraphEntryContent(paragraphEditingScreen.getCheckedParagraphs());
+            if (e.getActionCommand().equals(MERGE_WITH_PREVIOUS) &&
+                    !paragraphEditingScreen.isParagraphTheFirst(componentIndex)) {
+                mergeParagraphs(componentIndex - 1, componentIndex);
+            }
+
+            if (e.getActionCommand().equals(MERGE_WITH_NEXT) &&
+                    !paragraphEditingScreen.isParagraphTheLast(componentIndex)) {
+                mergeParagraphs(componentIndex, componentIndex + 1);
             }
 
             repaintMyPanel();
@@ -131,5 +165,24 @@ public class ParagraphPopupMenu {
             paragraphEditingScreen.splitParagraphEntriesContent(lineNumber);
 
         }
+    }
+
+    /**
+     * Returns the index of a component from the panel
+     *
+     * @param searchedComponent
+     * @return index
+     */
+    public int getComponentIndex(Component[] components, Component searchedComponent) {
+        int counter = 0;
+
+        for (Component component : components) {
+            if (searchedComponent == component) {
+                return counter;
+            }
+            counter++;
+        }
+
+        return -1;
     }
 }

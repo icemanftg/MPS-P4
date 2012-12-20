@@ -26,7 +26,59 @@ public class Block extends CompoundNode<Block, Line> {
         return content;
     }
 
-    public boolean canBeMerged(Block block) {
+    public void merge(Block block) {
+        if ( canBeMerged(block) ) {
+            addChildrenFromAnotherBlock(block);
+            removeBlock(block);
+        }
+    }
+
+    public void split(int index) {
+        addNewBlockToRoot(index);
+        setNewHeightForBlockAfterSplit(index);
+        removeElementsContainedInNewBlock(index);
+    }
+
+    private void addNewBlockToRoot(int index) {
+        Compound<Block> root = getParent();
+        int indexOfChildFromChildrenList = root.getIndexOfChildFromChildrenList(this);
+        root.addChildAtIndex(indexOfChildFromChildrenList, makeNewBlock(index));
+    }
+
+    private Block makeNewBlock(int index) {
+        List<Line> children = getChildren();
+
+        int heightForNewBlock = calculateHeight(index);
+
+        Block blockResultedFromMerge = new Block(getParent(), getLeftUpperCornerX(), getLeftUpperCornerY(),
+                heightForNewBlock, getWidth());
+        addChildrenToNewBlock(blockResultedFromMerge, children.subList(index, children.size()));
+        return null;
+    }
+
+    private void removeElementsContainedInNewBlock(int index) {
+        List<Line> children = getChildren();
+        this.removeChildren(children.subList(0, index - 1));
+    }
+
+    private void setNewHeightForBlockAfterSplit(int index) {
+        Line child = getChildren().get(index);
+        int newHeight = child.getLeftUpperCornerY() - getLeftUpperCornerY();
+        setHeight(newHeight);
+    }
+
+    private void addChildrenToNewBlock(Block newBlock, List<Line> children) {
+        newBlock.addChildren(children);
+    }
+
+    private int calculateHeight(int index) {
+        List<Line> children = getChildren();
+        Line line = children.get(index);
+
+        return getHeight() - line.getLeftUpperCornerY() + getLeftUpperCornerY();
+    }
+
+    private boolean canBeMerged(Block block) {
         int backupX = block.getLeftUpperCornerX();
         int backupY = block.getLeftUpperCornerY();
         int backupHeight = block.getHeight();
@@ -42,14 +94,7 @@ public class Block extends CompoundNode<Block, Line> {
         return false;
     }
 
-    public void merge(Block block) {
-        if ( canBeMerged(block) ) {
-            addChildren(block);
-            removeBlock(block);
-        }
-    }
-
-    private void addChildren(Block block) {
+    private void addChildrenFromAnotherBlock(Block block) {
         List<Line> children = block.getChildren();
         this.addChildren(children);
     }

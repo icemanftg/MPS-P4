@@ -14,14 +14,26 @@ public abstract class OrphanCompoundNode<T extends Node> extends Node implements
     }
 
     @Override
+    public void addChildAtIndex(int index, T child) {
+        children.add(index, child);
+    }
+
+    @Override
     public List<T> getChildren() {
         return children;
     }
 
+    @Override
+    public T getChild(int index) {
+        return children.get(index);
+    }
+
+    @Override
     public void addChild(T child) {
         children.add(child);
     }
 
+    @Override
     public void addChildren(List<T> childrenToBeAdded) {
         children.addAll(childrenToBeAdded);
     }
@@ -38,5 +50,16 @@ public abstract class OrphanCompoundNode<T extends Node> extends Node implements
     @Override
     public void removeChildren(List<T> children) {
         children.removeAll(children);
+    }
+
+    @Override
+    public int getIndexOfChildFromChildrenList(T child) {
+        for ( int i = 0; i < children.size(); i++ ) {
+            if ( child == children.get(i) ) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

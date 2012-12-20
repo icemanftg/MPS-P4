@@ -18,7 +18,17 @@ public interface Compound<T extends Node> {
      */
     List<T> getChildren();
 
+    T getChild(int index);
+
     void removeChildren(List<T> children);
 
     void removeChild(T child);
+
+    void addChildren(List<T> children);
+
+    void addChild(T child);
+
+    void addChildAtIndex(int index, T child);
+
+    int getIndexOfChildFromChildrenList(T child);
 }

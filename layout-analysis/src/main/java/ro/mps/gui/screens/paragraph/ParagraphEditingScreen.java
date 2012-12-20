@@ -1,5 +1,6 @@
 package ro.mps.gui.screens.paragraph;
 
+import ro.mps.data.concrete.Block;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
 import ro.mps.data.concrete.Root;
@@ -89,13 +90,24 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
      *
      * @param paragraphsToBeRemoved
      */
-    public void removeParagraphsFromContainer(List<ParagraphEntry> paragraphsToBeRemoved) {
+    private void removeParagraphsFromContainer(List<ParagraphEntry> paragraphsToBeRemoved) {
+        for (ParagraphEntry paragraphToBeRemoved : paragraphsToBeRemoved) {
+            containingPanel.remove(paragraphToBeRemoved.getContainer());
+            paragraphs.remove(paragraphToBeRemoved);
+        }
+    }
+
+    private void removeBlocksFromDataStructure(List<ParagraphEntry> paragraphsToBeRemoved) {
         for (ParagraphEntry paragraphToBeRemoved : paragraphsToBeRemoved) {
             int paragraphEntryIndex = getParagraphEntryIndex(paragraphToBeRemoved);
             containingPanel.remove(paragraphToBeRemoved.getContainer());
-            paragraphs.remove(paragraphToBeRemoved);
             root.removeChild(paragraphEntryIndex);
         }
+    }
+
+    public void removeParagraphs(List<ParagraphEntry> paragraphEntries) {
+        removeParagraphsFromContainer(paragraphEntries);
+        removeBlocksFromDataStructure(paragraphEntries);
     }
 
     /**
@@ -134,6 +146,21 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         removeParagraphsFromContainer(paragraphs);
     }
 
+    public void mergeTwoParagraphEntryContent(ParagraphEntry firstParagraph, ParagraphEntry secondParagraph) {
+        List<ParagraphEntry> paragraphEntries = new LinkedList<ParagraphEntry>();
+        paragraphEntries.add(firstParagraph);
+        paragraphEntries.add(secondParagraph);
+        mergeParagraphEntryContent(paragraphEntries);
+    }
+
+    private void modifyDataStructureAfterMergeOperation(ParagraphEntry paragraphEntry) {
+        int paragraphEntryIndex = getParagraphEntryIndex(paragraphEntry);
+        Block firstBlock = root.getChild(paragraphEntryIndex);
+        Block secondBlock = root.getChild(paragraphEntryIndex + 1);
+
+        firstBlock.merge(secondBlock);
+    }
+
     /**
      * Splits paragraphs entries content
      *
@@ -144,7 +171,14 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
         for (ParagraphEntry checkedParagraph : checkedParagraphs) {
             splitParagraphEntryContent(checkedParagraph, lineNumber);
+            modifyDataStructureAfterSplitOperation(checkedParagraph, lineNumber);
         }
+    }
+
+    private void modifyDataStructureAfterSplitOperation(ParagraphEntry checkedParagraph, int lineNumber) {
+        int paragraphEntryIndex = getParagraphEntryIndex(checkedParagraph);
+        Block block = root.getChild(paragraphEntryIndex);
+        block.split(lineNumber);
     }
 
     /**
@@ -182,6 +216,18 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         }
 
         return -1;
+    }
+
+    public ParagraphEntry getParagraphAtIndex(int index) {
+        return paragraphs.get(index);
+    }
+
+    public boolean isParagraphTheFirst(int index) {
+        return index == 0;
+    }
+
+    public boolean isParagraphTheLast(int index) {
+        return index == paragraphs.size() - 1;
     }
 
     /**
@@ -250,8 +296,10 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
      * @return
      */
     private String addNewLineCharacter(String text) {
+        final String LINE_SEPARATOR_TEXT = "line.separator";
+
         if (!text.isEmpty()) {
-            text += "\n";
+            text += System.getProperty(LINE_SEPARATOR_TEXT);
         }
 
         return text;

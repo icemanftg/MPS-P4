@@ -46,7 +46,7 @@ public class LinesPopupMenu {
         }
 
         /**
-         * Returns the component that triggerd the envent
+         * Returns the component that triggered the event
          *
          * @param event
          * @return
