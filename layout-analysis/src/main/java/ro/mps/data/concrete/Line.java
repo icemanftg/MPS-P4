@@ -11,7 +11,7 @@ public class Line extends Node implements HasContent, HasParent {
     private String content;
 
     public Line(int x, int y, int height, int width) {
-        super("line", x, y, height, width);
+        super("Line", x, y, height, width);
     }
 
     public Line(Compound p, int x, int y, int height, int width) {

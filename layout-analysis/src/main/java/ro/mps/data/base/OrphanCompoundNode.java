@@ -18,4 +18,8 @@ public abstract class OrphanCompoundNode extends Node implements Compound {
         return children;
     }
 
+    public void addChild(Node child) {
+        children.add(child);
+    }
+
 }

@@ -6,11 +6,11 @@ import ro.mps.data.base.CompoundNode;
 public class Block extends CompoundNode {
 
     public Block(int x, int y, int height, int width) {
-        super("block", x, y, height, width);
+        super("Block", x, y, height, width);
     }
 
     public Block(Compound parent, int x, int y, int height, int width) {
-        super(parent, "block", x, y, height, width);
+        super(parent, "Block", x, y, height, width);
     }
 
 }

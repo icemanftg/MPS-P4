@@ -1,0 +1,15 @@
+<Document image="gogu.tiff" direction="ascending">
+<TextBlock left="1" top="1" right="100" bottom="100">
+        <TextLine left="1" top="1" right="50" bottom="50">
+            <String>abc</String>
+        </TextLine>
+        <TextLine left="2" top="2" right="51" bottom="51">
+            <String>def</String>
+        </TextLine>
+</TextBlock>
+<TextBlock left="1" top="1" right="100" bottom="100">
+    <TextLine left="1" top="1" right="50" bottom="50">
+        <String>alabala</String>
+    </TextLine>
+</TextBlock>
+</Document>
