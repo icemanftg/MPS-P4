@@ -3,7 +3,13 @@ package ro.mps.data.base;
 import ro.mps.data.api.Compound;
 import ro.mps.data.api.HasParent;
 
-public abstract class CompoundNode<T extends Node> extends OrphanCompoundNode<T> implements HasParent {
+/**
+ * A compoundNode has as children a compoundNode of type C
+ * His father has as children a compoundNode of type T
+ * @param <T> the compound's class
+ * @param <C> the children's class
+ */
+public abstract class CompoundNode<T extends Node, C extends Node> extends OrphanCompoundNode<C> implements HasParent<T> {
 
     private Compound parent;
 
@@ -17,12 +23,12 @@ public abstract class CompoundNode<T extends Node> extends OrphanCompoundNode<T>
     }
 
     @Override
-    public Compound getParent() {
+    public Compound<T> getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(Compound p) {
+    public void setParent(Compound<T> p) {
         parent = p;
     }
 }

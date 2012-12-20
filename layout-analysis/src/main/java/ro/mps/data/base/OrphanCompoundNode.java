@@ -5,7 +5,7 @@ import ro.mps.data.api.Compound;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class OrphanCompoundNode<T extends Node> extends Node implements Compound {
+public abstract class OrphanCompoundNode<T extends Node> extends Node implements Compound<T> {
 
     private List<T> children = new ArrayList<T>();
 
@@ -31,12 +31,12 @@ public abstract class OrphanCompoundNode<T extends Node> extends Node implements
     }
 
     @Override
-    public void removeChild(Node child) {
+    public void removeChild(T child) {
         children.remove(child);
     }
 
     @Override
-    public void removeChildren(List children) {
+    public void removeChildren(List<T> children) {
         children.removeAll(children);
     }
 }

@@ -5,7 +5,7 @@ import ro.mps.data.base.CompoundNode;
 
 import java.util.List;
 
-public class Block extends CompoundNode<Line> {
+public class Block extends CompoundNode<Block, Line> {
 
     public Block(int x, int y, int height, int width) {
         super("block", x, y, height, width);
