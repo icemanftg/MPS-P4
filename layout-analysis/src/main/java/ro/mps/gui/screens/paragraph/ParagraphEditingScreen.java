@@ -43,6 +43,10 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         super.addScrollPanel(containingPanel);
     }
 
+    public Root getRoot() {
+        return root;
+    }
+
     /**
      * Generates the paragraphs that can be edited
      */
@@ -106,8 +110,8 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     }
 
     public void removeParagraphs(List<ParagraphEntry> paragraphEntries) {
-        removeParagraphsFromContainer(paragraphEntries);
         removeBlocksFromDataStructure(paragraphEntries);
+        removeParagraphsFromContainer(paragraphEntries);
     }
 
     /**
@@ -135,7 +139,6 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
         for (ParagraphEntry paragraph : paragraphs) {
             JTextArea textArea = paragraph.getTextArea();
-            textContent = addNewLineCharacter(textContent);
             textContent += textArea.getText();
         }
 
@@ -146,19 +149,25 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         removeParagraphsFromContainer(paragraphs);
     }
 
-    public void mergeTwoParagraphEntryContent(ParagraphEntry firstParagraph, ParagraphEntry secondParagraph) {
+    public boolean mergeTwoParagraphEntryContent(ParagraphEntry firstParagraph, ParagraphEntry secondParagraph) {
         List<ParagraphEntry> paragraphEntries = new LinkedList<ParagraphEntry>();
         paragraphEntries.add(firstParagraph);
         paragraphEntries.add(secondParagraph);
-        mergeParagraphEntryContent(paragraphEntries);
+
+        boolean paragraphsCanBeMerged = modifyDataStructureAfterMergeOperation(firstParagraph);
+        if ( paragraphsCanBeMerged ) {
+            mergeParagraphEntryContent(paragraphEntries);
+        }
+
+        return !paragraphsCanBeMerged;
     }
 
-    private void modifyDataStructureAfterMergeOperation(ParagraphEntry paragraphEntry) {
+    private boolean modifyDataStructureAfterMergeOperation(ParagraphEntry paragraphEntry) {
         int paragraphEntryIndex = getParagraphEntryIndex(paragraphEntry);
         Block firstBlock = root.getChild(paragraphEntryIndex);
         Block secondBlock = root.getChild(paragraphEntryIndex + 1);
 
-        firstBlock.merge(secondBlock);
+        return firstBlock.merge(secondBlock);
     }
 
     /**
@@ -257,7 +266,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
      */
     private String getFirstLines(String paragraphText, int lineNumber) {
         int endPosition = getIndexForSplitting(paragraphText, lineNumber);
-        return paragraphText.substring(0, endPosition - 1);
+        return paragraphText.substring(0, endPosition);
     }
 
     /**
@@ -280,29 +289,15 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
      * @return
      */
     private int getIndexForSplitting(String paragraphText, int lineNumber) {
+        final String LINE_SEPARATOR_TEXT = "line.separator";
         int position = 0;
+        int lineSeparatorLength = System.getProperty(LINE_SEPARATOR_TEXT).length();
 
         for (int i = 0; i < lineNumber; i++) {
-            position = paragraphText.indexOf('\n', position) + 1;
+            position = paragraphText.indexOf(System.getProperty(LINE_SEPARATOR_TEXT), position) + lineSeparatorLength;
         }
 
         return position;
-    }
-
-    /**
-     * Appends newline character if text is not empty
-     *
-     * @param text
-     * @return
-     */
-    private String addNewLineCharacter(String text) {
-        final String LINE_SEPARATOR_TEXT = "line.separator";
-
-        if (!text.isEmpty()) {
-            text += System.getProperty(LINE_SEPARATOR_TEXT);
-        }
-
-        return text;
     }
 
     /**

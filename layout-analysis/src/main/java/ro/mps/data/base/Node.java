@@ -78,10 +78,10 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
     @Override
     public boolean inside(int x, int y) {
         return
-                this.x <= x &&
-                        this.x + width >= x &&
-                        this.y <= y &&
-                        this.y + height >= y;
+                this.x < x &&
+                        this.x + width > x &&
+                        this.y < y &&
+                        this.y + height > y;
     }
 
     @Override
@@ -141,5 +141,10 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
 
         width = Math.max(width, node.getWidth());
         height = height + node.getHeight();
+
+        setX(x);
+        setY(y);
+        setWidth(width);
+        setHeight(height);
     }
 }

@@ -18,6 +18,7 @@ public class ParagraphPopupMenu {
     private static final String DELETE_SELECTED = "Delete selected";
     private static final String EDIT_PARAGRAPH = "Edit paragraph";
     private static final String SPLIT = "Split";
+    private static final String ERROR_MESSAGE = "Paragraphs can't be merged!";
 
     private JPopupMenu rightClickMenu;
     private PositionSpinner positionSpinner;
@@ -118,10 +119,15 @@ public class ParagraphPopupMenu {
             return jPopupMenu.getInvoker().getParent();
         }
 
-        private void mergeParagraphs(int indexOfFirstParagraph, int indexOfSecondParagraph) {
+        private boolean mergeParagraphs(int indexOfFirstParagraph, int indexOfSecondParagraph) {
             ParagraphEntry firstParagraphEntry = paragraphEditingScreen.getParagraphAtIndex(indexOfFirstParagraph);
             ParagraphEntry secondParagraphEntry = paragraphEditingScreen.getParagraphAtIndex(indexOfSecondParagraph);
-            paragraphEditingScreen.mergeTwoParagraphEntryContent(firstParagraphEntry, secondParagraphEntry);
+            return paragraphEditingScreen.mergeTwoParagraphEntryContent(firstParagraphEntry, secondParagraphEntry);
+        }
+
+        private void showInfoAboutDataStructure() {
+            System.out.println("------------------------------------------");
+            System.out.println(paragraphEditingScreen.getRoot());
         }
 
         @Override
@@ -129,6 +135,7 @@ public class ParagraphPopupMenu {
             Component jPopupMenu = getInvoker(e);
             JPanel containingPanel = paragraphEditingScreen.getContainingPanel();
             int componentIndex = getComponentIndex(containingPanel.getComponents(), jPopupMenu);
+            boolean displayMessage = false;
 
             if (e.getActionCommand().equals(DELETE_SELECTED)) {
                 paragraphEditingScreen.removeParagraphs(paragraphEditingScreen.getCheckedParagraphs());
@@ -136,14 +143,19 @@ public class ParagraphPopupMenu {
 
             if (e.getActionCommand().equals(MERGE_WITH_PREVIOUS) &&
                     !paragraphEditingScreen.isParagraphTheFirst(componentIndex)) {
-                mergeParagraphs(componentIndex - 1, componentIndex);
+                displayMessage = mergeParagraphs(componentIndex - 1, componentIndex);
             }
 
             if (e.getActionCommand().equals(MERGE_WITH_NEXT) &&
                     !paragraphEditingScreen.isParagraphTheLast(componentIndex)) {
-                mergeParagraphs(componentIndex, componentIndex + 1);
+                displayMessage = mergeParagraphs(componentIndex, componentIndex + 1);
             }
 
+            if ( displayMessage ) {
+                JOptionPane.showMessageDialog(paragraphEditingScreen, ERROR_MESSAGE);
+            }
+
+            showInfoAboutDataStructure();
             repaintMyPanel();
         }
     }
@@ -158,12 +170,17 @@ public class ParagraphPopupMenu {
             this.paragraphEditingScreen = paragraphEditingScreen;
         }
 
+        private void showInfoAboutDataStructure() {
+            System.out.println("------------------------------------------");
+            System.out.println(paragraphEditingScreen.getRoot());
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             SpinnerModel spinnerNumberModel = positionSpinner.getSpinnerNumberModel();
             int lineNumber = Integer.parseInt(spinnerNumberModel.getValue().toString());
             paragraphEditingScreen.splitParagraphEntriesContent(lineNumber);
-
+            showInfoAboutDataStructure();
         }
     }
 

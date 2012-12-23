@@ -19,4 +19,33 @@ public class Root extends OrphanCompoundNode<Block> {
 
         return textFromParagraphs;
     }
+
+    public List<String> getTextFromLines() {
+        List<String> textFromLines = new LinkedList<String>();
+
+        for ( Block block : getChildren() ) {
+            for ( Line line : block.getChildren() ) {
+                textFromLines.add(line.getContent());
+            }
+        }
+
+        return textFromLines;
+    }
+
+    @Override
+    public String toString() {
+        final String TEMPLATE = "**ROOT**\n" +
+                "\tx = %d\n" +
+                "\ty = %d\n" +
+                "\tWidth = %d\n" +
+                "\tHeight = %d\n";
+
+        String result = String.format(TEMPLATE, getLeftUpperCornerX(), getLeftUpperCornerY(), getHeight(), getWidth());
+
+        for ( Block block : getChildren() ) {
+            result += block.toString();
+        }
+
+        return result;
+    }
 }

@@ -7,6 +7,7 @@ import ro.mps.gui.screens.lines.LinesEditingScreen;
 import ro.mps.gui.screens.lines.LinesTextGenerator;
 import ro.mps.gui.screens.paragraph.ParagraphEditingScreen;
 import ro.mps.gui.screens.paragraph.ParagraphsTextGenerator;
+import ro.mps.gui.screens.paragraph.TreeGenerator;
 
 import javax.swing.*;
 
@@ -36,10 +37,11 @@ public class UserInterface extends JFrame {
      */
     private void addTabbedPannel() {
         TabbedPannel tabbedPannel = new TabbedPannel();
-        tabbedPannel.addPane(new ParagraphEditingScreen(ParagraphsTextGenerator.getParagraphsText(30)));
-        tabbedPannel.addPane(new LinesEditingScreen(LinesTextGenerator.getLinesText(100)));
+        TreeGenerator treeGenerator = new TreeGenerator(5);
+        tabbedPannel.addPane(new ParagraphEditingScreen(treeGenerator.buildTree()));
+        tabbedPannel.addPane(new LinesEditingScreen(treeGenerator.buildTree()));
         tabbedPannel.addPane(new SelectionScreen());
-        tabbedPannel.addPane(new CharacterEditingScreen(LinesTextGenerator.getLinesText(100)));
+        tabbedPannel.addPane(new CharacterEditingScreen(treeGenerator.buildTree()));
 
         getContentPane().add(tabbedPannel);
     }

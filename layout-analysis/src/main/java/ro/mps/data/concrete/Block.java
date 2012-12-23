@@ -26,11 +26,14 @@ public class Block extends CompoundNode<Block, Line> {
         return content;
     }
 
-    public void merge(Block block) {
-        if ( canBeMerged(block) ) {
+    public boolean merge(Block block) {
+        boolean canBeMerged = canBeMerged(block);
+        if ( canBeMerged ) {
             addChildrenFromAnotherBlock(block);
             removeBlock(block);
         }
+
+        return canBeMerged;
     }
 
     public void split(int index) {
@@ -41,24 +44,26 @@ public class Block extends CompoundNode<Block, Line> {
 
     private void addNewBlockToRoot(int index) {
         Compound<Block> root = getParent();
-        int indexOfChildFromChildrenList = root.getIndexOfChildFromChildrenList(this);
+        int indexOfChildFromChildrenList = root.getIndexOfChildFromChildrenList(this) + 1;
         root.addChildAtIndex(indexOfChildFromChildrenList, makeNewBlock(index));
     }
 
     private Block makeNewBlock(int index) {
         List<Line> children = getChildren();
+        Line lineToSplit = children.get(index);
 
         int heightForNewBlock = calculateHeight(index);
 
-        Block blockResultedFromMerge = new Block(getParent(), getLeftUpperCornerX(), getLeftUpperCornerY(),
-                heightForNewBlock, getWidth());
-        addChildrenToNewBlock(blockResultedFromMerge, children.subList(index, children.size()));
-        return null;
+        Block blockResultedFromSplit = new Block(getParent(), lineToSplit.getLeftUpperCornerX(),
+                lineToSplit.getLeftUpperCornerY(), heightForNewBlock, getWidth());
+        addChildrenToNewBlock(blockResultedFromSplit, children.subList(index, children.size()));
+
+        return blockResultedFromSplit;
     }
 
     private void removeElementsContainedInNewBlock(int index) {
         List<Line> children = getChildren();
-        this.removeChildren(children.subList(0, index - 1));
+        this.removeChildren(children.subList(index, children.size()));
     }
 
     private void setNewHeightForBlockAfterSplit(int index) {
@@ -88,10 +93,10 @@ public class Block extends CompoundNode<Block, Line> {
 
         if ( intersectsOtherBlocks(block) ) {
             setOldValues(backupX, backupY, backupHeight, backupWith);
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     private void addChildrenFromAnotherBlock(Block block) {
@@ -115,15 +120,29 @@ public class Block extends CompoundNode<Block, Line> {
         Compound<Block> root = this.getParent();
         List<Block> blocks = root.getChildren();
 
-        blocks.remove(this);
-        blocks.remove(block);
-
         for ( Block otherBlock : blocks ) {
-            if ( this.inside(otherBlock.getLeftUpperCorner()) ) {
+            if ( otherBlock != this && otherBlock != block && this.inside(otherBlock.getLeftUpperCorner()) ) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        final String TEMPLATE = "\t**BLOCK**\n" +
+                "\t\tx = %d\n" +
+                "\t\ty = %d\n" +
+                "\t\tWidth = %d\n" +
+                "\t\tHeight = %d\n";
+
+        String result = String.format(TEMPLATE, getLeftUpperCornerX(), getLeftUpperCornerY(), getHeight(), getWidth());
+
+        for ( Line line : getChildren() ) {
+            result += line.toString();
+        }
+
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package ro.mps.gui.screens.lines;
 
+import ro.mps.data.concrete.Root;
+
 import javax.swing.*;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import java.util.List;
 public class LinesEditingScreen extends CharacterEditingScreen {
     private static final String WINDOW_TITLE = "Edit lines in blocks";
     private LinesPopupMenu popupMenu;
+    private Root root;
 
     public LinesEditingScreen(List<String> textLines) {
         super(textLines);
@@ -18,6 +21,11 @@ public class LinesEditingScreen extends CharacterEditingScreen {
             textLine.setEditable(false);
             textLine.setComponentPopupMenu(getRightClickMenu());
         }
+    }
+
+    public LinesEditingScreen(Root root) {
+        this(root.getTextFromLines());
+        this.root = root;
     }
 
     /**

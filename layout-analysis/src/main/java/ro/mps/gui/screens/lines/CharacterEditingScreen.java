@@ -1,5 +1,6 @@
 package ro.mps.gui.screens.lines;
 
+import ro.mps.data.concrete.Root;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
 
@@ -15,13 +16,20 @@ import java.util.List;
  */
 public class CharacterEditingScreen extends BottomPaneTemplate {
     private static final String WINDOW_TILE = "Edit characters in lines";
+    private Root root;
     protected List<JTextField> lines;
     protected JPanel containingPanel;
+
 
     public CharacterEditingScreen(List<String> textLines) {
         super(WINDOW_TILE);
         addLines(textLines);
         super.addBottomPane();
+    }
+
+    public CharacterEditingScreen(Root root) {
+        this(root.getTextFromLines());
+        this.root = root;
     }
 
     public JPanel getContainingPanel() {

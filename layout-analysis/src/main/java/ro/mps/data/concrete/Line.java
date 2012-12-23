@@ -42,4 +42,16 @@ public class Line extends Node implements HasContent, HasParent {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        final String TEMPLATE = "\t\t**LINE**\n" +
+                "\t\t\tx = %d\n" +
+                "\t\t\ty = %d\n" +
+                "\t\t\tWidth = %d\n" +
+                "\t\t\tHeight = %d\n" +
+                "\t\t\tContent = %s\n";
+
+        return String.format(TEMPLATE, getLeftUpperCornerX(), getLeftUpperCornerY(), getHeight(), getWidth(), content);
+    }
 }
