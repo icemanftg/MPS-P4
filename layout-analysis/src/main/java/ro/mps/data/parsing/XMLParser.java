@@ -50,16 +50,24 @@ public class XMLParser {
             root.setImageName(doc.getDocumentElement().getAttribute("image"));
             root.setDirection(doc.getDocumentElement().getAttribute("direction"));
 
+            /* Get the page number ComposedBlock */
+            ComposedBlock cBlock = getPageNumberComposedBlock(doc);
+            root.setPageNumber(cBlock);
+
             /* Get list of all TextBlocks */
             NodeList nList = doc.getElementsByTagName("TextBlock");
             if(nList != null && nList.getLength() > 0) {
 			for(int i = 0 ; i < nList.getLength();i++) {
-                                /* Get the TextBlock element */
+                                /* Get only the TextBlock elements that
+                                   are immediate children of Root
+                                 */
 				Element el = (Element)nList.item(i);
-                                /* Put the information in a Block */
-				Block b = getBlock(el, root);
-                                /* Add that Block as a child of root */
-				root.addChild(b);
+                                if(el.getParentNode().getNodeName().equals("Document")) {
+                                    /* Put the information in a Block */
+                                    Block b = getBlock(el, root);
+                                    /* Add that Block as a child of root */
+                                    root.addChild(b);
+                                }
 			}
 		}
 
@@ -153,4 +161,27 @@ public class XMLParser {
 	return Integer.parseInt(getTextValue(ele,tagName));
     }
 
+
+    /**
+     * Obtain the page number in a ComposedBlock object of our structure
+     * @param doc   the Document we are analyzing
+     * @return      the ComposedBlock object with the necessary data
+     */
+    private ComposedBlock getPageNumberComposedBlock(Document doc) {
+        /* Get the ComposedBlock element */
+        NodeList nodeList = doc.getElementsByTagName("ComposedBlock");
+        Element pageNumber = (Element)nodeList.item(0);
+
+        /* Get the TextBlock element from the ComposedBlock */
+        nodeList = pageNumber.getElementsByTagName(("TextBlock"));
+        Element textBlock = (Element)nodeList.item(0);
+
+        /* Create a ComposedBlock object */
+        ComposedBlock cBlock = new ComposedBlock();
+        /* Get the Block object from the TextBlock */
+        Block block = getBlock(textBlock, cBlock);
+
+        cBlock.setBlock(block);
+        return cBlock;
+    }
 }

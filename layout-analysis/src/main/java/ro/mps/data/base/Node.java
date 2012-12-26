@@ -18,6 +18,13 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
     private int width, height;
     private String label;
 
+	/**
+     * Default constructor - only used by ComposedBlock
+     */
+    public Node() {
+
+    }
+
     /**
      * Constructor that sets position coordinates
      *

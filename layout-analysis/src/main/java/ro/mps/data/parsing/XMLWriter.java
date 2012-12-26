@@ -90,6 +90,15 @@ public class XMLWriter {
                                 /* Add Element to rootElement */
 				rootElement.appendChild(el);
 			}
+
+			/* Create the Composed Block element and add it */
+            Element cBlockElement = doc.createElement("ComposedBlock");
+            ComposedBlock cBlockObject = root.getPageNumber();
+            attr = doc.createAttribute("type");
+            attr.setValue(cBlockObject.getType());
+            cBlockElement.setAttributeNode(attr);
+            cBlockElement.appendChild(getBlockElement(cBlockObject.getBlock()));
+            rootElement.appendChild(cBlockElement);
 		}
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLWriter.class.getName()).log(Level.SEVERE, null, ex);

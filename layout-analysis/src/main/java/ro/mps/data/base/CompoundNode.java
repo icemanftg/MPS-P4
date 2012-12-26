@@ -7,6 +7,13 @@ public abstract class CompoundNode extends OrphanCompoundNode implements HasPare
 
     private Compound parent;
 
+	/**
+     * Default constructor - only used by ComposedBlock
+     */
+    public CompoundNode() {
+
+    }
+
     public CompoundNode(String label, int x, int y, int height, int width) {
         super(label, x, y, height, width);
     }
