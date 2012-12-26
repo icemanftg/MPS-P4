@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ro.mps.data.concrete.*;
+import ro.mps.data.api.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
@@ -45,6 +46,10 @@ public class XMLParser {
             Document doc = dBuilder.parse(XmlFile);
             doc.getDocumentElement().normalize();
 
+            /* Put Document attributes in our root */
+            root.setImageName(doc.getDocumentElement().getAttribute("image"));
+            root.setDirection(doc.getDocumentElement().getAttribute("direction"));
+
             /* Get list of all TextBlocks */
             NodeList nList = doc.getElementsByTagName("TextBlock");
             if(nList != null && nList.getLength() > 0) {
@@ -57,6 +62,7 @@ public class XMLParser {
 				root.addChild(b);
 			}
 		}
+
         } catch (SAXException ex) {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -64,6 +70,7 @@ public class XMLParser {
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /** Creates a Block from a TextBlock element of the xml
@@ -72,7 +79,7 @@ public class XMLParser {
      * @param root      the parent of the newly created Block
      * @return          the Block object
      */
-    private Block getBlock(Element el, Root root) {
+    private Block getBlock(Element el, Compound root) {
 
         /* Get all the block attributes */
         int left = Integer.parseInt(el.getAttribute("left"));
@@ -100,6 +107,26 @@ public class XMLParser {
         return b;
     }
 
+    /** Creates a Line object from a TextLine element of the xml
+     *
+     * @param elem      the Element we will analyze
+     * @param b         the parent Block we will attach the line to
+     * @return          the Line object
+     */
+    private Line getLine(Element elem, Block b) {
+
+        /* Get all the line attributes */
+        int left = Integer.parseInt(elem.getAttribute("left"));
+	int top = Integer.parseInt(elem.getAttribute("top"));
+	int right = Integer.parseInt(elem.getAttribute("right"));
+        int bottom = Integer.parseInt(elem.getAttribute("bottom"));
+
+	/* Create a new Line with the attributes read from the xml , parent and content */
+        String content = getTextValue(elem, "String");
+        Line line = new Line(content, b, left, top, bottom, right);
+        return line;
+    }
+
     /** Gets the value of an Element in string format
      *
      * @param ele       the parent Element
@@ -124,26 +151,6 @@ public class XMLParser {
      */
     private int getIntValue(Element ele, String tagName) {
 	return Integer.parseInt(getTextValue(ele,tagName));
-    }
-
-    /** Creates a Line object from a TextLine element of the xml
-     *
-     * @param elem      the Element we will analyze
-     * @param b         the parent Block we will attach the line to
-     * @return          the Line object
-     */
-    private Line getLine(Element elem, Block b) {
-
-        /* Get all the line attributes */
-        int left = Integer.parseInt(elem.getAttribute("left"));
-	int top = Integer.parseInt(elem.getAttribute("top"));
-	int right = Integer.parseInt(elem.getAttribute("right"));
-        int bottom = Integer.parseInt(elem.getAttribute("bottom"));
-
-	/* Create a new Line with the attributes read from the xml , parent and content */
-        String content = getTextValue(elem, "String");
-        Line line = new Line(content, b, left, top, bottom, right);
-        return line;
     }
 
 }
