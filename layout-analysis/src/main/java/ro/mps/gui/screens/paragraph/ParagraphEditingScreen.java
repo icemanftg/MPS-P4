@@ -4,8 +4,11 @@ import ro.mps.data.concrete.Block;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
 import ro.mps.data.concrete.Root;
+import ro.mps.gui.screens.Observer;
+import ro.mps.gui.screens.Subject;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,15 +18,16 @@ import java.util.List;
  * Date: 18.11.2012
  * Time: 19:06
  */
-public class ParagraphEditingScreen extends BottomPaneTemplate {
+public class ParagraphEditingScreen extends BottomPaneTemplate implements Observer, Subject {
 
     private static final String WINDOW_TITLE = "Edit Blocks";
     private List<ParagraphEntry> paragraphs;
     private Root root;
     private JPanel containingPanel;
     private ParagraphPopupMenu popupMenu;
+    private List<Observer> observers = new ArrayList<Observer>();
 
-    public ParagraphEditingScreen(List<String> paragraphsText) {
+    private ParagraphEditingScreen(List<String> paragraphsText) {
         super(WINDOW_TITLE);
         setPanel();
         addParagraphs(paragraphsText);
@@ -33,6 +37,13 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     public ParagraphEditingScreen(Root root) {
         this(root.getTextFromParagraphs());
         this.root = root;
+    }
+
+    @Override
+    public void update(Root root) {
+        this.root = root;
+        containingPanel.removeAll();
+        addParagraphs(root.getTextFromParagraphs());
     }
 
     private void setPanel() {
@@ -46,6 +57,8 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     public Root getRoot() {
         return root;
     }
+
+
 
     /**
      * Generates the paragraphs that can be edited
@@ -313,5 +326,22 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     public JPanel getContainingPanel() {
         return containingPanel;
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for ( Observer observer : observers ) {
+            observer.update(root);
+        }
     }
 }

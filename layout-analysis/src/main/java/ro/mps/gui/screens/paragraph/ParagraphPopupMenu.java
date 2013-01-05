@@ -157,6 +157,7 @@ public class ParagraphPopupMenu {
 
             showInfoAboutDataStructure();
             repaintMyPanel();
+            paragraphEditingScreen.notifyObservers();
         }
     }
 
@@ -181,6 +182,7 @@ public class ParagraphPopupMenu {
             int lineNumber = Integer.parseInt(spinnerNumberModel.getValue().toString());
             paragraphEditingScreen.splitParagraphEntriesContent(lineNumber);
             showInfoAboutDataStructure();
+            paragraphEditingScreen.notifyObservers();
         }
     }
 

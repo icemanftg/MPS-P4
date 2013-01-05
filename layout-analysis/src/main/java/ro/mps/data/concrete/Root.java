@@ -32,6 +32,16 @@ public class Root extends OrphanCompoundNode<Block> {
         return textFromLines;
     }
 
+    public List<Line> getLines() {
+        List<Line> lines = new LinkedList<Line>();
+
+        for ( Block block : getChildren() ) {
+            lines.addAll(block.getChildren());
+        }
+
+        return lines;
+    }
+
     @Override
     public String toString() {
         final String TEMPLATE = "**ROOT**\n" +

@@ -78,15 +78,23 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
     @Override
     public boolean inside(int x, int y) {
         return
-                this.x < x &&
-                        this.x + width > x &&
-                        this.y < y &&
-                        this.y + height > y;
+                this.x <= x &&
+                        this.x + width >= x &&
+                        this.y <= y &&
+                        this.y + height >= y;
     }
 
     @Override
     public boolean inside(Point p) {
         return inside(p.x, p.y);
+    }
+
+    public boolean strictlyInside(int x, int y) {
+        return
+                this.x < x &&
+                this.x + width > x &&
+                this.y < y &&
+                this.y + height > y;
     }
 
     @Override
@@ -116,8 +124,8 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
     public boolean contains(HasPosition p) {
         return
                 inside(p.getLeftUpperCorner()) &&
-                        p.getLeftUpperCornerX() + p.getWidth() < x + width &&
-                        p.getLeftUpperCornerY() + p.getHeight() < y + height;
+                        p.getLeftUpperCornerX() + p.getWidth() <= x + width &&
+                        p.getLeftUpperCornerY() + p.getHeight() <= y + height;
     }
 
     @Override
@@ -133,6 +141,22 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
     @Override
     public void setLabel(String newLabel) {
         label = newLabel;
+    }
+
+    public boolean intersectsAnotherNode(Node node) {
+        return
+                node.strictlyInside(x, y) ||
+                node.strictlyInside(x + width, y) ||
+                node.strictlyInside(x, y + height) ||
+                node.strictlyInside(x + width, y + height);
+    }
+
+    public boolean haveTheSameDimensions(Node node) {
+        return
+                x == node.getLeftUpperCornerX() &&
+                y == node.getLeftUpperCornerY() &&
+                width == node.getWidth() &&
+                height == node.getHeight();
     }
 
     public void setDimensionsAfterMerge(Node node) {

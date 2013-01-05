@@ -17,6 +17,8 @@ public class LinesPopupMenu {
     private static final String SPLIT_AT_POSITION = "Split at position";
     private static final String EDIT_LINES = "Edit lines";
     private static final String SPLIT = "Split";
+    private static final String ERROR_MESSAGE_FOR_MERGE = "Lines aren't in the same block. Couldn't merge them.";
+    private static final String ERROR_MESSAGE_FOR_SPLIT = "Line couldn't be split there is no space left.";
 
     private PositionSpinner positionSpinner;
     private LinesEditingScreen linesEditingScreen;
@@ -71,16 +73,22 @@ public class LinesPopupMenu {
             Component componentInvoker = getInvoker(e);
             int index = linesEditingScreen.getComponentIndex(componentInvoker);
             int numberOfComponents = linesEditingScreen.getNumberOfComponents();
+            boolean displayMessage = false;
 
             if (e.getActionCommand().equals(MERGE_WITH_PREVIOUS_LINE) && index != 0) {
-                linesEditingScreen.mergeWithPreviousLine(index);
+                displayMessage = !linesEditingScreen.mergeWithPreviousLine(index);
             }
 
             if (e.getActionCommand().equals(MERGE_WITH_NEXT_LINE) && index != numberOfComponents - 1) {
-                linesEditingScreen.mergeWithNextLine(index);
+                displayMessage = !linesEditingScreen.mergeWithNextLine(index);
+            }
+
+            if ( displayMessage ) {
+                JOptionPane.showMessageDialog(linesEditingScreen, ERROR_MESSAGE_FOR_MERGE);
             }
 
             repaintMyPanel();
+            linesEditingScreen.notifyObservers();
         }
     }
 
@@ -176,7 +184,13 @@ public class LinesPopupMenu {
             int wordNumber = Integer.parseInt(spinnerNumberModel.getValue().toString());
             int index = linesEditingScreen.getComponentIndex(getInvoker(e));
 
-            linesEditingScreen.splitAtWord(wordNumber, index);
+            boolean displayMessage = linesEditingScreen.splitAtWord(wordNumber, index);
+
+            if ( displayMessage ) {
+                JOptionPane.showMessageDialog(linesEditingScreen, ERROR_MESSAGE_FOR_SPLIT);
+            }
+
+            linesEditingScreen.notifyObservers();
         }
     }
 }

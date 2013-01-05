@@ -121,7 +121,8 @@ public class Block extends CompoundNode<Block, Line> {
         List<Block> blocks = root.getChildren();
 
         for ( Block otherBlock : blocks ) {
-            if ( otherBlock != this && otherBlock != block && this.inside(otherBlock.getLeftUpperCorner()) ) {
+            if ( otherBlock != this && otherBlock != block
+                    && this.intersectsAnotherNode(otherBlock) && this.haveTheSameDimensions(otherBlock) ) {
                 return true;
             }
         }

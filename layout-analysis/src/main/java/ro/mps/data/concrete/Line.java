@@ -5,9 +5,9 @@ import ro.mps.data.api.HasContent;
 import ro.mps.data.api.HasParent;
 import ro.mps.data.base.Node;
 
-public class Line extends Node implements HasContent, HasParent {
+public class Line extends Node implements HasContent, HasParent<Line> {
 
-    private Compound parent;
+    private Compound<Line> parent;
     private String content;
 
     public Line(int x, int y, int height, int width) {
@@ -24,14 +24,18 @@ public class Line extends Node implements HasContent, HasParent {
         this.content = content;
     }
 
+    public boolean haveSameParent(Line line) {
+        return this.getParent() == line.getParent();
+    }
+
     @Override
-    public Compound getParent() {
+    public Compound<Line> getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(Compound p) {
-        parent = p;
+    public void setParent(Compound<Line> parent) {
+        this.parent = parent;
     }
 
     @Override
