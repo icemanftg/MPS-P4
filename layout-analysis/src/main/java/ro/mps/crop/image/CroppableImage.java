@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class CroppableImage {
 
-    private BufferedImage img;
+    protected BufferedImage img;
 
     public CroppableImage(String path) throws IOException {
         img = ImageIO.read(new File(path));
@@ -30,7 +30,6 @@ public class CroppableImage {
 
         if (width + x > img.getWidth())
             width = img.getWidth() - x;
-        ;
 
         return img.getSubimage(x, y, width, height);
     }

@@ -76,6 +76,6 @@ public class ConfigNotPossibleException extends RuntimeException {
      * @since 1.7
      */
     public ConfigNotPossibleException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+        //super(message, cause, enableSuppression, writableStackTrace);
     }
 }

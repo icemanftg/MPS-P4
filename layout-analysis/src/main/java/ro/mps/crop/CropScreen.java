@@ -1,6 +1,7 @@
 package ro.mps.crop;
 
 import ro.mps.crop.image.CroppableImage;
+import ro.mps.crop.image.OCRableImage;
 import ro.mps.properties.Properties;
 
 import javax.swing.*;
@@ -21,37 +22,42 @@ public class CropScreen extends JComponent {
     private boolean selecting;
     private JFrame parent;
 
-    private CroppableImage inputImage;
+    private OCRableImage inputImage;
 
+    public static void startOCRSCreen(final String pathToImage) {
+    	
+    EventQueue.invokeLater(new Runnable() {
+
+        public void run() {
+	            JFrame f = new JFrame(Properties.APP_TITLE.getValue());
+	            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	            CropScreen g = null;
+	            try {
+	                g = new CropScreen(f, pathToImage);
+	            } catch (IOException e) {
+	                System.exit(1);
+	            }
+	
+	            f.setBounds(0, 0, g.inputImage.asImage().getWidth(null),
+	                    g.inputImage.asImage().getHeight(null));
+	            f.add(g);
+	            f.setLocationByPlatform(true);
+	            f.setVisible(true);
+        	}
+    	});
+    
+	}
     public static void main(String[] args) throws Exception {
-        EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                JFrame f = new JFrame(Properties.APP_TITLE.getValue());
-                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                CropScreen g = null;
-                try {
-                    g = new CropScreen(f);
-                } catch (IOException e) {
-                    System.exit(1);
-                }
-
-                f.setBounds(0, 0, g.inputImage.asImage().getWidth(null),
-                        g.inputImage.asImage().getHeight(null));
-                f.add(g);
-                f.setLocationByPlatform(true);
-                f.setVisible(true);
-            }
-        });
+        startOCRSCreen("image_samples/test.jpg");
     }
 
-    public CropScreen(JFrame parent) throws IOException {
+    public CropScreen(JFrame parent, String pathToImage) throws IOException {
         this.parent = parent;
         this.setOpaque(true);
         this.addMouseListener(new MouseHandler());
         this.addMouseMotionListener(new MouseMotionHandler());
 
-        inputImage = new CroppableImage("image.jpg");
+        inputImage = new OCRableImage(pathToImage);
     }
 
     @Override
@@ -79,9 +85,10 @@ public class CropScreen extends JComponent {
         @Override
         public void mouseReleased(MouseEvent e) {
 
-            inputImage.writeCroppedImage("new_image",
-                    mouseRect.x, mouseRect.y,
-                    mouseRect.height, mouseRect.width);
+        	System.out.println(
+        			inputImage.getContentOfSelection(
+        					mouseRect.x, mouseRect.y,
+        					mouseRect.height, mouseRect.width));
 
             selecting = false;
             mouseRect.setBounds(0, 0, 0, 0);
