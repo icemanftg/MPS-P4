@@ -10,6 +10,10 @@ public class Root extends OrphanCompoundNode<Block> {
         super("document", 0, 0, height, width);
     }
 
+    /**
+     * Returns text from paragraphs
+     * @return - returns a list of text from paragraph
+     */
     public List<String> getTextFromParagraphs() {
         List<String> textFromParagraphs = new LinkedList<String>();
 
@@ -20,6 +24,10 @@ public class Root extends OrphanCompoundNode<Block> {
         return textFromParagraphs;
     }
 
+    /**
+     * Returns text from lines
+     * @return - returns a list of text from paragraph
+     */
     public List<String> getTextFromLines() {
         List<String> textFromLines = new LinkedList<String>();
 
@@ -32,6 +40,10 @@ public class Root extends OrphanCompoundNode<Block> {
         return textFromLines;
     }
 
+    /**
+     * Returns the line contained in the tree
+     * @return - returns a list of lines contained in the tree
+     */
     public List<Line> getLines() {
         List<Line> lines = new LinkedList<Line>();
 

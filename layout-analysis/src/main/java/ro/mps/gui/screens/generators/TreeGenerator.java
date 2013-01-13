@@ -1,4 +1,4 @@
-package ro.mps.gui.screens.paragraph;
+package ro.mps.gui.screens.generators;
 
 import ro.mps.data.concrete.Block;
 import ro.mps.data.concrete.Line;

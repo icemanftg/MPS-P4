@@ -11,7 +11,7 @@ import ro.mps.data.api.HasParent;
  */
 public abstract class CompoundNode<T extends Node, C extends Node> extends OrphanCompoundNode<C> implements HasParent<T> {
 
-    private Compound parent;
+    private Compound<T> parent;
 
     public CompoundNode(String label, int x, int y, int height, int width) {
         super(label, x, y, height, width);

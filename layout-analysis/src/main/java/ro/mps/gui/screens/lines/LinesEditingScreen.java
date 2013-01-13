@@ -29,6 +29,10 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         }
     }
 
+    /**
+     * Updates the screen based on the root
+     * @param root - root of the tree
+     */
     @Override
     public void update(Root root) {
         this.root = root;
@@ -48,7 +52,7 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
     /**
      * Returns right click menu
      *
-     * @return
+     * @return - the menu
      */
     public JPopupMenu getRightClickMenu() {
         return getPopupMenu().getRightClickMenu();
@@ -57,7 +61,7 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
     /**
      * Merge a line with the previous one
      *
-     * @param index of line
+     * @param index - index of line
      */
     public boolean mergeWithPreviousLine(int index) {
         return mergeLines(index - 1, index);
@@ -66,12 +70,18 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
     /**
      * Merge a line with the next one
      *
-     * @param index of line
+     * @param index - index of line
      */
     public boolean mergeWithNextLine(int index) {
         return mergeLines(index, index + 1);
     }
 
+    /**
+     * Merges two lines identified by their indexes
+     * @param indexOfFirstLine - index of the first line
+     * @param indexOfSecondLine - index of the second line
+     * @return true if the lines can be merged
+     */
     private boolean mergeLines(int indexOfFirstLine, int indexOfSecondLine) {
         if (couldLineBeMerged(indexOfFirstLine, indexOfSecondLine)) {
             adjustScreenAfterMergeOperation(indexOfFirstLine, indexOfSecondLine);
@@ -82,6 +92,12 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         return false;
     }
 
+    /**
+     * Test if the lines can be merged
+     * @param indexOfFirstLine - index of the first line
+     * @param indexOfSecondLine - index of the second line
+     * @return true if the lines can be merged
+     */
     private boolean couldLineBeMerged(int indexOfFirstLine, int indexOfSecondLine) {
         Line firstLine = lines.get(indexOfFirstLine);
         Line secondLine = lines.get(indexOfSecondLine);
@@ -89,6 +105,11 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         return firstLine.haveSameParent(secondLine);
     }
 
+    /**
+     * Adjusts the screen after the merge operation
+     * @param indexOfFirstLine - index of the first line
+     * @param indexOfSecondLine - index of the second line
+     */
     private void adjustScreenAfterMergeOperation(int indexOfFirstLine, int indexOfSecondLine) {
         JTextField firstTextField = textFields.get(indexOfFirstLine);
         JTextField secondTextField = textFields.get(indexOfSecondLine);
@@ -97,6 +118,11 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         containingPanel.remove(indexOfSecondLine);
     }
 
+    /**
+     * Adjusts data structure after merge operation.
+     * @param indexOfFirstLine - index of the first line
+     * @param indexOfSecondLine - index of the second line
+     */
     private void adjustDataStructureAfterMergeOperation(int indexOfFirstLine, int indexOfSecondLine) {
         Line firstLine = lines.get(indexOfFirstLine);
         Line secondLine = lines.get(indexOfSecondLine);
@@ -105,6 +131,10 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         deleteLineFromDataStructure(secondLine);
     }
 
+    /**
+     * Deletes a line from data structure
+     * @param line - line that will be deleted
+     */
     private void deleteLineFromDataStructure(Line line) {
         Compound<Line> parent = line.getParent();
         lines.remove(line);
@@ -115,8 +145,8 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * Splits a line at a given word number.
      * Line is selected through index.
      *
-     * @param wordNumber word number
-     * @param index      of line
+     * @param wordNumber - word number
+     * @param index - index of line
      */
     public boolean splitAtWord(int wordNumber, int index) {
         JTextField currentTextField = textFields.get(index);
@@ -132,6 +162,12 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         return true;
     }
 
+    /**
+     * Adjusts data structure after split operation.
+     * @param wordNumber - this number will
+     * @param index - index of the line
+     * @param text - text of the line
+     */
     private void adjustDataStructureAfterSplit(int wordNumber, int index, String text) {
         Line line = lines.get(index);
         Line newLine = lines.get(index + 1);
@@ -139,6 +175,11 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         newLine.setContent(getLastPartOfSplit(text, wordNumber));
     }
 
+    /**
+     * Tests if a line can be split.
+     * @param index - index of the line that will be split
+     * @return - true if line can be split
+     */
     private boolean canBeSplit(int index) {
         Line currentLine = lines.get(index);
         Line newLine = new Line(currentLine.getParent(),
@@ -155,6 +196,11 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         return false;
     }
 
+    /**
+     * Inserts a line in data structure after the currentLine
+     * @param currentLine - current line
+     * @param lineToBeInserted - line that will be inserted
+     */
     private void insertLineInDataStructure(Line currentLine, Line lineToBeInserted) {
         Compound<Line> parent = currentLine.getParent();
         int indexOfChild = parent.getIndexOfChildFromChildrenList(currentLine);
@@ -162,6 +208,11 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
         lines = super.getRoot().getLines();
     }
 
+    /**
+     * Test if a line intersects other lines
+     * @param line - line tested
+     * @return true if line intersects othe lines
+     */
     private boolean intersectsOtherLines(Line line) {
         for ( Line otherLine : lines ) {
             if ( otherLine != line && ( line.intersectsAnotherNode(otherLine)
@@ -176,8 +227,8 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
     /**
      * Adds a text line at a given position
      *
-     * @param text
-     * @param positionIndex
+     * @param text -  text of the line
+     * @param positionIndex - position of the line
      */
     private void addTextLine(String text, int positionIndex) {
         JTextField textField = new JTextField(text);
@@ -190,9 +241,9 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
     /**
      * Returns the first part of the text split by a wordNumber
      *
-     * @param paragraphText
-     * @param wordNumber
-     * @return
+     * @param paragraphText - text of the paragraph
+     * @param wordNumber - word number
+     * @return - text containing the first part of the split
      */
     private String getFirstPartOfSplit(String paragraphText, int wordNumber) {
         int endPosition = getIndexForSplitting(paragraphText, wordNumber);
@@ -202,9 +253,9 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
     /**
      * Returns the second part of the text split by a wordNumber
      *
-     * @param paragraphText
-     * @param wordNumber
-     * @return
+     * @param paragraphText - text of the paragraph
+     * @param wordNumber - word number
+     * @return - text containing the second part of the split
      */
     private String getLastPartOfSplit(String paragraphText, int wordNumber) {
         int startPosition = getIndexForSplitting(paragraphText, wordNumber);
@@ -214,9 +265,9 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
     /**
      * Returns the index where splitting should start
      *
-     * @param paragraphText
-     * @param lineNumber
-     * @return
+     * @param paragraphText - text of the paragraph
+     * @param lineNumber - line number
+     * @return - index where splitting should start
      */
     private int getIndexForSplitting(String paragraphText, int lineNumber) {
         int position = 0;
@@ -232,7 +283,7 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * Counts the number of words in a text
      *
      * @param text text
-     * @return number of words
+     * @return - returns number of words
      */
     public int getNumberOfWords(String text) {
         int numberOfAppearances = 0;

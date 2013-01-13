@@ -14,12 +14,12 @@ public class Line extends Node implements HasContent, HasParent<Line> {
         super("line", x, y, height, width);
     }
 
-    public Line(Compound p, int x, int y, int height, int width) {
+    public Line(Compound<Line> p, int x, int y, int height, int width) {
         this(x, y, height, width);
         parent = p;
     }
 
-    public Line(String content, Compound p, int x, int y, int height, int width) {
+    public Line(String content, Compound<Line> p, int x, int y, int height, int width) {
         this(p, x, y, height, width);
         this.content = content;
     }

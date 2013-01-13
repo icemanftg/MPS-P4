@@ -5,10 +5,8 @@ import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.SelectionScreen;
 import ro.mps.gui.screens.lines.CharacterEditingScreen;
 import ro.mps.gui.screens.lines.LinesEditingScreen;
-import ro.mps.gui.screens.lines.LinesTextGenerator;
 import ro.mps.gui.screens.paragraph.ParagraphEditingScreen;
-import ro.mps.gui.screens.paragraph.ParagraphsTextGenerator;
-import ro.mps.gui.screens.paragraph.TreeGenerator;
+import ro.mps.gui.screens.generators.TreeGenerator;
 
 import javax.swing.*;
 

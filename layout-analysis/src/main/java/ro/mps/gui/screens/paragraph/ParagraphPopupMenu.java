@@ -34,7 +34,7 @@ public class ParagraphPopupMenu {
     /**
      * Builds the right click menu
      *
-     * @return right click menu
+     * @return - returns right click menu
      */
     private JPopupMenu buildPopupMenu(ParagraphEditingScreen paragraphEditingScreen) {
         rightClickMenu = new JPopupMenu(EDIT_PARAGRAPH);
@@ -63,7 +63,7 @@ public class ParagraphPopupMenu {
     /**
      * Builds a panel that contains a spinner and a button
      *
-     * @return panel
+     * @return - returns the panel
      */
     private JPanel getSplitContainer(ParagraphEditingScreen paragraphEditingScreen) {
         JPanel splitContainer = new JPanel();
@@ -109,8 +109,8 @@ public class ParagraphPopupMenu {
         /**
          * Returns the component that triggered the event
          *
-         * @param event
-         * @return
+         * @param event - action event
+         * @return - returns componet that triggerd the event
          */
         private Component getInvoker(ActionEvent event) {
             JMenuItem source = (JMenuItem) event.getSource();
@@ -188,9 +188,9 @@ public class ParagraphPopupMenu {
 
     /**
      * Returns the index of a component from the panel
-     *
-     * @param searchedComponent
-     * @return index
+     * @param components - components
+     * @param searchedComponent - searched component
+     * @return - returns index of the searched component
      */
     public int getComponentIndex(Component[] components, Component searchedComponent) {
         int counter = 0;

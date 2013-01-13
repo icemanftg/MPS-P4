@@ -11,8 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,7 +83,7 @@ public class CharacterEditingScreen extends BottomPaneTemplate implements Observ
     /**
      * Returns the index of a component from the panel
      *
-     * @param searchedComponent
+     * @param searchedComponent - searched component
      * @return index
      */
     public int getComponentIndex(Component searchedComponent) {
@@ -105,7 +103,7 @@ public class CharacterEditingScreen extends BottomPaneTemplate implements Observ
     /**
      * Returns the number of components
      *
-     * @return
+     * @return - returns the number of components
      */
     public int getNumberOfComponents() {
         return textFields.size();
