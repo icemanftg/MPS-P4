@@ -2,6 +2,7 @@ package ro.mps;
 
 import ro.mps.configure.Config;
 import ro.mps.gui.UserInterface;
+import ro.mps.initial_screen.InitialInterface;
 
 import java.awt.*;
 
@@ -15,7 +16,7 @@ public class LayoutAnalysis {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                UserInterface layoutGUI = new UserInterface();
+                InitialInterface layoutGUI = new InitialInterface();
             }
         });
     }

@@ -2,6 +2,7 @@ package ro.mps.data.base;
 
 import ro.mps.data.api.Compound;
 import ro.mps.data.api.HasParent;
+import ro.mps.data.api.HasPosition;
 
 public abstract class CompoundNode extends OrphanCompoundNode implements HasParent {
 
@@ -31,5 +32,10 @@ public abstract class CompoundNode extends OrphanCompoundNode implements HasPare
     @Override
     public void setParent(Compound p) {
         parent = p;
+    }
+    
+    @Override
+    public boolean fits(HasPosition p) {
+    	return true;
     }
 }

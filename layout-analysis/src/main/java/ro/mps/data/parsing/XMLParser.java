@@ -52,7 +52,8 @@ public class XMLParser {
 
             /* Get the page number ComposedBlock */
             ComposedBlock cBlock = getPageNumberComposedBlock(doc);
-            root.setPageNumber(cBlock);
+            
+            //root.setPageNumber(cBlock);
 
             /* Get list of all TextBlocks */
             NodeList nList = doc.getElementsByTagName("TextBlock");
@@ -98,7 +99,7 @@ public class XMLParser {
 	/* Create a new Block with the attributes read from the xml nodes
            and root as parent
          */
-	Block b = new Block(root, left, top, bottom, right);
+	Block b = new Block(root, left, top, bottom-top, right-left);
 
         /* Iterate through all the lines of the block */
         NodeList nList = el.getElementsByTagName("TextLine");
@@ -131,7 +132,7 @@ public class XMLParser {
 
 	/* Create a new Line with the attributes read from the xml , parent and content */
         String content = getTextValue(elem, "String");
-        Line line = new Line(content, b, left, top, bottom, right);
+        Line line = new Line(content, b, left, top, bottom-top, right-left);
         return line;
     }
 

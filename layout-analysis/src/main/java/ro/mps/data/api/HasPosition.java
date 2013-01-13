@@ -51,7 +51,6 @@ public interface HasPosition {
      * @return
      */
     boolean inside(Point p);
-
     boolean inside(int x, int y);
 
     /**
@@ -69,5 +68,7 @@ public interface HasPosition {
      * @return
      */
     boolean isContainedBy(HasPosition p);
+    
+    
 
 }

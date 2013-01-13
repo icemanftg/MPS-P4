@@ -1,5 +1,6 @@
-package ro.mps.gui;
+package ro.mps.initial_screen;
 
+import ro.mps.gui.TabbedPannel;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.SelectionScreen;
 import ro.mps.gui.screens.lines.CharacterEditingScreen;
@@ -12,10 +13,10 @@ import javax.swing.*;
 
 
 @SuppressWarnings("serial")
-public class UserInterface extends JFrame {
+public class InitialInterface extends JFrame {
 
 
-    public UserInterface() {
+    public InitialInterface() {
 
         this.init();
     }
@@ -38,10 +39,7 @@ public class UserInterface extends JFrame {
      */
     private void addTabbedPannel() {
         TabbedPannel tabbedPannel = new TabbedPannel();
-        tabbedPannel.addPane(new ParagraphEditingScreen(ParagraphsTextGenerator.getParagraphsText(30)));
-        tabbedPannel.addPane(new LinesEditingScreen(LinesTextGenerator.getLinesText(100)));
-        tabbedPannel.addPane(new SelectionScreen());
-        tabbedPannel.addPane(new CharacterEditingScreen(LinesTextGenerator.getLinesText(100)));
+        tabbedPannel.addPane(new FileLoadScreen());
 
         getContentPane().add(tabbedPannel);
     }

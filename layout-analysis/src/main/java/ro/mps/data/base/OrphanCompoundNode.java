@@ -13,7 +13,6 @@ public abstract class OrphanCompoundNode extends Node implements Compound {
      * Default constructor - only used by ComposedBlock
      */
     public OrphanCompoundNode() {
-
     }
 
     public OrphanCompoundNode(String label, int x, int y, int height, int width) {

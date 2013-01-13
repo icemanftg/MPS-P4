@@ -1,5 +1,6 @@
 package ro.mps.data.concrete;
 
+import ro.mps.data.api.HasPosition;
 import ro.mps.data.base.OrphanCompoundNode;
 
 public class Root extends OrphanCompoundNode {
@@ -29,4 +30,8 @@ public class Root extends OrphanCompoundNode {
     }
 
 
+    @Override
+    public boolean fits(HasPosition p) {
+    	return true;
+    }
 }

@@ -91,7 +91,7 @@ public class XMLWriter {
 				rootElement.appendChild(el);
 			}
 
-			/* Create the Composed Block element and add it */
+			/* Create the Composed Block element and add it 
             Element cBlockElement = doc.createElement("ComposedBlock");
             ComposedBlock cBlockObject = root.getPageNumber();
             attr = doc.createAttribute("type");
@@ -99,6 +99,7 @@ public class XMLWriter {
             cBlockElement.setAttributeNode(attr);
             cBlockElement.appendChild(getBlockElement(cBlockObject.getBlock()));
             rootElement.appendChild(cBlockElement);
+            */
 		}
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLWriter.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,11 +126,11 @@ public class XMLWriter {
         blockElement.setAttributeNode(attr);
 
         attr = doc.createAttribute("bottom");
-        attr.setValue(Integer.toString(block.getHeight()));
+        attr.setValue(Integer.toString(block.getLeftUpperCornerY()+block.getHeight()));
         blockElement.setAttributeNode(attr);
 
         attr = doc.createAttribute("right");
-        attr.setValue(Integer.toString(block.getWidth()));
+        attr.setValue(Integer.toString(block.getLeftUpperCornerX()+block.getWidth()));
         blockElement.setAttributeNode(attr);
 
         /* Get all the TextLines and create elements from them */
@@ -165,11 +166,11 @@ public class XMLWriter {
         lineElement.setAttributeNode(attr);
 
         attr = doc.createAttribute("bottom");
-        attr.setValue(Integer.toString(line.getHeight()));
+        attr.setValue(Integer.toString(line.getLeftUpperCornerY()+line.getHeight()));
         lineElement.setAttributeNode(attr);
 
         attr = doc.createAttribute("right");
-        attr.setValue(Integer.toString(line.getWidth()));
+        attr.setValue(Integer.toString(line.getLeftUpperCornerX()+line.getWidth()));
         lineElement.setAttributeNode(attr);
 
         /* Set TextLine Element content */

@@ -18,4 +18,12 @@ public interface Compound {
      */
     List<Node> getChildren();
 
+    
+    /**
+     * Checks if the current element overlaps the other
+     * 
+     * @param p
+     * @return
+     */
+    boolean fits(HasPosition p);
 }
