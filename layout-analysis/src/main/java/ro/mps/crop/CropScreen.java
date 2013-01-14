@@ -5,6 +5,8 @@ import ro.mps.crop.image.OCRableImage;
 import ro.mps.data.base.Node;
 import ro.mps.data.concrete.Root;
 import ro.mps.data.parsing.XMLWriter;
+import ro.mps.error.exceptions.DoenstFitException;
+import ro.mps.error.gui.ErrorThrower;
 import ro.mps.properties.Properties;
 
 import javax.swing.*;
@@ -154,7 +156,7 @@ public class CropScreen extends JComponent {
 	            f.setLocationByPlatform(true);
 	            f.setVisible(true);
 	            controls.setBounds(0,0,300,200);
-	            controls.setLayout(new BoxLayout(controls, BoxLayout.LINE_AXIS));
+	            //controls.setLayout(new BoxLayout(controls, BoxLayout.LINE_AXIS));
 	            controls.setVisible(true);
         	}
     	});
@@ -162,7 +164,7 @@ public class CropScreen extends JComponent {
 	}
     
     public static void main(String[] args) throws Exception {
-        startOCRSCreen("image_samples/test.jpg");
+        startOCRSCreen("image_samples/test.tif");
     }
         
     public CropScreen(JFrame parent, String pathToImage) throws IOException {
@@ -211,10 +213,14 @@ public class CropScreen extends JComponent {
         @Override
         public void mouseReleased(MouseEvent e) {
 
-        	System.out.println(
-        			inputImage.getContentOfSelection(
-        					mouseRect.x, mouseRect.y,
-        					mouseRect.height, mouseRect.width));
+        	try {
+	        	System.out.println(
+	        			inputImage.getContentOfSelection(
+	        					mouseRect.x, mouseRect.y,
+	        					mouseRect.height, mouseRect.width));
+        	} catch (DoenstFitException ex) {
+        		ErrorThrower.popErrorDialog(CropScreen.this, "Component doesn't fit.");
+        	}
 
             selecting = false;
             mouseRect.setBounds(0, 0, 0, 0);

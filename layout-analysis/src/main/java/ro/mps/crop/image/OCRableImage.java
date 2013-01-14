@@ -8,6 +8,7 @@ import ro.mps.data.base.Node;
 import ro.mps.data.concrete.Block;
 import ro.mps.data.concrete.Line;
 import ro.mps.data.concrete.Root;
+import ro.mps.error.exceptions.DoenstFitException;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -40,7 +41,7 @@ public class OCRableImage extends CroppableImage {
 		instance.setLanguage(language);
 	}
 	
-	public String getContentOfSelection(int x, int y, int height, int width) {
+	public String getContentOfSelection(int x, int y, int height, int width) throws DoenstFitException {
         //Outside of image
         if (x > img.getWidth() || y > img.getHeight())
             return null;
@@ -67,8 +68,8 @@ public class OCRableImage extends CroppableImage {
 			
 			if (tree.clears(new_block))
 				tree.addChild(new_block);
-			else ;
-				// Error handling here
+			else
+				throw new DoenstFitException();
 			
 			return content;
 		} catch (TesseractException e) {
