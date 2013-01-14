@@ -69,6 +69,13 @@ public interface HasPosition {
      */
     boolean isContainedBy(HasPosition p);
     
-    
+    /**
+     * 
+     * Checks if the other element doesn't overlap the current one
+     * 
+     * @param p
+     * @return
+     */
+    boolean clears(HasPosition p); 
 
 }

@@ -125,5 +125,16 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
     public void setLabel(String newLabel) {
         label = newLabel;
     }
-
+    
+    @Override
+    public boolean clears(HasPosition p) {
+    	//Checks under
+    	return (getLeftUpperCornerY() + getHeight() <= p.getLeftUpperCornerY() ||
+    	//Checks below
+    			getLeftUpperCornerY() >= p.getLeftUpperCornerY() + p.getHeight() ||
+    	//Checks right		
+    			getLeftUpperCornerX() + getWidth() <= p.getLeftUpperCornerX() ||
+    	//Checks left
+    	    	getLeftUpperCornerX() >= p.getLeftUpperCornerX() + p.getWidth());
+    }
 }
