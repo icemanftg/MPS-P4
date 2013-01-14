@@ -66,10 +66,14 @@ public class OCRableImage extends CroppableImage {
 						new Line(lines[i], new_block, x, lineY, line_height, width));
 			}
 			
-			if (tree.clears(new_block))
+			if (tree.fits(new_block))
 				tree.addChild(new_block);
-			else
+			else {
+				System.err.println(new_block.getLeftUpperCornerX() + " " +
+					new_block.getLeftUpperCornerY() + " " + new_block.getWidth() + " " + new_block.getHeight()); 
 				throw new DoenstFitException();
+			}
+				
 			
 			return content;
 		} catch (TesseractException e) {

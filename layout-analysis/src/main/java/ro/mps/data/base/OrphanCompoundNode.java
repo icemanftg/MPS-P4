@@ -1,6 +1,7 @@
 package ro.mps.data.base;
 
 import ro.mps.data.api.Compound;
+import ro.mps.data.api.HasPosition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,31 @@ public abstract class OrphanCompoundNode extends Node implements Compound {
 
     public void addChild(Node child) {
         children.add(child);
+    }
+    
+    @Override
+    public boolean fits(HasPosition p) {
+    	/*
+    	 * Check if fits inside the container (i.e parent)
+    	 */
+    	if (! (
+    			(getLeftUpperCornerX() <= p.getLeftUpperCornerX()) &&
+    			(getLeftUpperCornerX() + getWidth() >= p.getLeftUpperCornerX() + p.getWidth()) &&
+    			(getLeftUpperCornerY() <= p.getLeftUpperCornerY()) &&
+    			(getLeftUpperCornerY() + getHeight() >= p.getLeftUpperCornerY() + p.getHeight())))
+    			return false;
+    	/**
+    	 * Checks overlapping with children
+    	 */
+    	for (HasPosition child : getChildren()) {
+    		if (! child.clears(p))
+    			return false;
+    	}
+    	
+    	/**
+    	 * No overlapping with the children or the block itself
+    	 */
+    	return true;
     }
 
 }

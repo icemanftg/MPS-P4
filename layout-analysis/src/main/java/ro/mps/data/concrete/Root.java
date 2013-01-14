@@ -29,9 +29,4 @@ public class Root extends OrphanCompoundNode {
         super("Document", 0, 0, height, width);
     }
 
-
-    @Override
-    public boolean fits(HasPosition p) {
-    	return true;
-    }
 }

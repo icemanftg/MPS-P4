@@ -103,7 +103,7 @@ class ControlsFrame extends JFrame {
 		btn.addActionListener(next);
 		
 		btn = new JButton("Reset");
-		buttonsPanel.add(btn);
+		//buttonsPanel.add(btn);
 		btn.addActionListener(reset);
 		
 		btn = new JButton("Export to XML");
@@ -149,6 +149,8 @@ public class CropScreen extends JComponent {
 	
 	            JFrame controls = new ControlsFrame("OCR Controlls",g);
         		controls.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        		
+        		ErrorThrower.popErrorDialog(controls, "");
 	            
 	            f.setBounds(0, 0, g.inputImage.asImage().getWidth(null),
 	                    g.inputImage.asImage().getHeight(null));
@@ -219,6 +221,7 @@ public class CropScreen extends JComponent {
 	        					mouseRect.x, mouseRect.y,
 	        					mouseRect.height, mouseRect.width));
         	} catch (DoenstFitException ex) {
+        		System.err.println("Bad thing here");
         		ErrorThrower.popErrorDialog(CropScreen.this, "Component doesn't fit.");
         	}
 
