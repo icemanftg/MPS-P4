@@ -2,12 +2,16 @@ package ro.mps.crop.image;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Scanner;
 
 import ro.mps.data.*;
 import ro.mps.data.base.Node;
 import ro.mps.data.concrete.Block;
+import ro.mps.data.concrete.ImageBlock;
 import ro.mps.data.concrete.Line;
+import ro.mps.data.concrete.PageNumber;
 import ro.mps.data.concrete.Root;
+import ro.mps.error.exceptions.BadPageNumber;
 import ro.mps.error.exceptions.DoenstFitException;
 
 import net.sourceforge.tess4j.Tesseract;
@@ -65,6 +69,75 @@ public class OCRableImage extends CroppableImage {
 				new_block.addChild(
 						new Line(lines[i], new_block, x, lineY, line_height, width));
 			}
+			
+			if (tree.fits(new_block))
+				tree.addChild(new_block);
+			else {
+				System.err.println(new_block.getLeftUpperCornerX() + " " +
+					new_block.getLeftUpperCornerY() + " " + new_block.getWidth() + " " + new_block.getHeight()); 
+				throw new DoenstFitException();
+			}
+				
+			
+			return content;
+		} catch (TesseractException e) {
+			e.printStackTrace();
+			return null;
+		}
+    }
+	
+	public String getContentOfSelectionAsImageBlock(int x, int y, int height, int width) throws DoenstFitException {
+        //Outside of image
+        if (x > img.getWidth() || y > img.getHeight())
+            return null;
+
+        if (height + y > img.getHeight())
+            height = img.getHeight() - y;
+
+        if (width + x > img.getWidth())
+            width = img.getWidth() - x;
+
+		ImageBlock new_block = new ImageBlock(tree, x, y, height, width);
+		
+		if (tree.fits(new_block))
+			tree.addChild(new_block);
+		else {
+			System.err.println(new_block.getLeftUpperCornerX() + " " +
+				new_block.getLeftUpperCornerY() + " " + new_block.getWidth() + " " + new_block.getHeight()); 
+			throw new DoenstFitException();
+		}
+			
+		return "Image Block";
+    }
+	
+	public String getContentOfSelectionAsPageNumberBlock(int x, int y, int height, int width) throws DoenstFitException, BadPageNumber {
+        //Outside of image
+        if (x > img.getWidth() || y > img.getHeight())
+            return null;
+
+        if (height + y > img.getHeight())
+            height = img.getHeight() - y;
+
+        if (width + x > img.getWidth())
+            width = img.getWidth() - x;
+
+        try {
+			String content = instance.doOCR(img.getSubimage(x, y, width, height));
+			
+			PageNumber new_block = new PageNumber(tree, x, y, height, width);
+			
+			Scanner pageFinder = new Scanner(content);
+			try {
+				content = pageFinder.next("[0-9]+");
+			} catch (Exception e) {
+				throw new BadPageNumber();
+			}
+			
+			if (content == null) {
+				content = "0";
+			}
+			
+			new_block.setContent(content);
 			
 			if (tree.fits(new_block))
 				tree.addChild(new_block);

@@ -5,6 +5,7 @@ import ro.mps.crop.image.OCRableImage;
 import ro.mps.data.base.Node;
 import ro.mps.data.concrete.Root;
 import ro.mps.data.parsing.XMLWriter;
+import ro.mps.error.exceptions.BadPageNumber;
 import ro.mps.error.exceptions.DoenstFitException;
 import ro.mps.error.gui.ErrorThrower;
 import ro.mps.properties.Properties;
@@ -252,12 +253,20 @@ public class CropScreen extends JComponent {
 	        					mouseRect.x, mouseRect.y,
 	        					mouseRect.height, mouseRect.width));
         		} else if (renderingColor.equals(Color.RED)) {
-        			
+        			System.out.println(
+    	        			inputImage.getContentOfSelectionAsImageBlock(
+    	        					mouseRect.x, mouseRect.y,
+    	        					mouseRect.height, mouseRect.width));
         		} else {
-        			
+        			System.out.println(
+    	        			inputImage.getContentOfSelectionAsPageNumberBlock(
+    	        					mouseRect.x, mouseRect.y,
+    	        					mouseRect.height, mouseRect.width));
         		}
         	} catch (DoenstFitException ex) {
         		//Error handling code here
+        	} catch (BadPageNumber pn) {
+        		
         	}
 
             selecting = false;
