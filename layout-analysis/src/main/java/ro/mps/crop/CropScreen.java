@@ -27,21 +27,25 @@ class ControlsFrame extends JFrame {
 	    
     private static int LANG_MENU_HEIGHT = 100;
     
-    public static String[] LANGS = new String[] {"ENG", "DE", "RO"};
-    public static String[] BLOCK_TYPES = new String[] {"Image", "Paragraph"};
+    public static String[] LANGS = new String[] {"eng", "deu"};
+    public static String[] BLOCK_TYPES = new String[] {"Image", "Paragraph", "Page Number"};
     
     private CropScreen attatched;
+    JTabbedPane panel = new JTabbedPane();
+	
+	JPanel langPanel = new JPanel();
+	JPanel blockPanel = new JPanel();
+	JPanel buttonsPanel = new JPanel();
+	
+	String blockType;
+	
+	ButtonGroup langGroup = new ButtonGroup();
+	ButtonGroup blockTypeGroup = new ButtonGroup();
     
     public ControlsFrame(String title, final CropScreen attatched) {
 		super(title);
 		this.attatched = attatched;
-		JPanel langPanel = new JPanel();
-		JPanel blockPanel = new JPanel();
-		JPanel buttonsPanel = new JPanel();
-    	ButtonGroup langGroup = new ButtonGroup();
-    	ButtonGroup blockTypeGroup = new ButtonGroup();
-    	
-
+		
     	ActionListener langChanged = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {				
@@ -49,10 +53,24 @@ class ControlsFrame extends JFrame {
 			}
 		};
 		
+		ActionListener blockChanged = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {				
+				blockType = ((JRadioButton)arg0.getSource()).getText();
+				if (blockType.equals("Image"))
+					attatched.renderingColor = Color.RED;
+				else if (blockType.equals("Paragraph"))
+					attatched.renderingColor = Color.GREEN;
+				else
+					attatched.renderingColor = Color.ORANGE;
+					
+			}
+		};
+		
 		ActionListener reset = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {				
-				
+				attatched.reset();
 			}
 		};
 		
@@ -77,33 +95,47 @@ class ControlsFrame extends JFrame {
 				}
 			}
 		};
+		
+		JPanel top = new JPanel();
+		top.setLayout(new BorderLayout());
+		getContentPane().add(top);
     	
+		/**
+		 * Adding the lang buttons
+		 */
     	for (String lang : LANGS) {
     		JRadioButton btn = new JRadioButton(lang);
     		langGroup.add(btn);
     		langPanel.add(btn);
+    		if (lang.equals("eng"))
+    			btn.setSelected(true);
     		btn.addActionListener(langChanged);
     	}
     	
+    	/**
+    	 * Add the block type buttons
+    	 */
     	for (String lang : BLOCK_TYPES) {
     		JRadioButton btn = new JRadioButton(lang);
     		blockTypeGroup.add(btn);
     		blockPanel.add(btn);
-    		//btn.addActionListener(langChanged);
+    		if (lang.equals("Paragraph"))
+    			btn.setSelected(true);
+    		btn.addActionListener(blockChanged);
     	}
     	
     	langPanel.setBorder(BorderFactory.createTitledBorder("Choose text language"));
-    	add(langPanel);
+    	panel.addTab("Language Settings", langPanel);
     	
     	blockPanel.setBorder(BorderFactory.createTitledBorder("Choose block type"));
-    	add(blockPanel);
+    	panel.addTab("Block Type", blockPanel);
     	
     	JButton btn = new JButton("Ok");
     	buttonsPanel.add(btn);
 		btn.addActionListener(next);
 		
 		btn = new JButton("Reset");
-		//buttonsPanel.add(btn);
+		buttonsPanel.add(btn);
 		btn.addActionListener(reset);
 		
 		btn = new JButton("Export to XML");
@@ -111,7 +143,9 @@ class ControlsFrame extends JFrame {
 		btn.addActionListener(export);
     	
     	buttonsPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
-    	add(buttonsPanel);
+    	panel.addTab("Actions", buttonsPanel);
+    	top.add(panel, BorderLayout.CENTER);
+    	add(panel);
 	}
     
 }
@@ -126,6 +160,7 @@ public class CropScreen extends JComponent {
     private Rectangle mouseRect = new Rectangle();
     private boolean selecting;
     private JFrame parent;
+    Color renderingColor = Color.GREEN;
 
     private OCRableImage inputImage;
     
@@ -134,8 +169,6 @@ public class CropScreen extends JComponent {
     EventQueue.invokeLater(new Runnable() {
 
         public void run() {
-        	
-        		
         		
 	            JFrame f = new JFrame(Properties.APP_TITLE.getValue());
 	            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -149,8 +182,6 @@ public class CropScreen extends JComponent {
 	
 	            JFrame controls = new ControlsFrame("OCR Controlls",g);
         		controls.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        		
-        		ErrorThrower.popErrorDialog(controls, "");
 	            
 	            f.setBounds(0, 0, g.inputImage.asImage().getWidth(null),
 	                    g.inputImage.asImage().getHeight(null));
@@ -158,7 +189,6 @@ public class CropScreen extends JComponent {
 	            f.setLocationByPlatform(true);
 	            f.setVisible(true);
 	            controls.setBounds(0,0,300,200);
-	            //controls.setLayout(new BoxLayout(controls, BoxLayout.LINE_AXIS));
 	            controls.setVisible(true);
         	}
     	});
@@ -197,7 +227,7 @@ public class CropScreen extends JComponent {
         g.drawImage(inputImage.asImage(), 0, 0, null);
 
         if (selecting) {
-            g.setColor(Color.orange);
+            g.setColor(renderingColor);
 
             g.drawRect(mouseRect.x, mouseRect.y,
                     mouseRect.width, mouseRect.height);
@@ -216,13 +246,18 @@ public class CropScreen extends JComponent {
         public void mouseReleased(MouseEvent e) {
 
         	try {
-	        	System.out.println(
-	        			inputImage.getContentOfSelection(
+        		if (renderingColor.equals(Color.GREEN)) {
+        			System.out.println(
+	        			inputImage.getContentOfSelectionAsBlock(
 	        					mouseRect.x, mouseRect.y,
 	        					mouseRect.height, mouseRect.width));
+        		} else if (renderingColor.equals(Color.RED)) {
+        			
+        		} else {
+        			
+        		}
         	} catch (DoenstFitException ex) {
-        		System.err.println("Bad thing here");
-        		ErrorThrower.popErrorDialog(CropScreen.this, "Component doesn't fit.");
+        		//Error handling code here
         	}
 
             selecting = false;
@@ -255,6 +290,10 @@ public class CropScreen extends JComponent {
     
     public Root getRoot(){
     	return inputImage.getBuiltTree();
+    }
+    
+    public void reset(){
+    	inputImage.resetTree();
     }
 
 }

@@ -28,7 +28,7 @@ public class OCRableImage extends CroppableImage {
 		return tree.getChildren();
 	}
 	
-	public void voidResetTree(){
+	public void resetTree(){
 		tree = new Root(img.getWidth(), img.getHeight());
 	}
 
@@ -41,7 +41,7 @@ public class OCRableImage extends CroppableImage {
 		instance.setLanguage(language);
 	}
 	
-	public String getContentOfSelection(int x, int y, int height, int width) throws DoenstFitException {
+	public String getContentOfSelectionAsBlock(int x, int y, int height, int width) throws DoenstFitException {
         //Outside of image
         if (x > img.getWidth() || y > img.getHeight())
             return null;
