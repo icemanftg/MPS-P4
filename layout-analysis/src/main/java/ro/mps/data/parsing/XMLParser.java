@@ -51,7 +51,7 @@ public class XMLParser {
             root.setDirection(doc.getDocumentElement().getAttribute("direction"));
 
             /* Get the page number ComposedBlock */
-            ComposedBlock cBlock = getPageNumberComposedBlock(doc);
+            //ComposedBlock cBlock = getPageNumberComposedBlock(doc);
             
             //root.setPageNumber(cBlock);
 
