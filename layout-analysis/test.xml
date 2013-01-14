@@ -1,14 +1,16 @@
-<Document image="gogu.tiff" direction="ascending">
-<ComposedBlock type="page_number">
-    <TextBlock left="1" top="1" right="100" bottom="100">
-        <TextLine left="1" top="1" right="50" bottom="50">
-            <String>abc</String>
-        </TextLine>
-    </TextBlock>
-</ComposedBlock>
-<TextBlock left="1" top="1" right="100" bottom="100">
-    <TextLine left="1" top="1" right="50" bottom="50">
-        <String>alabala</String>
+<Document image="nume_imagine.tip" direction="ascending">
+<TextBlock left="1" right="1" top="1" bottom="1">
+    <TextLine left="1" right="1" top="1" bottom="1">
+        <String>ceva</String>
+        <String>poate fi si un text din mai multe stringuri</String>
+        <String>Linia numarul 1</String>
+    </TextLine>
+
+    <TextLine left="1" right="1" top="1" bottom="1">
+        <String>ceva</String>
+        <String>ceva</String>
+        <String>ceva</String>
     </TextLine>
 </TextBlock>
+
 </Document>
