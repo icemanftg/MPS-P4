@@ -4,9 +4,9 @@ import ro.mps.screen.base.OrphanCompoundNode;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Root extends OrphanCompoundNode<Block> {
+public class RootUsedInEditingScreen extends OrphanCompoundNode<Block> {
 
-    public Root(int width, int height) {
+    public RootUsedInEditingScreen(int width, int height) {
         super("document", 0, 0, height, width);
     }
 

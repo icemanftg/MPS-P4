@@ -5,36 +5,36 @@ import ro.mps.screen.api.HasContent;
 import ro.mps.screen.api.HasParent;
 import ro.mps.screen.base.Node;
 
-public class Line extends Node implements HasContent, HasParent<Line> {
+public class LineUsedInEditingScreen extends Node implements HasContent, HasParent<LineUsedInEditingScreen> {
 
-    private Compound<Line> parent;
+    private Compound<LineUsedInEditingScreen> parent;
     private String content;
 
-    public Line(int x, int y, int height, int width) {
+    public LineUsedInEditingScreen(int x, int y, int height, int width) {
         super("line", x, y, height, width);
     }
 
-    public Line(Compound<Line> p, int x, int y, int height, int width) {
+    public LineUsedInEditingScreen(Compound<LineUsedInEditingScreen> p, int x, int y, int height, int width) {
         this(x, y, height, width);
         parent = p;
     }
 
-    public Line(String content, Compound<Line> p, int x, int y, int height, int width) {
+    public LineUsedInEditingScreen(String content, Compound<LineUsedInEditingScreen> p, int x, int y, int height, int width) {
         this(p, x, y, height, width);
         this.content = content;
     }
 
-    public boolean haveSameParent(Line line) {
+    public boolean haveSameParent(LineUsedInEditingScreen line) {
         return this.getParent() == line.getParent();
     }
 
     @Override
-    public Compound<Line> getParent() {
+    public Compound<LineUsedInEditingScreen> getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(Compound<Line> parent) {
+    public void setParent(Compound<LineUsedInEditingScreen> parent) {
         this.parent = parent;
     }
 

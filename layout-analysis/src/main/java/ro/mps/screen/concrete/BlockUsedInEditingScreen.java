@@ -5,13 +5,13 @@ import ro.mps.screen.base.CompoundNode;
 
 import java.util.List;
 
-public class Block extends CompoundNode<Block, Line> {
+public class BlockUsedInEditingScreen extends CompoundNode<BlockUsedInEditingScreen, LineUsedInEditingScreen> {
 
-    public Block(int x, int y, int height, int width) {
+    public BlockUsedInEditingScreen(int x, int y, int height, int width) {
         super("block", x, y, height, width);
     }
 
-    public Block(Compound parent, int x, int y, int height, int width) {
+    public BlockUsedInEditingScreen(Compound parent, int x, int y, int height, int width) {
         super(parent, "block", x, y, height, width);
     }
 
@@ -23,7 +23,7 @@ public class Block extends CompoundNode<Block, Line> {
         String content = "";
         final String LINE_SEPARATOR_TEXT = "line.separator";
 
-        for ( Line child : getChildren() ) {
+        for ( LineUsedInEditingScreen child : getChildren() ) {
             content += child.getContent() + System.getProperty(LINE_SEPARATOR_TEXT);
         }
 
@@ -35,7 +35,7 @@ public class Block extends CompoundNode<Block, Line> {
      * @param block - block to be merged
      * @return - returns true if blocks can be merged
      */
-    public boolean merge(Block block) {
+    public boolean merge(BlockUsedInEditingScreen block) {
         boolean canBeMerged = canBeMerged(block);
         if ( canBeMerged ) {
             addChildrenFromAnotherBlock(block);
@@ -60,7 +60,7 @@ public class Block extends CompoundNode<Block, Line> {
      * @param index - position where the new block will be added
      */
     private void addNewBlockToRoot(int index) {
-        Compound<Block> root = getParent();
+        Compound<BlockUsedInEditingScreen> root = getParent();
         int indexOfChildFromChildrenList = root.getIndexOfChildFromChildrenList(this) + 1;
         root.addChildAtIndex(indexOfChildFromChildrenList, makeNewBlock(index));
     }
@@ -70,13 +70,13 @@ public class Block extends CompoundNode<Block, Line> {
      * @param index - index
      * @return - returns a block with the same dimensions as the block pointed by index
      */
-    private Block makeNewBlock(int index) {
-        List<Line> children = getChildren();
-        Line lineToSplit = children.get(index);
+    private BlockUsedInEditingScreen makeNewBlock(int index) {
+        List<LineUsedInEditingScreen> children = getChildren();
+        LineUsedInEditingScreen lineToSplit = children.get(index);
 
         int heightForNewBlock = calculateHeight(index);
 
-        Block blockResultedFromSplit = new Block(getParent(), lineToSplit.getLeftUpperCornerX(),
+        BlockUsedInEditingScreen blockResultedFromSplit = new BlockUsedInEditingScreen(getParent(), lineToSplit.getLeftUpperCornerX(),
                 lineToSplit.getLeftUpperCornerY(), heightForNewBlock, getWidth());
         addChildrenToNewBlock(blockResultedFromSplit, children.subList(index, children.size()));
 
@@ -88,7 +88,7 @@ public class Block extends CompoundNode<Block, Line> {
      * @param index - index that tells start position for deleting the blocks
      */
     private void removeElementsContainedInNewBlock(int index) {
-        List<Line> children = getChildren();
+        List<LineUsedInEditingScreen> children = getChildren();
         this.removeChildren(children.subList(index, children.size()));
     }
 
@@ -97,7 +97,7 @@ public class Block extends CompoundNode<Block, Line> {
      * @param index - index of the block
      */
     private void setNewHeightForBlockAfterSplit(int index) {
-        Line child = getChildren().get(index);
+        LineUsedInEditingScreen child = getChildren().get(index);
         int newHeight = child.getLeftUpperCornerY() - getLeftUpperCornerY();
         setHeight(newHeight);
     }
@@ -107,7 +107,7 @@ public class Block extends CompoundNode<Block, Line> {
      * @param newBlock - block
      * @param children - list of lines
      */
-    private void addChildrenToNewBlock(Block newBlock, List<Line> children) {
+    private void addChildrenToNewBlock(BlockUsedInEditingScreen newBlock, List<LineUsedInEditingScreen> children) {
         newBlock.addChildren(children);
     }
 
@@ -117,8 +117,8 @@ public class Block extends CompoundNode<Block, Line> {
      * @return - returns height
      */
     private int calculateHeight(int index) {
-        List<Line> children = getChildren();
-        Line line = children.get(index);
+        List<LineUsedInEditingScreen> children = getChildren();
+        LineUsedInEditingScreen line = children.get(index);
 
         return getHeight() - line.getLeftUpperCornerY() + getLeftUpperCornerY();
     }
@@ -128,7 +128,7 @@ public class Block extends CompoundNode<Block, Line> {
      * @param block - block
      * @return - returns true if blocks can be merged
      */
-    private boolean canBeMerged(Block block) {
+    private boolean canBeMerged(BlockUsedInEditingScreen block) {
         int backupX = block.getLeftUpperCornerX();
         int backupY = block.getLeftUpperCornerY();
         int backupHeight = block.getHeight();
@@ -148,8 +148,8 @@ public class Block extends CompoundNode<Block, Line> {
      * Adds children from another block
      * @param block - block whose children will be added to the current block
      */
-    private void addChildrenFromAnotherBlock(Block block) {
-        List<Line> children = block.getChildren();
+    private void addChildrenFromAnotherBlock(BlockUsedInEditingScreen block) {
+        List<LineUsedInEditingScreen> children = block.getChildren();
         this.addChildren(children);
     }
 
@@ -157,8 +157,8 @@ public class Block extends CompoundNode<Block, Line> {
      * Removes a block
      * @param block - block to be removed
      */
-    private void removeBlock(Block block) {
-        Compound<Block> root = this.getParent();
+    private void removeBlock(BlockUsedInEditingScreen block) {
+        Compound<BlockUsedInEditingScreen> root = this.getParent();
         root.removeChild(block);
     }
 
@@ -174,11 +174,11 @@ public class Block extends CompoundNode<Block, Line> {
      * @param block - tested block
      * @return - returns true if block intersects other block
      */
-    private boolean intersectsOtherBlocks(Block block) {
-        Compound<Block> root = this.getParent();
-        List<Block> blocks = root.getChildren();
+    private boolean intersectsOtherBlocks(BlockUsedInEditingScreen block) {
+        Compound<BlockUsedInEditingScreen> root = this.getParent();
+        List<BlockUsedInEditingScreen> blocks = root.getChildren();
 
-        for ( Block otherBlock : blocks ) {
+        for ( BlockUsedInEditingScreen otherBlock : blocks ) {
             if ( otherBlock != this && otherBlock != block
                     && this.intersectsAnotherNode(otherBlock) && this.haveTheSameDimensions(otherBlock) ) {
                 return true;
@@ -198,7 +198,7 @@ public class Block extends CompoundNode<Block, Line> {
 
         String result = String.format(TEMPLATE, getLeftUpperCornerX(), getLeftUpperCornerY(), getHeight(), getWidth());
 
-        for ( Line line : getChildren() ) {
+        for ( LineUsedInEditingScreen line : getChildren() ) {
             result += line.toString();
         }
 
