@@ -23,4 +23,11 @@ public class PageNumberBlock extends Block {
     		return null;
     	}
     }
+    
+    public void setPageNumber(String number){
+    	if (getChildren().size() > 0) {
+    		Line lnumber = (Line)(getChildren().get(0));
+    		lnumber.setContent(number);
+    	}
+    }
 }
