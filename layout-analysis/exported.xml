@@ -1,75 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Document direction="" image="">
-<TextBlock bottom="513" left="85" right="555" top="49">
-<TextLine bottom="91" left="85" right="555" top="49">
-<String>The (quick) [brown]</String>
+<TextBlock bottom="452" left="557" right="785" top="113">
+<TextLine bottom="161" left="557" right="785" top="113">
+<String>&lt;lazy&gt; #9(</String>
 </TextLine>
-<TextLine bottom="133" left="85" right="555" top="91">
-<String/>
+<TextLine bottom="209" left="557" right="785" top="161">
+<String>5% of E-m</String>
 </TextLine>
-<TextLine bottom="175" left="85" right="555" top="133">
-<String>Over the $43,456.78</String>
+<TextLine bottom="257" left="557" right="785" top="209">
+<String>;ite.com is</String>
 </TextLine>
-<TextLine bottom="217" left="85" right="555" top="175">
-<String/>
+<TextLine bottom="305" left="557" right="785" top="257">
+<String>a Fuchs sp:</String>
 </TextLine>
-<TextLine bottom="259" left="85" right="555" top="217">
-<String>&amp; duck/goose, as 12.</String>
+<TextLine bottom="353" left="557" right="785" top="305">
+<String>I. Le renan</String>
 </TextLine>
-<TextLine bottom="301" left="85" right="555" top="259">
-<String>from aspammer@web:</String>
+<TextLine bottom="401" left="557" right="785" top="353">
+<String>ssus le chi</String>
 </TextLine>
-<TextLine bottom="343" left="85" right="555" top="301">
-<String>Der ,,schnelle” braum</String>
-</TextLine>
-<TextLine bottom="385" left="85" right="555" top="343">
-<String>iiber den faulen Hund</String>
-</TextLine>
-<TextLine bottom="427" left="85" right="555" top="385">
-<String>arapide» saute par-de</String>
-</TextLine>
-<TextLine bottom="469" left="85" right="555" top="427">
-<String>paresseux. La volpe r</String>
-</TextLine>
-<TextLine bottom="511" left="85" right="555" top="469">
-<String>salta sopra i] cane pi</String>
-</TextLine>
-</TextBlock>
-<TextBlock bottom="415" left="624" right="822" top="49">
-<TextLine bottom="101" left="624" right="822" top="49">
-<String>x} jumps!</String>
-</TextLine>
-<TextLine bottom="153" left="624" right="822" top="101">
-<String>zy&gt; #90 1</String>
-</TextLine>
-<TextLine bottom="205" left="624" right="822" top="153">
-<String>of E-mai</String>
-</TextLine>
-<TextLine bottom="257" left="624" right="822" top="205">
-<String>.com is s]</String>
-</TextLine>
-<TextLine bottom="309" left="624" right="822" top="257">
-<String>uchs spri:</String>
-</TextLine>
-<TextLine bottom="361" left="624" right="822" top="309">
-<String>‘e renard</String>
-</TextLine>
-<TextLine bottom="413" left="624" right="822" top="361">
-<String>s le chic:</String>
-</TextLine>
-</TextBlock>
-<TextBlock bottom="594" left="652" right="837" top="470">
-<TextLine bottom="501" left="652" right="837" top="470">
-<String>El zorro</String>
-</TextLine>
-<TextLine bottom="532" left="652" right="837" top="501">
-<String>el perro</String>
-</TextLine>
-<TextLine bottom="563" left="652" right="837" top="532">
-<String/>
-</TextLine>
-<TextLine bottom="594" left="652" right="837" top="563">
-<String>m rénirlo</String>
+<TextLine bottom="449" left="557" right="785" top="401">
+<String>narrone ral</String>
 </TextLine>
 </TextBlock>
 </Document>
