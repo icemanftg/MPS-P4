@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Document direction="" image="">
-<TextBlock bottom="452" left="557" right="785" top="113">
-<TextLine bottom="161" left="557" right="785" top="113">
-<String>&lt;lazy&gt; #9(</String>
+<TextBlock bottom="358" left="297" right="576" top="223">
+<TextLine bottom="268" left="297" right="576" top="223">
+<String>|mmer@websi</String>
 </TextLine>
-<TextLine bottom="209" left="557" right="785" top="161">
-<String>5% of E-m</String>
+<TextLine bottom="313" left="297" right="576" top="268">
+<String>aelle” braune</String>
 </TextLine>
-<TextLine bottom="257" left="557" right="785" top="209">
-<String>;ite.com is</String>
-</TextLine>
-<TextLine bottom="305" left="557" right="785" top="257">
-<String>a Fuchs sp:</String>
-</TextLine>
-<TextLine bottom="353" left="557" right="785" top="305">
-<String>I. Le renan</String>
-</TextLine>
-<TextLine bottom="401" left="557" right="785" top="353">
-<String>ssus le chi</String>
-</TextLine>
-<TextLine bottom="449" left="557" right="785" top="401">
-<String>narrone ral</String>
+<TextLine bottom="358" left="297" right="576" top="313">
+<String>faulen Hund.</String>
 </TextLine>
 </TextBlock>
+<TextBlock bottom="468" left="328" right="522" top="413">
+<TextLine bottom="468" left="328" right="522" top="413">
+<String>La volpe</String>
+</TextLine>
+</TextBlock>
+<ComposedBlock type="page_number">
+<TextBlock bottom="161" left="488" right="540" top="117">
+<TextLine bottom="161" left="488" right="540" top="117">
+<String>78</String>
+</TextLine>
+</TextBlock>
+</ComposedBlock>
 </Document>

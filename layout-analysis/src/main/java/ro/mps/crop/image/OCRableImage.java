@@ -6,15 +6,12 @@ import java.util.Scanner;
 
 import ro.mps.data.*;
 import ro.mps.data.base.Node;
-<<<<<<< HEAD
 import ro.mps.data.concrete.Block;
 import ro.mps.data.concrete.ImageBlock;
 import ro.mps.data.concrete.Line;
-import ro.mps.data.concrete.PageNumber;
+import ro.mps.data.concrete.PageNumberBlock;
 import ro.mps.data.concrete.Root;
-=======
 import ro.mps.data.concrete.*;
->>>>>>> 1085f273af2cc39053c2c840c96999acfab53823
 import ro.mps.error.exceptions.BadPageNumber;
 import ro.mps.error.exceptions.DoenstFitException;
 
@@ -126,37 +123,39 @@ public class OCRableImage extends CroppableImage {
             width = img.getWidth() - x;
 
         try {
-            String content = instance.doOCR(img.getSubimage(x, y, width, height));
-
-            PageNumber new_block = new PageNumber(tree, x, y, height, width);
-
-            Scanner pageFinder = new Scanner(content);
-            try {
-                content = pageFinder.next("[0-9]+");
-            } catch (Exception e) {
-                throw new BadPageNumber();
-            }
-
-            if (content == null) {
-                content = "0";
-            }
-
-            new_block.setContent(content);
-
-            if (tree.fits(new_block))
-                tree.addChild(new_block);
-            else {
-                System.err.println(new_block.getLeftUpperCornerX() + " " +
-                        new_block.getLeftUpperCornerY() + " " + new_block.getWidth() + " " + new_block.getHeight());
-                throw new DoenstFitException();
-            }
-
-
-            return content;
-        } catch (TesseractException e) {
-            e.printStackTrace();
-            return null;
-        }
+String content = instance.doOCR(img.getSubimage(x, y, width, height));
+			
+			PageNumberBlock new_block = new PageNumberBlock(tree, x, y, height, width);
+			
+			Scanner pageFinder = new Scanner(content);
+			try {
+				content = pageFinder.next("[0-9]+");
+			} catch (Exception e) {
+				throw new BadPageNumber();
+			}
+			
+			if (content == null) {
+				content = "0";
+			}
+			
+			Line pageNumber = new Line(new_block, x, y, height, width);
+			pageNumber.setContent(content);
+			new_block.addChild(pageNumber);
+			
+			if (tree.fits(new_block))
+				tree.addChild(new_block);
+			else {
+				System.err.println(new_block.getLeftUpperCornerX() + " " +
+					new_block.getLeftUpperCornerY() + " " + new_block.getWidth() + " " + new_block.getHeight()); 
+				throw new DoenstFitException();
+			}
+				
+			
+			return content;
+		} catch (TesseractException e) {
+			e.printStackTrace();
+			return null;
+		}
     }
 
     public Root getBuiltTree(){
