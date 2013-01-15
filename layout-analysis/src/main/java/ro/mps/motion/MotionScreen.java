@@ -2,11 +2,13 @@ package ro.mps.motion;
 
 import ro.mps.crop.image.CroppableImage;
 import ro.mps.crop.image.OCRableImage;
+import ro.mps.data.api.HasContent;
 import ro.mps.data.api.HasPosition;
 import ro.mps.data.base.CompoundNode;
 import ro.mps.data.base.Node;
 import ro.mps.data.base.OrphanCompoundNode;
 import ro.mps.data.concrete.Block;
+import ro.mps.data.concrete.Line;
 import ro.mps.data.concrete.Root;
 import ro.mps.data.parsing.XMLWriter;
 import ro.mps.error.exceptions.BadPageNumber;
@@ -15,7 +17,6 @@ import ro.mps.error.gui.ErrorThrower;
 import ro.mps.move_resize.RootResizeProcessor;
 import ro.mps.properties.Properties;
 
-import javax.sound.sampled.Line;
 import javax.swing.*;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -72,6 +73,62 @@ class ControlsFrame extends JFrame {
 			}
 		};
 		
+		ActionListener up = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				attatched.up();
+			}
+		};
+		
+		ActionListener down = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				attatched.down();
+			}
+		};
+		
+		ActionListener left = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				attatched.left();
+			}
+		};
+		
+		ActionListener right = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				attatched.right();
+			}
+		};
+		
+		ActionListener incWidth = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				attatched.incWidth();
+			}
+		};
+		
+		ActionListener incHeight = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				attatched.incHeight();
+			}
+		};
+		
+		ActionListener decWidth = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				attatched.decWidth();
+			}
+		};
+		
+		ActionListener decHeight = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				attatched.decHeight();
+			}
+		};
+		
 		ActionListener export = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -91,7 +148,6 @@ class ControlsFrame extends JFrame {
 		JPanel top = new JPanel();
 		top.setLayout(new BorderLayout());
 		getContentPane().add(top);
-    	
     	
     	/**
     	 * Add the block type buttons
@@ -113,19 +169,19 @@ class ControlsFrame extends JFrame {
     	 */
     	JButton btn = new JButton("Left");
     	movePanel.add(btn);
-		btn.addActionListener(null);
+		btn.addActionListener(left);
 		
 		btn = new JButton("Right");
     	movePanel.add(btn);
-		btn.addActionListener(null);
+		btn.addActionListener(right);
 		
 		btn = new JButton("Down");
     	movePanel.add(btn);
-		btn.addActionListener(null);
+		btn.addActionListener(down);
 		
 		btn = new JButton("Up");
     	movePanel.add(btn);
-		btn.addActionListener(null);
+		btn.addActionListener(up);
     	
     	movePanel.setBorder(BorderFactory.createTitledBorder("Move actions"));
     	panel.addTab("Move", movePanel);
@@ -135,19 +191,19 @@ class ControlsFrame extends JFrame {
     	 */
     	btn = new JButton("+ Width");
     	resizePanel.add(btn);
-		btn.addActionListener(null);
+		btn.addActionListener(incWidth);
 		
 		btn = new JButton("- Width");
 		resizePanel.add(btn);
-		btn.addActionListener(null);
+		btn.addActionListener(decWidth);
 		
 		btn = new JButton("+ Height");
 		resizePanel.add(btn);
-		btn.addActionListener(null);
+		btn.addActionListener(incHeight);
 		
 		btn = new JButton("- Height");
 		resizePanel.add(btn);
-		btn.addActionListener(null);
+		btn.addActionListener(decHeight);
     	
     	movePanel.setBorder(BorderFactory.createTitledBorder("Resize actions"));
     	panel.addTab("Resize", resizePanel);
@@ -198,6 +254,10 @@ public class MotionScreen extends JComponent {
     
     public void renderBlocks(boolean flag){
     	renderBlocks = flag;
+    	if (renderBlocks)
+    		availableForSelection = blocks;
+    	else
+    		availableForSelection = lines;
     }
     
     public static void startMotionSCreen(final Root root) {
@@ -280,6 +340,10 @@ public class MotionScreen extends JComponent {
     				hp.getLeftUpperCornerY(),
     				hp.getWidth(),
     				hp.getHeight());
+    		g.setColor(Color.BLACK);
+    		g.drawString(((HasContent)hp).getContent(),
+    				hp.getLeftUpperCornerX(),
+    				hp.getLeftUpperCornerY()+hp.getHeight());
     	}
     }
     
@@ -294,13 +358,29 @@ public class MotionScreen extends JComponent {
     }
     
     private void drawSelected(Graphics g, HasPosition hp) {
-    	if (hp != selected){
+    	if (hp == selected && selected != null){
     		g.setColor(selectedColor);
     		g.drawRect(hp.getLeftUpperCornerX(),
     				hp.getLeftUpperCornerY(),
     				hp.getWidth(),
     				hp.getHeight());
+    		if (hp instanceof HasContent){
+    			g.setColor(Color.GREEN);
+    			g.drawString(((HasContent)hp).getContent(),
+    					hp.getLeftUpperCornerX(),
+    					hp.getLeftUpperCornerY()+hp.getHeight());
+    		}
     	}
+    }
+    
+    private void updateSelected(Point click){
+    	for (HasPosition hp : availableForSelection){
+    		if (hp.inside(click)){
+    			selected = hp;
+    			return;
+    		}
+    	}
+    	selected = null;
     }
     
     private void drawLines(Collection<HasPosition> lines, Graphics g){
@@ -318,6 +398,7 @@ public class MotionScreen extends JComponent {
          */
         drawLines(lines, g);
         drawBlocks(blocks, g);
+        drawSelected(g, selected);
         
     }
 
@@ -331,11 +412,89 @@ public class MotionScreen extends JComponent {
         @Override
         public void mousePressed(MouseEvent e) {
             mousePt = e.getPoint();
+            updateSelected(mousePt);
         }
     }
     
     public Root getRoot(){
     	return root;
     }
+    
+    public void incHeight(){
+    	
+    }
+    
+    public void incWidth(){
+    	
+    }
+    
+    public void decHeight(){
+    	
+    }
+    
+    public void decWidth(){
+    	
+    }
+    
+    public void down(){
+    	
+    }
 
+    public void up(){
+    	
+    }
+
+    
+    /**
+     * Move on the x axis
+     */
+	public void left(){
+		if (selected != null)
+			if (selected instanceof Line){
+				leftLine(selected);
+			} else {
+				leftBlock(selected);
+			}
+	}
+
+	public void right(){
+		if (selected != null)
+			if (selected instanceof Line){
+				rightLine(selected);
+			} else {
+				rightBlock(selected);
+			}
+	}
+	
+	private void rightLine(HasPosition l){
+		Line b = (Line)l;
+		b.right();
+		if (! b.getParent().fits(l))
+			leftLine(l);
+	}
+	
+	private void leftLine(HasPosition l){
+		Line b = (Line)l;
+		b.left();
+		if (! b.getParent().fits(l))
+			rightLine(l);
+	}
+	
+	private void rightBlock(HasPosition l){
+		Block b = (Block)l;
+		b.right();
+		for (Node c : b.getChildren())
+			c.right();
+		if (! root.fits(l))
+			leftBlock(l);
+	}
+	
+	private void leftBlock(HasPosition l){
+		Block b = (Block)l;
+		b.left();
+		for (Node c : b.getChildren())
+			c.left();
+		if (! root.fits(l))
+			rightBlock(l);
+	}
 }

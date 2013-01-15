@@ -157,4 +157,44 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
     public void setWidth(int width) {
     	this.width = width;
     }
+    
+    @Override
+    public void decHeight() {
+    	height-=1;
+    }
+    
+    @Override
+    public void decWidth() {
+    	width-=1;
+    }
+    
+    @Override
+    public void down() {
+    	y+=1;
+    }
+    
+    @Override
+    public void incHeight() {
+    	height+=1;
+    }
+    
+    @Override
+    public void incWidth() {
+    	width+=1;
+    }
+    
+    @Override
+    public void left() {
+    	x-=1;
+    }
+    
+    @Override
+    public void right() {
+    	x+=1;
+    }
+    
+    @Override
+    public void up() {
+    	y-=1;
+    }
 }

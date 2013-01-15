@@ -44,6 +44,9 @@ public abstract class OrphanCompoundNode extends Node implements Compound {
     	 * Checks overlapping with children
     	 */
     	for (HasPosition child : getChildren()) {
+    		if (child == p){
+    			continue;
+    		}
     		if (! child.clears(p))
     			return false;
     	}

@@ -83,5 +83,21 @@ public interface HasPosition {
     
     void setLeftUpperCornerX(int x);
     void setLeftUpperCornerY(int y);
+    
+    public void incHeight();
+    
+    public void incWidth();
+    
+    public void decHeight();
+    
+    public void decWidth();
+    
+    public void down();
+
+    public void up();
+
+	public void left();
+
+	public void right();
 
 }
