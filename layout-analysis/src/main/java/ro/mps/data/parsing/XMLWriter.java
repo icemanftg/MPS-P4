@@ -20,7 +20,7 @@ import org.w3c.dom.Attr;
 
 public class XMLWriter {
 
-    /** DOM that will result after Root is converted */
+    /** DOM that will result after RootUsedInEditingScreen is converted */
     private static Document doc = null;
 
     /** Obtain the DOM
@@ -31,10 +31,10 @@ public class XMLWriter {
         return doc;
     }
 
-    /** Takes a Root element and writes the resultant XML to the file
+    /** Takes a RootUsedInEditingScreen element and writes the resultant XML to the file
      *  indicated by filename
      *
-     * @param root      The Root of our structure we are processing
+     * @param root      The RootUsedInEditingScreen of our structure we are processing
      * @param filename  The name of the XML we will create
      * @return          true if successful, false if not
      * @throws TransformerConfigurationException
@@ -42,7 +42,7 @@ public class XMLWriter {
      */
     public boolean writeFile(Root root, String filename) throws TransformerConfigurationException, TransformerException {
 
-        /* First we build the DOM from the Root */
+        /* First we build the DOM from the RootUsedInEditingScreen */
         this.convert(root);
         TransformerFactory tFactory = TransformerFactory.newInstance();
         Transformer transformer = tFactory.newTransformer();
@@ -59,9 +59,9 @@ public class XMLWriter {
         return true;
     }
 
-    /** Takes a Root element and creates a DOM from our structure in the doc field
+    /** Takes a RootUsedInEditingScreen element and creates a DOM from our structure in the doc field
      *
-     * @param root  The Root of our structure we are processing
+     * @param root  The RootUsedInEditingScreen of our structure we are processing
      */
     public void convert(Root root) {
 
@@ -74,7 +74,7 @@ public class XMLWriter {
             Element rootElement = doc.createElement(root.getLabel());
             doc.appendChild(rootElement);
 
-            /* Put our Root attributes in the DOM root element */
+            /* Put our RootUsedInEditingScreen attributes in the DOM root element */
             Attr attr = doc.createAttribute("image");
             attr.setValue(root.getImageName());
             rootElement.setAttributeNode(attr);
@@ -96,7 +96,7 @@ public class XMLWriter {
                     rootElement.appendChild(el);
                 }
 
-			/* Create the Composed Block element and add it 
+			/* Create the Composed BlockUsedInEditingScreen element and add it
             Element cBlockElement = doc.createElement("ComposedBlock");
             ComposedBlock cBlockObject = root.getPageNumber();
             attr = doc.createAttribute("type");

@@ -1,5 +1,6 @@
 package ro.mps.screen.concrete;
 
+import ro.mps.data.concrete.Block;
 import ro.mps.screen.api.Compound;
 import ro.mps.screen.base.CompoundNode;
 
@@ -13,6 +14,14 @@ public class BlockUsedInEditingScreen extends CompoundNode<BlockUsedInEditingScr
 
     public BlockUsedInEditingScreen(Compound parent, int x, int y, int height, int width) {
         super(parent, "block", x, y, height, width);
+    }
+
+    public BlockUsedInEditingScreen(Block block) {
+        super( "block",
+                block.getLeftUpperCornerX(),
+                block.getLeftUpperCornerY(),
+                block.getHeight(),
+                block.getWidth());
     }
 
     /**

@@ -1,5 +1,6 @@
 package ro.mps.screen.concrete;
 
+import ro.mps.data.concrete.Line;
 import ro.mps.screen.api.Compound;
 import ro.mps.screen.api.HasContent;
 import ro.mps.screen.api.HasParent;
@@ -17,6 +18,10 @@ public class LineUsedInEditingScreen extends Node implements HasContent, HasPare
     public LineUsedInEditingScreen(Compound<LineUsedInEditingScreen> p, int x, int y, int height, int width) {
         this(x, y, height, width);
         parent = p;
+    }
+
+    public LineUsedInEditingScreen(Line line) {
+        super("line", line.getLeftUpperCornerX(), line.getLeftUpperCornerY(), line.getHeight(), line.getWidth());
     }
 
     public LineUsedInEditingScreen(String content, Compound<LineUsedInEditingScreen> p, int x, int y, int height, int width) {

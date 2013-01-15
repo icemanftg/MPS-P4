@@ -64,9 +64,9 @@ public class XMLParser {
                                  */
                     Element el = (Element)nList.item(i);
                     if(el.getParentNode().getNodeName().equals("Document")) {
-                                    /* Put the information in a Block */
+                                    /* Put the information in a BlockUsedInEditingScreen */
                         Block b = getBlock(el, root);
-                                    /* Add that Block as a child of root */
+                                    /* Add that BlockUsedInEditingScreen as a child of root */
                         root.addChild(b);
                     }
                 }
@@ -91,11 +91,11 @@ public class XMLParser {
 
     }
 
-    /** Creates a Block from a TextBlock element of the xml
+    /** Creates a BlockUsedInEditingScreen from a TextBlock element of the xml
      *
      * @param el        the Element we will analyze
-     * @param root      the parent of the newly created Block
-     * @return          the Block object
+     * @param root      the parent of the newly created BlockUsedInEditingScreen
+     * @return          the BlockUsedInEditingScreen object
      */
     private Block getBlock(Element el, Compound root) {
 
@@ -105,7 +105,7 @@ public class XMLParser {
         int right = Integer.parseInt(el.getAttribute("right"));
         int bottom = Integer.parseInt(el.getAttribute("bottom"));
 
-	/* Create a new Block with the attributes read from the xml nodes
+	/* Create a new BlockUsedInEditingScreen with the attributes read from the xml nodes
            and root as parent
          */
         Block b = new Block(root, left, top, bottom-top, right-left);
@@ -116,20 +116,20 @@ public class XMLParser {
             for(int i = 0 ; i < nList.getLength();i++) {
                                 /* Get the TextLine element */
                 Element elem = (Element)nList.item(i);
-                                /* Get the Line object */
+                                /* Get the LineUsedInEditingScreen object */
                 Line line = getLine(elem, b);
-                                /* Add it to the Block's children */
+                                /* Add it to the BlockUsedInEditingScreen's children */
                 b.addChild(line);
             }
         }
         return b;
     }
 
-    /** Creates a Line object from a TextLine element of the xml
+    /** Creates a LineUsedInEditingScreen object from a TextLine element of the xml
      *
      * @param elem      the Element we will analyze
-     * @param b         the parent Block we will attach the line to
-     * @return          the Line object
+     * @param b         the parent BlockUsedInEditingScreen we will attach the line to
+     * @return          the LineUsedInEditingScreen object
      */
     private Line getLine(Element elem, Block b) {
 
@@ -139,7 +139,7 @@ public class XMLParser {
         int right = Integer.parseInt(elem.getAttribute("right"));
         int bottom = Integer.parseInt(elem.getAttribute("bottom"));
 
-	/* Create a new Line with the attributes read from the xml , parent and content */
+	/* Create a new LineUsedInEditingScreen with the attributes read from the xml , parent and content */
         String content = getTextValue(elem, "String");
         Line line = new Line(content, b, left, top, bottom-top, right-left);
         return line;
@@ -188,7 +188,7 @@ public class XMLParser {
 
         /* Create a ComposedBlock object */
         ComposedBlock cBlock = new ComposedBlock();
-        /* Get the Block object from the TextBlock */
+        /* Get the BlockUsedInEditingScreen object from the TextBlock */
         Block block = getBlock(textBlock, cBlock);
 
         cBlock.setBlock(block);
@@ -208,7 +208,7 @@ public class XMLParser {
         int right = Integer.parseInt(el.getAttribute("right"));
         int bottom = Integer.parseInt(el.getAttribute("bottom"));
 
-	/* Create a new Block with the attributes read from the xml nodes
+	/* Create a new BlockUsedInEditingScreen with the attributes read from the xml nodes
            and root as parent
          */
         ImageBlock b = new ImageBlock(root, left, top, bottom-top, right-left);

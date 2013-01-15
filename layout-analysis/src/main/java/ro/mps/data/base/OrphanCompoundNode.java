@@ -28,7 +28,7 @@ public abstract class OrphanCompoundNode extends Node implements Compound {
     public void addChild(Node child) {
         children.add(child);
     }
-    
+
     @Override
     public boolean fits(HasPosition p) {
     	/*

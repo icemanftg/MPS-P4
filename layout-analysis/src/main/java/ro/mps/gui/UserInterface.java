@@ -6,7 +6,7 @@ import ro.mps.gui.screens.generators.TreeGenerator;
 import ro.mps.gui.screens.lines.CharacterEditingScreen;
 import ro.mps.gui.screens.lines.LinesEditingScreen;
 import ro.mps.gui.screens.paragraph.ParagraphEditingScreen;
-import ro.mps.screen.concrete.Root;
+import ro.mps.screen.concrete.RootUsedInEditingScreen;
 
 import javax.swing.*;
 
@@ -15,7 +15,7 @@ public class UserInterface extends JFrame {
     private ParagraphEditingScreen paragraphEditingScreen;
     private LinesEditingScreen linesEditingScreen;
     private CharacterEditingScreen characterEditingScreen;
-    private Root root;
+    private RootUsedInEditingScreen root;
 
     public UserInterface() {
 

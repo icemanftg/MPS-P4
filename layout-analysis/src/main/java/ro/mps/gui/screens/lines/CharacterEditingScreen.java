@@ -1,11 +1,13 @@
 package ro.mps.gui.screens.lines;
 
-import ro.mps.screen.concrete.Line;
-import ro.mps.screen.concrete.Root;
+import ro.mps.data.concrete.Root;
+import ro.mps.screen.concrete.LineUsedInEditingScreen;
+import ro.mps.screen.concrete.RootUsedInEditingScreen;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
 import ro.mps.gui.screens.Observer;
 import ro.mps.gui.screens.Subject;
+import ro.mps.screen.transformer.DataStructureTransformer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,9 +24,9 @@ import java.util.List;
  */
 public class CharacterEditingScreen extends BottomPaneTemplate implements Observer, Subject {
     private static final String WINDOW_TILE = "Edit characters in textFields";
-    protected Root root;
+    protected RootUsedInEditingScreen root;
     protected List<JTextField> textFields;
-    protected List<Line> lines;
+    protected List<LineUsedInEditingScreen> lines;
     protected JPanel containingPanel;
     private List<Observer> observers = new ArrayList<Observer>();
 
@@ -35,14 +37,18 @@ public class CharacterEditingScreen extends BottomPaneTemplate implements Observ
         super.addBottomPane();
     }
 
-    public CharacterEditingScreen(Root root) {
+    public CharacterEditingScreen(RootUsedInEditingScreen root) {
         this(root.getTextFromLines());
         this.lines = root.getLines();
         this.root = root;
     }
 
+    public CharacterEditingScreen(Root root) {
+        this(DataStructureTransformer.transformRootToRootUsedInEditingScreen(root));
+    }
+
     @Override
-    public void update(Root root) {
+    public void update(RootUsedInEditingScreen root) {
         this.root = root;
         this.lines = root.getLines();
         containingPanel.removeAll();
@@ -53,8 +59,12 @@ public class CharacterEditingScreen extends BottomPaneTemplate implements Observ
         return containingPanel;
     }
 
-    public Root getRoot() {
+    public RootUsedInEditingScreen getRootUsedInEditingScreen() {
         return root;
+    }
+
+    public Root getRoot() {
+        return DataStructureTransformer.transformRootUsedInEditingScreenToRoot(root);
     }
 
     private void initPanel() {
@@ -118,7 +128,7 @@ public class CharacterEditingScreen extends BottomPaneTemplate implements Observ
 
         private void showInfoAboutDataStructure() {
             System.out.println("------------------------------------------");
-            System.out.println(characterEditingScreen.getRoot());
+            System.out.println(characterEditingScreen.getRootUsedInEditingScreen());
         }
 
         @Override

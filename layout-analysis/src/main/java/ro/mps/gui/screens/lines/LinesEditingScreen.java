@@ -1,10 +1,12 @@
 package ro.mps.gui.screens.lines;
 
+import ro.mps.data.concrete.Root;
 import ro.mps.screen.api.Compound;
-import ro.mps.screen.concrete.Line;
-import ro.mps.screen.concrete.Root;
+import ro.mps.screen.concrete.LineUsedInEditingScreen;
+import ro.mps.screen.concrete.RootUsedInEditingScreen;
 import ro.mps.gui.screens.Observer;
 import ro.mps.gui.screens.Subject;
+import ro.mps.screen.transformer.DataStructureTransformer;
 
 import javax.swing.*;
 
@@ -17,9 +19,13 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
     private static final String WINDOW_TITLE = "Edit lines in blocks";
     private LinesPopupMenu popupMenu;
 
-    public LinesEditingScreen(Root root) {
+    public LinesEditingScreen(RootUsedInEditingScreen root) {
         super(root);
         makeTextNonEditable();
+    }
+
+    public LinesEditingScreen(Root root) {
+        this(DataStructureTransformer.transformRootToRootUsedInEditingScreen(root));
     }
 
     private void makeTextNonEditable() {
@@ -34,7 +40,7 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * @param root - root of the tree
      */
     @Override
-    public void update(Root root) {
+    public void update(RootUsedInEditingScreen root) {
         this.root = root;
         this.lines = root.getLines();
         containingPanel.removeAll();
@@ -99,8 +105,8 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * @return true if the lines can be merged
      */
     private boolean couldLineBeMerged(int indexOfFirstLine, int indexOfSecondLine) {
-        Line firstLine = lines.get(indexOfFirstLine);
-        Line secondLine = lines.get(indexOfSecondLine);
+        LineUsedInEditingScreen firstLine = lines.get(indexOfFirstLine);
+        LineUsedInEditingScreen secondLine = lines.get(indexOfSecondLine);
 
         return firstLine.haveSameParent(secondLine);
     }
@@ -124,8 +130,8 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * @param indexOfSecondLine - index of the second line
      */
     private void adjustDataStructureAfterMergeOperation(int indexOfFirstLine, int indexOfSecondLine) {
-        Line firstLine = lines.get(indexOfFirstLine);
-        Line secondLine = lines.get(indexOfSecondLine);
+        LineUsedInEditingScreen firstLine = lines.get(indexOfFirstLine);
+        LineUsedInEditingScreen secondLine = lines.get(indexOfSecondLine);
 
         firstLine.setContent(firstLine.getContent() + secondLine.getContent());
         deleteLineFromDataStructure(secondLine);
@@ -135,15 +141,15 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * Deletes a line from data structure
      * @param line - line that will be deleted
      */
-    private void deleteLineFromDataStructure(Line line) {
-        Compound<Line> parent = line.getParent();
+    private void deleteLineFromDataStructure(LineUsedInEditingScreen line) {
+        Compound<LineUsedInEditingScreen> parent = line.getParent();
         lines.remove(line);
         parent.removeChild(line);
     }
 
     /**
      * Splits a line at a given word number.
-     * Line is selected through index.
+     * LineUsedInEditingScreen is selected through index.
      *
      * @param wordNumber - word number
      * @param index - index of line
@@ -169,8 +175,8 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * @param text - text of the line
      */
     private void adjustDataStructureAfterSplit(int wordNumber, int index, String text) {
-        Line line = lines.get(index);
-        Line newLine = lines.get(index + 1);
+        LineUsedInEditingScreen line = lines.get(index);
+        LineUsedInEditingScreen newLine = lines.get(index + 1);
         line.setContent(getFirstPartOfSplit(text, wordNumber));
         newLine.setContent(getLastPartOfSplit(text, wordNumber));
     }
@@ -181,8 +187,8 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * @return - true if line can be split
      */
     private boolean canBeSplit(int index) {
-        Line currentLine = lines.get(index);
-        Line newLine = new Line(currentLine.getParent(),
+        LineUsedInEditingScreen currentLine = lines.get(index);
+        LineUsedInEditingScreen newLine = new LineUsedInEditingScreen(currentLine.getParent(),
                 currentLine.getLeftUpperCornerX(),
                 currentLine.getLeftUpperCornerY() + currentLine.getHeight(),
                 currentLine.getHeight(),
@@ -201,11 +207,11 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * @param currentLine - current line
      * @param lineToBeInserted - line that will be inserted
      */
-    private void insertLineInDataStructure(Line currentLine, Line lineToBeInserted) {
-        Compound<Line> parent = currentLine.getParent();
+    private void insertLineInDataStructure(LineUsedInEditingScreen currentLine, LineUsedInEditingScreen lineToBeInserted) {
+        Compound<LineUsedInEditingScreen> parent = currentLine.getParent();
         int indexOfChild = parent.getIndexOfChildFromChildrenList(currentLine);
         parent.addChildAtIndex(indexOfChild + 1, lineToBeInserted);
-        lines = super.getRoot().getLines();
+        lines = super.getRootUsedInEditingScreen().getLines();
     }
 
     /**
@@ -213,8 +219,8 @@ public class LinesEditingScreen extends CharacterEditingScreen implements Observ
      * @param line - line tested
      * @return true if line intersects othe lines
      */
-    private boolean intersectsOtherLines(Line line) {
-        for ( Line otherLine : lines ) {
+    private boolean intersectsOtherLines(LineUsedInEditingScreen line) {
+        for ( LineUsedInEditingScreen otherLine : lines ) {
             if ( otherLine != line && ( line.intersectsAnotherNode(otherLine)
                     || line.haveTheSameDimensions(otherLine) ) ) {
                 return true;

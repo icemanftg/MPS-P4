@@ -6,8 +6,8 @@ package ro.mps.smart.textbox;/*
 
 import ro.mps.screen.api.Compound;
 import ro.mps.screen.base.Node;
-import ro.mps.screen.concrete.Block;
-import ro.mps.screen.concrete.Line;
+import ro.mps.screen.concrete.BlockUsedInEditingScreen;
+import ro.mps.screen.concrete.LineUsedInEditingScreen;
 import ro.mps.smart.frame.SmartFrame;
 
 import javax.swing.*;
@@ -29,7 +29,7 @@ public class SmartTextBox extends Box {
     private ComponentMover mover;
     private String content, visibleContent;
     private JLabel jl;
-    private ArrayList<Line> lines;
+    private ArrayList<LineUsedInEditingScreen> lines;
     private SmartFrame frame;
 
     public SmartTextBox(int w, int h) {
@@ -66,7 +66,7 @@ public class SmartTextBox extends Box {
 
         add(textArea);
 
-        lines = new ArrayList<Line>();
+        lines = new ArrayList<LineUsedInEditingScreen>();
 
         setPreferredSize(new Dimension(w, h));
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -90,8 +90,8 @@ public class SmartTextBox extends Box {
             message = "No node";
         } else {
             message = "Containing node " + lines.get(0).getParent() + "\n";
-            for (Line line : lines) {
-                message += "\tLine: " + line + " :: " + line.getContent() + "\n";
+            for (LineUsedInEditingScreen line : lines) {
+                message += "\tLineUsedInEditingScreen: " + line + " :: " + line.getContent() + "\n";
             }
         }
 
@@ -137,10 +137,10 @@ public class SmartTextBox extends Box {
             return;
         }
 
-        Block block;
+        BlockUsedInEditingScreen block;
 
         if (lines.isEmpty()) {
-            block = new Block(
+            block = new BlockUsedInEditingScreen(
                     textArea.getX(),
                     textArea.getY(),
                     textArea.getWidth(),
@@ -149,12 +149,12 @@ public class SmartTextBox extends Box {
 //                    rendered ? lineHeight(lineContents[0]) : textArea.getHeight());
             getFrame().add(block);
         } else {
-            block = (Block) lines.get(0).getParent();
+            block = (BlockUsedInEditingScreen) lines.get(0).getParent();
         }
 
         lines.clear();
 
-        Line line = new Line(
+        LineUsedInEditingScreen line = new LineUsedInEditingScreen(
                 textArea.getX(),
                 textArea.getY(),
                 rendered ? lineWidth(lineContents[0]) : textArea.getWidth(),
@@ -165,7 +165,7 @@ public class SmartTextBox extends Box {
         lines.add(line);
 
         for (int i = 1; i < lineContents.length; ++i) {
-            Line l = new Line(
+            LineUsedInEditingScreen l = new LineUsedInEditingScreen(
                     lines.get(i - 1).getLeftUpperCornerX(),
                     lines.get(i - 1).getLeftUpperCornerY() + lines.get(i - 1).getHeight(),
                     rendered ? lineWidth(lineContents[i]) : textArea.getWidth(),
@@ -254,28 +254,28 @@ public class SmartTextBox extends Box {
 
     public String[] getWords() {
         ArrayList<String> words = new ArrayList<String>();
-        for (Line line : lines) {
+        for (LineUsedInEditingScreen line : lines) {
             Collections.addAll(words, line.getContent().split(" ,.:;()[]/"));
         }
         return words.toArray(new String[words.size()]);
     }
 
-    public ArrayList<Line> getLines() {
+    public ArrayList<LineUsedInEditingScreen> getLines() {
         return lines;
     }
 
-    private void setLines(ArrayList<Line> lines) {
+    private void setLines(ArrayList<LineUsedInEditingScreen> lines) {
         this.lines = lines;
         content = "";
-        for (Line line : lines) {
+        for (LineUsedInEditingScreen line : lines) {
             content += line.getContent() + "\n";
         }
         content = content.trim();
     }
 
     private void add(Node node) {
-        if (node instanceof Line) {
-            Line line = (Line) node;
+        if (node instanceof LineUsedInEditingScreen) {
+            LineUsedInEditingScreen line = (LineUsedInEditingScreen) node;
             lines.add(line);
             content += "\n" + line.getContent();
         }

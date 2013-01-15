@@ -103,7 +103,7 @@ public class OCRableImage extends CroppableImage {
             throw new DoenstFitException();
         }
 
-        return "Image Block";
+        return "Image BlockUsedInEditingScreen";
     }
 
     public String getContentOfSelectionAsPageNumberBlock(int x, int y, int height, int width) throws DoenstFitException, BadPageNumber {

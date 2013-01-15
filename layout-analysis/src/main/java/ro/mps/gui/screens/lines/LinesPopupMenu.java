@@ -18,7 +18,7 @@ public class LinesPopupMenu {
     private static final String EDIT_LINES = "Edit lines";
     private static final String SPLIT = "Split";
     private static final String ERROR_MESSAGE_FOR_MERGE = "Lines aren't in the same block. Couldn't merge them.";
-    private static final String ERROR_MESSAGE_FOR_SPLIT = "Line couldn't be split there is no space left.";
+    private static final String ERROR_MESSAGE_FOR_SPLIT = "LineUsedInEditingScreen couldn't be split there is no space left.";
 
     private PositionSpinner positionSpinner;
     //private LinesEditingScreen linesEditingScreen;

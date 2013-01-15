@@ -127,7 +127,7 @@ public class ParagraphPopupMenu {
 
         private void showInfoAboutDataStructure() {
             System.out.println("------------------------------------------");
-            System.out.println(paragraphEditingScreen.getRoot());
+            System.out.println(paragraphEditingScreen.getRootUsedInEditingScreen());
         }
 
         @Override
@@ -173,7 +173,7 @@ public class ParagraphPopupMenu {
 
         private void showInfoAboutDataStructure() {
             System.out.println("------------------------------------------");
-            System.out.println(paragraphEditingScreen.getRoot());
+            System.out.println(paragraphEditingScreen.getRootUsedInEditingScreen());
         }
 
         @Override

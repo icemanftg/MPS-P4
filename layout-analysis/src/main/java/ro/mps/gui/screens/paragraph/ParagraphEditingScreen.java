@@ -1,11 +1,13 @@
 package ro.mps.gui.screens.paragraph;
 
-import ro.mps.screen.concrete.Block;
+import ro.mps.data.concrete.Root;
+import ro.mps.screen.concrete.BlockUsedInEditingScreen;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
-import ro.mps.screen.concrete.Root;
+import ro.mps.screen.concrete.RootUsedInEditingScreen;
 import ro.mps.gui.screens.Observer;
 import ro.mps.gui.screens.Subject;
+import ro.mps.screen.transformer.DataStructureTransformer;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
 
     private static final String WINDOW_TITLE = "Edit Blocks";
     private List<ParagraphEntry> paragraphs;
-    private Root root;
+    private RootUsedInEditingScreen root;
     private JPanel containingPanel;
     private ParagraphPopupMenu popupMenu;
     private List<Observer> observers = new ArrayList<Observer>();
@@ -38,9 +40,13 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
      * Builds the editing screen based on the root
      * @param root - root of the tree
      */
-    public ParagraphEditingScreen(Root root) {
+    public ParagraphEditingScreen(RootUsedInEditingScreen root) {
         this(root.getTextFromParagraphs());
         this.root = root;
+    }
+
+    public ParagraphEditingScreen(Root root) {
+        this(DataStructureTransformer.transformRootToRootUsedInEditingScreen(root));
     }
 
     /**
@@ -48,7 +54,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
      * @param root - root of the tree
      */
     @Override
-    public void update(Root root) {
+    public void update(RootUsedInEditingScreen root) {
         this.root = root;
         containingPanel.removeAll();
         addParagraphs(root.getTextFromParagraphs());
@@ -65,8 +71,12 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
         super.addScrollPanel(containingPanel);
     }
 
-    public Root getRoot() {
+    public RootUsedInEditingScreen getRootUsedInEditingScreen() {
         return root;
+    }
+
+    public Root getRoot() {
+        return DataStructureTransformer.transformRootUsedInEditingScreenToRoot(root);
     }
 
     /**
@@ -213,8 +223,8 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
      */
     private boolean modifyDataStructureAfterMergeOperation(ParagraphEntry paragraphEntry) {
         int paragraphEntryIndex = getParagraphEntryIndex(paragraphEntry);
-        Block firstBlock = root.getChild(paragraphEntryIndex);
-        Block secondBlock = root.getChild(paragraphEntryIndex + 1);
+        BlockUsedInEditingScreen firstBlock = root.getChild(paragraphEntryIndex);
+        BlockUsedInEditingScreen secondBlock = root.getChild(paragraphEntryIndex + 1);
 
         return firstBlock.merge(secondBlock);
     }
@@ -241,7 +251,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
      */
     private void modifyDataStructureAfterSplitOperation(ParagraphEntry checkedParagraph, int lineNumber) {
         int paragraphEntryIndex = getParagraphEntryIndex(checkedParagraph);
-        Block block = root.getChild(paragraphEntryIndex);
+        BlockUsedInEditingScreen block = root.getChild(paragraphEntryIndex);
         block.split(lineNumber);
     }
 

@@ -18,7 +18,6 @@ public interface Compound {
      */
     List<Node> getChildren();
 
-    
     /**
      * Checks if the current element overlaps the other
      * 

@@ -1,6 +1,6 @@
 package ro.mps.gui.screens;
 
-import ro.mps.screen.concrete.Root;
+import ro.mps.screen.concrete.RootUsedInEditingScreen;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,5 +9,5 @@ import ro.mps.screen.concrete.Root;
  * Time: 21:39
  */
 public interface Observer {
-    void update(Root root);
+    void update(RootUsedInEditingScreen root);
 }

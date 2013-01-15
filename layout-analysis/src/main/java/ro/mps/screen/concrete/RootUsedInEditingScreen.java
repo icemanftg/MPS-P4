@@ -1,13 +1,39 @@
 package ro.mps.screen.concrete;
 
+import ro.mps.data.concrete.ComposedBlock;
+import ro.mps.data.concrete.ImageBlock;
 import ro.mps.screen.base.OrphanCompoundNode;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RootUsedInEditingScreen extends OrphanCompoundNode<Block> {
+public class RootUsedInEditingScreen extends OrphanCompoundNode<BlockUsedInEditingScreen> {
+    private ComposedBlock composedBlock;
+    private List<ImageBlock> imageBlockList;
+    private boolean hasComposedBlock = false;
 
     public RootUsedInEditingScreen(int width, int height) {
-        super("document", 0, 0, height, width);
+        super("Document", 0, 0, height, width);
+    }
+
+    public ComposedBlock getComposedBlock() {
+        return composedBlock;
+    }
+
+    public void setComposedBlock(ComposedBlock composedBlock) {
+        this.composedBlock = composedBlock;
+        hasComposedBlock = true;
+    }
+
+    public boolean isHasComposedBlock() {
+        return hasComposedBlock;
+    }
+
+    public List<ImageBlock> getImageBlockList() {
+        return imageBlockList;
+    }
+
+    public void setImageBlockList(List<ImageBlock> imageBlockList) {
+        this.imageBlockList = imageBlockList;
     }
 
     /**
@@ -17,7 +43,7 @@ public class RootUsedInEditingScreen extends OrphanCompoundNode<Block> {
     public List<String> getTextFromParagraphs() {
         List<String> textFromParagraphs = new LinkedList<String>();
 
-        for ( Block block : getChildren() ) {
+        for ( BlockUsedInEditingScreen block : getChildren() ) {
             textFromParagraphs.add(block.getTextFromParagraph());
         }
 
@@ -31,8 +57,8 @@ public class RootUsedInEditingScreen extends OrphanCompoundNode<Block> {
     public List<String> getTextFromLines() {
         List<String> textFromLines = new LinkedList<String>();
 
-        for ( Block block : getChildren() ) {
-            for ( Line line : block.getChildren() ) {
+        for ( BlockUsedInEditingScreen block : getChildren() ) {
+            for ( LineUsedInEditingScreen line : block.getChildren() ) {
                 textFromLines.add(line.getContent());
             }
         }
@@ -44,10 +70,10 @@ public class RootUsedInEditingScreen extends OrphanCompoundNode<Block> {
      * Returns the line contained in the tree
      * @return - returns a list of lines contained in the tree
      */
-    public List<Line> getLines() {
-        List<Line> lines = new LinkedList<Line>();
+    public List<LineUsedInEditingScreen> getLines() {
+        List<LineUsedInEditingScreen> lines = new LinkedList<LineUsedInEditingScreen>();
 
-        for ( Block block : getChildren() ) {
+        for ( BlockUsedInEditingScreen block : getChildren() ) {
             lines.addAll(block.getChildren());
         }
 
@@ -64,7 +90,7 @@ public class RootUsedInEditingScreen extends OrphanCompoundNode<Block> {
 
         String result = String.format(TEMPLATE, getLeftUpperCornerX(), getLeftUpperCornerY(), getHeight(), getWidth());
 
-        for ( Block block : getChildren() ) {
+        for ( BlockUsedInEditingScreen block : getChildren() ) {
             result += block.toString();
         }
 

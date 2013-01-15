@@ -1,8 +1,8 @@
 package ro.mps.gui.screens.generators;
 
-import ro.mps.screen.concrete.Block;
-import ro.mps.screen.concrete.Line;
-import ro.mps.screen.concrete.Root;
+import ro.mps.screen.concrete.BlockUsedInEditingScreen;
+import ro.mps.screen.concrete.LineUsedInEditingScreen;
+import ro.mps.screen.concrete.RootUsedInEditingScreen;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,16 +27,16 @@ public class TreeGenerator {
         this.numberOfBlocks = numberOfBlocks;
     }
 
-    public Root buildTree() {
-        Root root = new Root(DEFAULT_HEIGHT, DEFAULT_WIDTH);
+    public RootUsedInEditingScreen buildTree() {
+        RootUsedInEditingScreen root = new RootUsedInEditingScreen(DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
         for (int i = 0; i < numberOfBlocks; i++) {
-            Block block = buildBlock(i);
+            BlockUsedInEditingScreen block = buildBlock(i);
             root.addChild(block);
             block.setParent(root);
 
             for (int j = 0; j < NUMBER_OF_LINES_FOR_EACH_BLOCK; j++) {
-                Line line = buildLine(j, block);
+                LineUsedInEditingScreen line = buildLine(j, block);
                 block.addChild(line);
                 line.setParent(block);
             }
@@ -45,23 +45,23 @@ public class TreeGenerator {
         return root;
     }
 
-    private Block buildBlock(int blockNumber) {
+    private BlockUsedInEditingScreen buildBlock(int blockNumber) {
         final int BLOCK_HEIGHT = 50;
         final int BLOCK_WIDTH = 50;
         final int BASE_COORDINATE_FOR_Y = 0;
         final int COORDINATE_FOR_X = 0;
         int y = BASE_COORDINATE_FOR_Y + blockNumber * BLOCK_HEIGHT;
 
-        return new Block(COORDINATE_FOR_X, y, BLOCK_HEIGHT, BLOCK_WIDTH);
+        return new BlockUsedInEditingScreen(COORDINATE_FOR_X, y, BLOCK_HEIGHT, BLOCK_WIDTH);
     }
 
-    private Line buildLine(int lineNumber, Block block) {
+    private LineUsedInEditingScreen buildLine(int lineNumber, BlockUsedInEditingScreen block) {
         final int LINE_HEIGHT = 10;
         final int LINE_WIDTH = 10;
         int y = block.getLeftUpperCornerY() + lineNumber * LINE_HEIGHT;
         int x = block.getLeftUpperCornerX();
 
-        Line line = new Line(x, y, LINE_HEIGHT, LINE_WIDTH);
+        LineUsedInEditingScreen line = new LineUsedInEditingScreen(x, y, LINE_HEIGHT, LINE_WIDTH);
         line.setContent(PLACEHOLDER_TEXT[lineNumber]);
 
         return line;
