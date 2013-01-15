@@ -2,7 +2,10 @@ package ro.mps.motion;
 
 import ro.mps.crop.image.CroppableImage;
 import ro.mps.crop.image.OCRableImage;
+import ro.mps.data.api.HasPosition;
+import ro.mps.data.base.CompoundNode;
 import ro.mps.data.base.Node;
+import ro.mps.data.base.OrphanCompoundNode;
 import ro.mps.data.concrete.Block;
 import ro.mps.data.concrete.Root;
 import ro.mps.data.parsing.XMLWriter;
@@ -184,10 +187,10 @@ public class MotionScreen extends JComponent {
     private Root root;
     private boolean renderBlocks = true;
     
-    private ArrayList<Block> blocks = new ArrayList<Block>();
-    private ArrayList<Line> lines = new ArrayList<Line>();
+    private ArrayList<HasPosition> blocks = new ArrayList<HasPosition>();
+    private ArrayList<HasPosition> lines = new ArrayList<HasPosition>();
     private Block selected;
-    private ArrayList<Block> availableForSelection;
+    private ArrayList<HasPosition> availableForSelection;
     
     public void renderBlocks(boolean flag){
     	renderBlocks = flag;
@@ -234,10 +237,24 @@ public class MotionScreen extends JComponent {
         /**
          * Adding all the blocks
          */
+        blocks.addAll(root.getChildren());
         
         /**
          * Adding all the lines
          */
+        CompoundNode cn = null;
+        for (HasPosition hp : blocks) {
+        	if (hp instanceof OrphanCompoundNode) {
+        		cn = (CompoundNode)hp;
+        		lines.addAll(cn.getChildren());
+        	}
+        }
+        
+        /**
+         * Initially focus is on the blocks
+         */
+        renderBlocks = true;
+        availableForSelection = blocks;
     }
 
     @Override
@@ -246,10 +263,24 @@ public class MotionScreen extends JComponent {
                 root.getHeight());
     }
     
+    private void drawBlocks(Collection<HasPosition> blocks, Graphics g) {
+    	
+    }
+    
+    private void drawLines(Collection<HasPosition> lines, Graphics g){
+    	
+    }
+    
     @Override
     public void paintComponent(Graphics g) {
         parent.repaint();
 
+        /**
+         * Draw components on the screen
+         */
+        drawBlocks(blocks, g);
+        drawLines(lines, g);
+        
     }
 
     private class MouseHandler extends MouseAdapter {
