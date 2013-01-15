@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Document direction="" image="">
-<TextBlock bottom="358" left="297" right="576" top="223">
-<TextLine bottom="268" left="297" right="576" top="223">
-<String>|mmer@websi</String>
+<TextBlock bottom="590" left="344" right="723" top="230">
+<TextLine bottom="270" left="344" right="723" top="230">
+<String>mergagweosuecom</String>
 </TextLine>
-<TextLine bottom="313" left="297" right="576" top="268">
-<String>aelle” braune</String>
+<TextLine bottom="310" left="344" right="723" top="270">
+<String>.le” braune Fuchs</String>
 </TextLine>
-<TextLine bottom="358" left="297" right="576" top="313">
-<String>faulen Hund.</String>
+<TextLine bottom="350" left="344" right="723" top="310">
+<String>ulen Hund. Le 1'61</String>
 </TextLine>
-</TextBlock>
-<TextBlock bottom="468" left="328" right="522" top="413">
-<TextLine bottom="468" left="328" right="522" top="413">
-<String>La volpe</String>
+<TextLine bottom="390" left="344" right="723" top="350">
+<String>ute par-dessus le</String>
+</TextLine>
+<TextLine bottom="430" left="344" right="723" top="390">
+<String>La volpe marrone</String>
+</TextLine>
+<TextLine bottom="470" left="344" right="723" top="430">
+<String>i] cane pigro. El</String>
+</TextLine>
+<TextLine bottom="510" left="344" right="723" top="470">
+<String>do salta sobre el</String>
+</TextLine>
+<TextLine bottom="550" left="344" right="723" top="510">
+<String/>
+</TextLine>
+<TextLine bottom="590" left="344" right="723" top="550">
+<String>rnnnca IYIOIIIAOYI .-</String>
 </TextLine>
 </TextBlock>
 <ComposedBlock type="page_number">
-<TextBlock bottom="161" left="488" right="540" top="117">
-<TextLine bottom="161" left="488" right="540" top="117">
+<TextBlock bottom="154" left="491" right="538" top="114">
+<TextLine bottom="154" left="491" right="538" top="114">
 <String>78</String>
 </TextLine>
 </TextBlock>
