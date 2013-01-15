@@ -268,24 +268,44 @@ public class MotionScreen extends JComponent {
     }
     
     private void drawBlocks(Collection<HasPosition> blocks, Graphics g) {
-    	g.setColor(blockColor);
     	for (HasPosition hp : blocks) {
-    		if (hp != selected)
-	    		g.drawRect(hp.getLeftUpperCornerX(),
-	    				hp.getLeftUpperCornerY(),
-	    				hp.getWidth(),
-	    				hp.getHeight());
+    		drawBlock(g, hp);
+    	}
+    }
+    
+    private void drawLine(Graphics g, HasPosition hp) {
+    	if (hp != selected){
+    		g.setColor(lineColor);
+    		g.drawRect(hp.getLeftUpperCornerX(),
+    				hp.getLeftUpperCornerY(),
+    				hp.getWidth(),
+    				hp.getHeight());
+    	}
+    }
+    
+    private void drawBlock(Graphics g, HasPosition hp) {
+    	if (hp != selected){
+    		g.setColor(blockColor);
+    		g.drawRect(hp.getLeftUpperCornerX(),
+    				hp.getLeftUpperCornerY(),
+    				hp.getWidth(),
+    				hp.getHeight());
+    	}
+    }
+    
+    private void drawSelected(Graphics g, HasPosition hp) {
+    	if (hp != selected){
+    		g.setColor(selectedColor);
+    		g.drawRect(hp.getLeftUpperCornerX(),
+    				hp.getLeftUpperCornerY(),
+    				hp.getWidth(),
+    				hp.getHeight());
     	}
     }
     
     private void drawLines(Collection<HasPosition> lines, Graphics g){
-    	g.setColor(lineColor);
     	for (HasPosition hp : lines) {
-    		if (hp != selected)
-	    		g.drawRect(hp.getLeftUpperCornerX(),
-	    				hp.getLeftUpperCornerY(),
-	    				hp.getWidth(),
-	    				hp.getHeight());
+    		drawLine(g, hp);
     	}
     }
     
@@ -296,8 +316,8 @@ public class MotionScreen extends JComponent {
         /**
          * Draw components on the screen
          */
-        drawBlocks(blocks, g);
         drawLines(lines, g);
+        drawBlocks(blocks, g);
         
     }
 
