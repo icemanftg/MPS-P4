@@ -181,6 +181,10 @@ class ControlsFrame extends JFrame {
 @SuppressWarnings("serial")
 public class MotionScreen extends JComponent {
 
+	private static Color blockColor = Color.BLUE;
+	private static Color lineColor = Color.YELLOW;
+	private static Color selectedColor = Color.GREEN;
+	
     private Point mousePt;
     private JFrame parent;
 
@@ -189,7 +193,7 @@ public class MotionScreen extends JComponent {
     
     private ArrayList<HasPosition> blocks = new ArrayList<HasPosition>();
     private ArrayList<HasPosition> lines = new ArrayList<HasPosition>();
-    private Block selected;
+    private HasPosition selected;
     private ArrayList<HasPosition> availableForSelection;
     
     public void renderBlocks(boolean flag){
@@ -264,11 +268,25 @@ public class MotionScreen extends JComponent {
     }
     
     private void drawBlocks(Collection<HasPosition> blocks, Graphics g) {
-    	
+    	g.setColor(blockColor);
+    	for (HasPosition hp : blocks) {
+    		if (hp != selected)
+	    		g.drawRect(hp.getLeftUpperCornerX(),
+	    				hp.getLeftUpperCornerY(),
+	    				hp.getWidth(),
+	    				hp.getHeight());
+    	}
     }
     
     private void drawLines(Collection<HasPosition> lines, Graphics g){
-    	
+    	g.setColor(lineColor);
+    	for (HasPosition hp : lines) {
+    		if (hp != selected)
+	    		g.drawRect(hp.getLeftUpperCornerX(),
+	    				hp.getLeftUpperCornerY(),
+	    				hp.getWidth(),
+	    				hp.getHeight());
+    	}
     }
     
     @Override
