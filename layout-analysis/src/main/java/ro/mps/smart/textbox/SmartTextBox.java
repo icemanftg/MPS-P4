@@ -4,10 +4,10 @@ package ro.mps.smart.textbox;/*
  */
 
 
-import ro.mps.data.api.Compound;
-import ro.mps.data.base.Node;
-import ro.mps.data.concrete.Block;
-import ro.mps.data.concrete.Line;
+import ro.mps.screen.api.Compound;
+import ro.mps.screen.base.Node;
+import ro.mps.screen.concrete.Block;
+import ro.mps.screen.concrete.Line;
 import ro.mps.smart.frame.SmartFrame;
 
 import javax.swing.*;

@@ -1,9 +1,9 @@
 package ro.mps.gui.screens.paragraph;
 
-import ro.mps.data.concrete.Block;
+import ro.mps.screen.concrete.Block;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
-import ro.mps.data.concrete.Root;
+import ro.mps.screen.concrete.Root;
 import ro.mps.gui.screens.Observer;
 import ro.mps.gui.screens.Subject;
 

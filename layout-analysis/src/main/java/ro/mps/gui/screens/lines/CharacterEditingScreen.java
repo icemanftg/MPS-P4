@@ -1,7 +1,7 @@
 package ro.mps.gui.screens.lines;
 
-import ro.mps.data.concrete.Line;
-import ro.mps.data.concrete.Root;
+import ro.mps.screen.concrete.Line;
+import ro.mps.screen.concrete.Root;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
 import ro.mps.gui.screens.Observer;

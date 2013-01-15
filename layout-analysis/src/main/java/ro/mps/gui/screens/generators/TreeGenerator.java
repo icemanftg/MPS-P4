@@ -1,8 +1,8 @@
 package ro.mps.gui.screens.generators;
 
-import ro.mps.data.concrete.Block;
-import ro.mps.data.concrete.Line;
-import ro.mps.data.concrete.Root;
+import ro.mps.screen.concrete.Block;
+import ro.mps.screen.concrete.Line;
+import ro.mps.screen.concrete.Root;
 
 /**
  * Created with IntelliJ IDEA.

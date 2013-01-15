@@ -1,6 +1,6 @@
 package ro.mps.gui;
 
-import ro.mps.data.concrete.Root;
+import ro.mps.screen.concrete.Root;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.SelectionScreen;
 import ro.mps.gui.screens.lines.CharacterEditingScreen;

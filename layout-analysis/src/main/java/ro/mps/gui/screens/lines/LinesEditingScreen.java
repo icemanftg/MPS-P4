@@ -1,8 +1,8 @@
 package ro.mps.gui.screens.lines;
 
-import ro.mps.data.api.Compound;
-import ro.mps.data.concrete.Line;
-import ro.mps.data.concrete.Root;
+import ro.mps.screen.api.Compound;
+import ro.mps.screen.concrete.Line;
+import ro.mps.screen.concrete.Root;
 import ro.mps.gui.screens.Observer;
 import ro.mps.gui.screens.Subject;
 

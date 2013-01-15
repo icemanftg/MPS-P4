@@ -1,6 +1,6 @@
 package ro.mps.gui.screens;
 
-import ro.mps.data.concrete.Root;
+import ro.mps.screen.concrete.Root;
 
 /**
  * Created with IntelliJ IDEA.
