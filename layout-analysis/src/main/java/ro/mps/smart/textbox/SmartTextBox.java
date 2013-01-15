@@ -4,20 +4,19 @@ package ro.mps.smart.textbox;/*
  */
 
 
-import ro.mps.screen.api.Compound;
-import ro.mps.screen.base.Node;
-import ro.mps.screen.concrete.BlockUsedInEditingScreen;
-import ro.mps.screen.concrete.LineUsedInEditingScreen;
+import ro.mps.data.base.Node;
+import ro.mps.data.concrete.Block;
+import ro.mps.data.concrete.Line;
 import ro.mps.smart.frame.SmartFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ro.mps.data.api.HasParent;
+import ro.mps.data.api.HasPosition;
+import ro.mps.error.exceptions.DoenstFitException;
 
 /**
  * @author alexandra
@@ -28,154 +27,198 @@ public class SmartTextBox extends Box {
     private ComponentResizer resizer;
     private ComponentMover mover;
     private String content, visibleContent;
-    private JLabel jl;
-    private ArrayList<LineUsedInEditingScreen> lines;
     private SmartFrame frame;
+    private HasPosition parentNode;
+    private Node node;
+    private Dimension size;
+    private Point position;
 
     public SmartTextBox(int w, int h) {
         super(BoxLayout.PAGE_AXIS);
 
         setBounds(0, 0, w, h);
 
+        size = new Dimension(w, h);
+        position = new Point(0, 0);
+
         Container cp = new Container();
         cp.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-        jl = new JLabel("\n");
-        cp.add(jl);
-        add(cp);
-
         textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(w, h - 20));
-        textArea.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                content = textArea.getText();
-                updateLineContent(content, true);
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                content = textArea.getText();
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                content = textArea.getText();
-            }
-        });
+        textArea.setEditable(false);
+        textArea.setPreferredSize(new Dimension(w, h));
 
         add(textArea);
 
-        lines = new ArrayList<LineUsedInEditingScreen>();
 
         setPreferredSize(new Dimension(w, h));
         setBorder(BorderFactory.createLineBorder(Color.black));
 
         resizer = new ComponentResizer(this);
-        mover = new ComponentMover(this, cp);
+        mover = new ComponentMover(this, textArea);
     }
 
-    public void handleResize() throws Exception {
-        textArea.setPreferredSize(new Dimension(getWidth(), getHeight() - jl.getHeight()));
+    public HasPosition getParentNode() {
+        return parentNode;
+    }
+
+    public void setParentNode(HasPosition parentNode) {
+        this.parentNode = parentNode;
+    }
+
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Block node) {
+        this.node = node;
+        System.out.println("Added block node");
+        this.setBounds(node.getLeftUpperCornerX(), node.getLeftUpperCornerY(), node.getWidth(), node.getHeight());
+
+        position = new Point(node.getLeftUpperCorner());
+        size = new Dimension(node.getWidth(), node.getHeight());
+
+//        for (Node child : node.getChildren()) {
+//            if (child instanceof Line) {
+//                Line line = (Line) child;
+//
+//                setText(getText() + "\n" + line.getContent());
+//            }
+//        }
+    }
+
+    public void setNode(Line node) {
+//        pt linii
+        System.out.println("Added line node");
+
+
+        this.node = node;
+        this.setBounds(node.getLeftUpperCornerX(), node.getLeftUpperCornerY(), node.getWidth(), node.getHeight());
+
+        position = new Point(node.getLeftUpperCorner());
+        size = new Dimension(node.getWidth(), node.getHeight());
+
+        setText(((Line) node).getContent());
+    }
+
+    public void handleResize() {
+        textArea.setPreferredSize(new Dimension(getWidth(), getHeight()));
         textArea.setMaximumSize(textArea.getPreferredSize());
         setBorder(BorderFactory.createLineBorder(Color.black));
 
         textArea.setMargin(new Insets(0, 0, 0, 0));
 
-        checkIntersections();
+        try {
+            checkIntersections();
+        } catch (DoenstFitException ex) {
+            Logger.getLogger(SmartTextBox.class.getName()).log(Level.SEVERE, null, ex);
+            
+            setBounds(position.x, position.y, size.width, size.height);
+            
+            WindowEvent wev = new WindowEvent(frame.getFrame(), WindowEvent.WINDOW_CLOSING);
+            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
 
-        String message = "";
-
-        if (lines.isEmpty()) {
-            message = "No node";
-        } else {
-            message = "Containing node " + lines.get(0).getParent() + "\n";
-            for (LineUsedInEditingScreen line : lines) {
-                message += "\tLineUsedInEditingScreen: " + line + " :: " + line.getContent() + "\n";
-            }
         }
 
-        Logger.getLogger(getClass().getName()).log(Level.INFO, message);
+        node.setWidth(getWidth());
+        node.setHeight(getHeight());
+        
+        size = new Dimension(getWidth(), getHeight());
+
     }
 
-    public void handleMove() throws Exception {
-        checkIntersections();
-    }
-
-    private void checkIntersections() throws Exception {
-        Node me = (Node) lines.get(0).getParent();
-        //am i inside?
-        for (Node node : getFrame().getChildren()) {
-            if (node.equals(me)) {
-                continue;
-            }
-
-            if (node.inside(me.getLeftUpperCorner())
-                    && node.inside(me.getLeftUpperCornerX() + me.getWidth(), me.getLeftUpperCornerY())
-                    && node.inside(me.getLeftUpperCornerX() + me.getWidth(), me.getLeftUpperCornerY() + me.getHeight())
-                    && node.inside(me.getLeftUpperCornerX(), me.getLeftUpperCornerY() + me.getHeight())) {
-                // node.merge(me) sau ceva
-                continue;
-            }
-
-            // se poate face merge daca m-am intins in dreapta si/sau in jos.
-
-            if (me.inside(node.getLeftUpperCorner())) {
-                // node.merge(me) sau ceva
-                continue;
-            }
-
-            throw new Exception("Invalid resize!");
+    public void handleMove() {
+        try {
+            checkIntersections();
+        } catch (DoenstFitException ex) {
+            Logger.getLogger(SmartTextBox.class.getName()).log(Level.SEVERE, null, ex);
+            
+            setBounds(position.x, position.y, size.width, size.height);
+            
+            WindowEvent wev = new WindowEvent(frame.getFrame(), WindowEvent.WINDOW_CLOSING);
+            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
         }
+
+        node.setUpperLeftCorner(getX(), getY());
+        
+        position = new Point(node.getLeftUpperCorner());
+    }
+
+    private void checkIntersections() throws DoenstFitException {
+
+        if (parentNode != null && !node.isContainedBy(parentNode)) {
+            throw new DoenstFitException();
+        }
+
+        for (Node other : getFrame().getChildren()) {
+            if (node.equals(other)) {
+                continue;
+            }
+
+            if (node.clears(other)) {
+                continue;
+            }
+
+            if (((HasParent) node).getParent().equals(other)) {
+                if (node.isContainedBy((HasPosition) other)) {
+                    continue;
+                } else {
+                    throw new DoenstFitException();
+                }
+            }
+
+            if (other instanceof Block) {
+                for (Node child : ((Block) other).getChildren()) {
+                    if (other.equals(child)) {
+                        continue;
+                    }
+                    if (!node.clears(other)) {
+                        throw new DoenstFitException();
+                    }
+                }
+            }
+
+
+        }
+
+       
     }
 
     private void updateLineContent(String content, boolean rendered) {
         String[] lineContents = content.split("\n");
 
         if (lineContents.length == 0) {
-            lines.clear();
+//            lines.clear();
             return;
         }
 
-        BlockUsedInEditingScreen block;
-
-        if (lines.isEmpty()) {
-            block = new BlockUsedInEditingScreen(
-                    textArea.getX(),
-                    textArea.getY(),
-                    textArea.getWidth(),
-                    textArea.getHeight());
-//                    rendered ? lineWidth(lineContents[0]) : textArea.getWidth(),
-//                    rendered ? lineHeight(lineContents[0]) : textArea.getHeight());
-            getFrame().add(block);
+        if (node instanceof Line) {
+            Line line = (Line) node;
+            line.setContent(lineContents[0]);
         } else {
-            block = (BlockUsedInEditingScreen) lines.get(0).getParent();
+            Block block = (Block) node;
+            for (int i = 0; i < Math.min(lineContents.length, block.getChildren().size()); ++i) {
+                Line line = (Line) block.getChildren().get(i);
+                line.setContent(lineContents[i]);
+            }
+
+            if (block.getChildren().size() > lineContents.length) {
+                for (int i = lineContents.length; i < block.getChildren().size(); ++i) {
+                    block.getChildren().remove(lineContents.length);
+                }
+            }
+
+            if (lineContents.length > block.getChildren().size()) {
+                Line last = (Line) block.getChildren().get(block.getChildren().size() - 1);
+                for (int i = block.getChildren().size(); i < lineContents.length; ++i) {
+                    Line line = new Line(last.getLeftUpperCornerX(), last.getLeftUpperCornerY() + last.getHeight(), last.getWidth(), last.getHeight());
+                    line.setParent(last.getParent());
+                    line.setContent(lineContents[i]);
+                    ((Block) last.getParent()).addChild(line);
+                }
+            }
         }
 
-        lines.clear();
-
-        LineUsedInEditingScreen line = new LineUsedInEditingScreen(
-                textArea.getX(),
-                textArea.getY(),
-                rendered ? lineWidth(lineContents[0]) : textArea.getWidth(),
-                rendered ? lineHeight(lineContents[0]) : textArea.getHeight());
-        line.setContent(lineContents[0]);
-        line.setParent(block);
-        block.getChildren().add(line);
-        lines.add(line);
-
-        for (int i = 1; i < lineContents.length; ++i) {
-            LineUsedInEditingScreen l = new LineUsedInEditingScreen(
-                    lines.get(i - 1).getLeftUpperCornerX(),
-                    lines.get(i - 1).getLeftUpperCornerY() + lines.get(i - 1).getHeight(),
-                    rendered ? lineWidth(lineContents[i]) : textArea.getWidth(),
-                    rendered ? lineHeight(lineContents[i]) : textArea.getHeight()
-            );
-            l.setParent(lines.get(i - 1).getParent());
-            l.getParent().getChildren().add(l);
-            l.setContent(lineContents[i]);
-            lines.add(l);
-        }
     }
 
     private int lineWidth(String line) {
@@ -243,48 +286,11 @@ public class SmartTextBox extends Box {
     }
 
     public void setText(String text) {
+        System.out.println("[TEXT] " + text);
+
         textArea.setText(text);
         content = text;
         updateLineContent(content, false);
-    }
-
-    public String[] getLineContents() {
-        return new String[lines.size()];
-    }
-
-    public String[] getWords() {
-        ArrayList<String> words = new ArrayList<String>();
-        for (LineUsedInEditingScreen line : lines) {
-            Collections.addAll(words, line.getContent().split(" ,.:;()[]/"));
-        }
-        return words.toArray(new String[words.size()]);
-    }
-
-    public ArrayList<LineUsedInEditingScreen> getLines() {
-        return lines;
-    }
-
-    private void setLines(ArrayList<LineUsedInEditingScreen> lines) {
-        this.lines = lines;
-        content = "";
-        for (LineUsedInEditingScreen line : lines) {
-            content += line.getContent() + "\n";
-        }
-        content = content.trim();
-    }
-
-    private void add(Node node) {
-        if (node instanceof LineUsedInEditingScreen) {
-            LineUsedInEditingScreen line = (LineUsedInEditingScreen) node;
-            lines.add(line);
-            content += "\n" + line.getContent();
-        }
-    }
-
-    public void add(Compound<Node> textAreaound) {
-        for (Node node : textAreaound.getChildren()) {
-            add(node);
-        }
     }
 
     public SmartFrame getFrame() {

@@ -137,4 +137,24 @@ public abstract class Node implements HasPosition, Resizable, Moveable, HasLabel
     	//Checks left
     	    	getLeftUpperCornerX() >= p.getLeftUpperCornerX() + p.getWidth());
     }
+    
+    @Override
+    public void setHeight(int height) {
+    	this.height = height; 
+    }
+    
+    @Override
+    public void setLeftUpperCornerX(int x) {
+    	this.x = x;
+    }
+    
+    @Override
+    public void setLeftUpperCornerY(int y) {
+    	this.y = y;
+    }
+    
+    @Override
+    public void setWidth(int width) {
+    	this.width = width;
+    }
 }

@@ -76,6 +76,12 @@ public interface HasPosition {
      * @param p
      * @return
      */
-    boolean clears(HasPosition p); 
+    boolean clears(HasPosition p);
+    
+    void setWidth(int width);
+    void setHeight(int height);
+    
+    void setLeftUpperCornerX(int x);
+    void setLeftUpperCornerY(int y);
 
 }

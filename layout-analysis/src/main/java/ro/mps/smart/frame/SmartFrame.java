@@ -4,7 +4,7 @@
  */
 package ro.mps.smart.frame;
 
-import ro.mps.screen.base.Node;
+import ro.mps.data.base.Node;
 import ro.mps.smart.textbox.SmartTextBox;
 
 import javax.swing.*;
@@ -24,14 +24,13 @@ public class SmartFrame {
     public SmartFrame() {
         frame = new JFrame();
         frame.setLayout(null);
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         children = new ArrayList<Node>();
+        
     }
 
     public SmartFrame(String title) {
         frame = new JFrame(title);
         frame.setLayout(null);
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         children = new ArrayList<Node>();
     }
 
@@ -52,7 +51,7 @@ public class SmartFrame {
         }
         return comp;
     }
-
+    
     public JFrame getFrame() {
         return frame;
     }
