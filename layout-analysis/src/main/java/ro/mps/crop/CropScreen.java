@@ -8,6 +8,8 @@ import ro.mps.data.parsing.XMLWriter;
 import ro.mps.error.exceptions.BadPageNumber;
 import ro.mps.error.exceptions.DoenstFitException;
 import ro.mps.error.gui.ErrorThrower;
+import ro.mps.motion.MotionScreen;
+import ro.mps.move_resize.RootResizeProcessor;
 import ro.mps.properties.Properties;
 
 import javax.swing.*;
@@ -77,7 +79,8 @@ class ControlsFrame extends JFrame {
 		
 		ActionListener next = new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {				
+			public void actionPerformed(ActionEvent arg0) {
+				MotionScreen.startMotionSCreen(attatched.getRoot());
 			}
 		};
 		
@@ -189,7 +192,7 @@ public class CropScreen extends JComponent {
 	            f.add(g);
 	            f.setLocationByPlatform(true);
 	            f.setVisible(true);
-	            controls.setBounds(0,0,300,200);
+	            controls.setBounds(0,0,400,150);
 	            controls.setVisible(true);
         	}
     	});
