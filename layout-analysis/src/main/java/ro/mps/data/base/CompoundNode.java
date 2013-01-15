@@ -4,15 +4,9 @@ import ro.mps.data.api.Compound;
 import ro.mps.data.api.HasParent;
 import ro.mps.data.api.HasPosition;
 
-/**
- * A compoundNode has as children a compoundNode of type C
- * His father has as children a compoundNode of type T
- * @param <T> the compound's class
- * @param <C> the children's class
- */
-public abstract class CompoundNode<T extends Node, C extends Node> extends OrphanCompoundNode<C> implements HasParent<T> {
+public abstract class CompoundNode extends OrphanCompoundNode implements HasParent {
 
-    private Compound<T> parent;
+    private Compound parent;
 
 	/**
      * Default constructor - only used by ComposedBlock
@@ -31,12 +25,12 @@ public abstract class CompoundNode<T extends Node, C extends Node> extends Orpha
     }
 
     @Override
-    public Compound<T> getParent() {
+    public Compound getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(Compound<T> p) {
+    public void setParent(Compound p) {
         parent = p;
     }
     

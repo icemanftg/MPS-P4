@@ -5,37 +5,33 @@ import ro.mps.data.api.HasContent;
 import ro.mps.data.api.HasParent;
 import ro.mps.data.base.Node;
 
-public class Line extends Node implements HasContent, HasParent<Line> {
+public class Line extends Node implements HasContent, HasParent {
 
-    private Compound<Line> parent;
+    private Compound parent;
     private String content;
 
     public Line(int x, int y, int height, int width) {
         super("Line", x, y, height, width);
     }
 
-    public Line(Compound<Line> p, int x, int y, int height, int width) {
+    public Line(Compound p, int x, int y, int height, int width) {
         this(x, y, height, width);
         parent = p;
     }
 
-    public Line(String content, Compound<Line> p, int x, int y, int height, int width) {
+    public Line(String content, Compound p, int x, int y, int height, int width) {
         this(p, x, y, height, width);
         this.content = content;
     }
 
-    public boolean haveSameParent(Line line) {
-        return this.getParent() == line.getParent();
-    }
-
     @Override
-    public Compound<Line> getParent() {
+    public Compound getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(Compound<Line> parent) {
-        this.parent = parent;
+    public void setParent(Compound p) {
+        parent = p;
     }
 
     @Override
@@ -47,15 +43,6 @@ public class Line extends Node implements HasContent, HasParent<Line> {
         this.content = content;
     }
 
-    @Override
-    public String toString() {
-        final String TEMPLATE = "\t\t**LINE**\n" +
-                "\t\t\tx = %d\n" +
-                "\t\t\ty = %d\n" +
-                "\t\t\tWidth = %d\n" +
-                "\t\t\tHeight = %d\n" +
-                "\t\t\tContent = %s\n";
+    ;
 
-        return String.format(TEMPLATE, getLeftUpperCornerX(), getLeftUpperCornerY(), getHeight(), getWidth(), content);
-    }
 }

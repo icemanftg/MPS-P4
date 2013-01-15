@@ -2,18 +2,20 @@ package ro.mps.gui;
 
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.SelectionScreen;
+import ro.mps.gui.screens.generators.TreeGenerator;
 import ro.mps.gui.screens.lines.CharacterEditingScreen;
 import ro.mps.gui.screens.lines.LinesEditingScreen;
-import ro.mps.gui.screens.lines.LinesTextGenerator;
 import ro.mps.gui.screens.paragraph.ParagraphEditingScreen;
-import ro.mps.gui.screens.paragraph.ParagraphsTextGenerator;
+import ro.mps.screen.concrete.Root;
 
 import javax.swing.*;
 
-
 @SuppressWarnings("serial")
 public class UserInterface extends JFrame {
-
+    private ParagraphEditingScreen paragraphEditingScreen;
+    private LinesEditingScreen linesEditingScreen;
+    private CharacterEditingScreen characterEditingScreen;
+    private Root root;
 
     public UserInterface() {
 
@@ -27,21 +29,44 @@ public class UserInterface extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(Screen.WINDOW_WIDTH, Screen.WINDOW_HEIGHT);
         this.setVisible(true);
+        generateTree();
+        createScreens();
+        registerObservers();
 
         addTabbedPannel();
     }
 
-    
-    
+    private void createScreens() {
+        paragraphEditingScreen = new ParagraphEditingScreen(root);
+        linesEditingScreen = new LinesEditingScreen(root);
+        characterEditingScreen = new CharacterEditingScreen(root);
+    }
+
+    private void generateTree() {
+        TreeGenerator treeGenerator = new TreeGenerator(5);
+        this.root = treeGenerator.buildTree();
+    }
+
+    private void registerObservers() {
+        paragraphEditingScreen.registerObserver(linesEditingScreen);
+        paragraphEditingScreen.registerObserver(characterEditingScreen);
+        linesEditingScreen.registerObserver(paragraphEditingScreen);
+        linesEditingScreen.registerObserver(characterEditingScreen);
+        characterEditingScreen.registerObserver(paragraphEditingScreen);
+        characterEditingScreen.registerObserver(linesEditingScreen);
+    }
+
+
     /**
      * Builds the initial tabbed pannel.
      */
     private void addTabbedPannel() {
         TabbedPannel tabbedPannel = new TabbedPannel();
-        tabbedPannel.addPane(new ParagraphEditingScreen(ParagraphsTextGenerator.getParagraphsText(30)));
-        tabbedPannel.addPane(new LinesEditingScreen(LinesTextGenerator.getLinesText(100)));
+
+        tabbedPannel.addPane(paragraphEditingScreen);
+        tabbedPannel.addPane(linesEditingScreen);
         tabbedPannel.addPane(new SelectionScreen());
-        tabbedPannel.addPane(new CharacterEditingScreen(LinesTextGenerator.getLinesText(100)));
+        tabbedPannel.addPane(characterEditingScreen);
 
         getContentPane().add(tabbedPannel);
     }

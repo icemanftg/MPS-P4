@@ -16,7 +16,7 @@ public class LayoutAnalysis {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                InitialInterface layoutGUI = new InitialInterface();
+                UserInterface layoutGUI = new UserInterface();
             }
         });
     }
