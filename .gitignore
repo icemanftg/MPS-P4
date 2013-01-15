@@ -28,3 +28,4 @@ adhoc/
 
 *classpath
 */bin/*
+layout-analysis/exported.xml

@@ -15,12 +15,11 @@ public class ComposedBlock extends CompoundNode {
         this.textBlock = block;
     }
 
-    public void setBlock(Block block) {
-        this.textBlock = block;
-    }
-
     public Block getBlock() {
-        return this.textBlock;
+    	if (getChildren().size() > 0)
+        	return (Block)getChildren().get(0);
+    	else
+    		return null;
     }
 
     public String getType() {

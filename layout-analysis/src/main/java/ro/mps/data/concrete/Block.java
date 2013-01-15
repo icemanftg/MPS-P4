@@ -12,5 +12,10 @@ public class Block extends CompoundNode {
     public Block(Compound parent, int x, int y, int height, int width) {
         super(parent, "BlockUsedInEditingScreen", x, y, height, width);
     }
+    
+    public boolean isPageNumber(){
+    	return false;
+    	
+    }
 
 }
