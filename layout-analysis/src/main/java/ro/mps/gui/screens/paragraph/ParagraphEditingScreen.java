@@ -1,9 +1,14 @@
 package ro.mps.gui.screens.paragraph;
 
+import ro.mps.screen.concrete.Block;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.BottomPaneTemplate;
+import ro.mps.screen.concrete.Root;
+import ro.mps.gui.screens.Observer;
+import ro.mps.gui.screens.Subject;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,26 +18,55 @@ import java.util.List;
  * Date: 18.11.2012
  * Time: 19:06
  */
-public class ParagraphEditingScreen extends BottomPaneTemplate {
+public class ParagraphEditingScreen extends BottomPaneTemplate implements Observer, Subject {
 
     private static final String WINDOW_TITLE = "Edit Blocks";
     private List<ParagraphEntry> paragraphs;
+    private Root root;
     private JPanel containingPanel;
     private ParagraphPopupMenu popupMenu;
+    private List<Observer> observers = new ArrayList<Observer>();
 
-    public ParagraphEditingScreen(List<String> paragraphsText) {
+    private ParagraphEditingScreen(List<String> paragraphsText) {
         super(WINDOW_TITLE);
         setPanel();
         addParagraphs(paragraphsText);
         super.addBottomPane();
     }
 
+    /**
+     * Builds the editing screen based on the root
+     * @param root - root of the tree
+     */
+    public ParagraphEditingScreen(Root root) {
+        this(root.getTextFromParagraphs());
+        this.root = root;
+    }
+
+    /**
+     * Updates the screen based on the root
+     * @param root - root of the tree
+     */
+    @Override
+    public void update(Root root) {
+        this.root = root;
+        containingPanel.removeAll();
+        addParagraphs(root.getTextFromParagraphs());
+    }
+
+    /**
+     * Sets the panel
+     */
     private void setPanel() {
         containingPanel = new JPanel();
         containingPanel.setSize(Screen.WINDOW_WIDTH - 50, Screen.WINDOW_HEIGHT - 150);
         containingPanel.setLayout(new BoxLayout(containingPanel, BoxLayout.Y_AXIS));
         containingPanel.setBorder(BorderFactory.createTitledBorder("Paragraphs"));
         super.addScrollPanel(containingPanel);
+    }
+
+    public Root getRoot() {
+        return root;
     }
 
     /**
@@ -52,7 +86,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     /**
      * Sets a popup menu to a text area
      *
-     * @param textArea with the popup menu set
+     * @param textArea - text area
      */
     private void setPopupMenuToJTextArea(JTextArea textArea) {
         textArea.setComponentPopupMenu(getRightClickMenu());
@@ -61,7 +95,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     /**
      * Returns the paragraph entry that are checked
      *
-     * @return
+     * @return - returns a list of checked paragraphs
      */
     public List<ParagraphEntry> getCheckedParagraphs() {
         List<ParagraphEntry> checkedParagraphs = new LinkedList<ParagraphEntry>();
@@ -78,22 +112,50 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     }
 
     /**
-     * Removes paragraphs from the container
-     *
-     * @param paragraphsToBeRemoved
+     * Removes one paragraph from container
+     * @param paragraphToBeRemoved - paragraph that will be removed
      */
-    public void removeParagraphsFromContainer(List<ParagraphEntry> paragraphsToBeRemoved) {
-        for (ParagraphEntry paragraphToBeRemoved : paragraphsToBeRemoved) {
-            containingPanel.remove(paragraphToBeRemoved.getContainer());
-            paragraphs.remove(paragraphToBeRemoved);
+    private void removeParagraphFromContainer(ParagraphEntry paragraphToBeRemoved) {
+        containingPanel.remove(paragraphToBeRemoved.getContainer());
+        paragraphs.remove(paragraphToBeRemoved);
+    }
+
+    /**
+     * Removes a block with all his children from data structure.
+     * @param paragraphToBeRemoved - paragraphs that will be removed
+     */
+    private void removeBlockFromDataStructure(ParagraphEntry paragraphToBeRemoved) {
+        int paragraphEntryIndex = getParagraphEntryIndex(paragraphToBeRemoved);
+        containingPanel.remove(paragraphToBeRemoved.getContainer());
+        root.removeChild(paragraphEntryIndex);
+    }
+
+    /**
+     * Removes paragraph from data structure and UI screen.
+     * @param paragraphEntries - paragraphs that will be removed.
+     */
+    public void removeParagraphs(List<ParagraphEntry> paragraphEntries) {
+        for (ParagraphEntry paragraphEntry : paragraphEntries) {
+            removeBlockFromDataStructure(paragraphEntry);
+            removeParagraphFromContainer(paragraphEntry);
+        }
+    }
+
+    /**
+     * Removes paragraphs from the container
+     * @param paragraphEntries - list of paragraphs that will be removed
+     */
+    public void removeParagraphsFromContainer(List<ParagraphEntry> paragraphEntries) {
+        for (ParagraphEntry paragraphEntry : paragraphEntries) {
+            removeParagraphFromContainer(paragraphEntry);
         }
     }
 
     /**
      * Sets text to a paragraph entry
      *
-     * @param paragraph
-     * @param textToBeAdded
+     * @param paragraph - paragraph entry
+     * @param textToBeAdded - text for the paragraph
      */
     private void setTextToParagraphEntry(ParagraphEntry paragraph, String textToBeAdded) {
         JTextArea textArea = paragraph.getTextArea();
@@ -114,7 +176,6 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
         for (ParagraphEntry paragraph : paragraphs) {
             JTextArea textArea = paragraph.getTextArea();
-            textContent = addNewLineCharacter(textContent);
             textContent += textArea.getText();
         }
 
@@ -126,23 +187,69 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     }
 
     /**
+     * Merges content of two paragraphs
+     *
+     * @param firstParagraph - first paragraph
+     * @param secondParagraph - second paragraph
+     * @return - returns true if paragraphs can be merged
+     */
+    public boolean mergeTwoParagraphEntryContent(ParagraphEntry firstParagraph, ParagraphEntry secondParagraph) {
+        List<ParagraphEntry> paragraphEntries = new LinkedList<ParagraphEntry>();
+        paragraphEntries.add(firstParagraph);
+        paragraphEntries.add(secondParagraph);
+
+        boolean paragraphsCanBeMerged = modifyDataStructureAfterMergeOperation(firstParagraph);
+        if ( paragraphsCanBeMerged ) {
+            mergeParagraphEntryContent(paragraphEntries);
+        }
+
+        return !paragraphsCanBeMerged;
+    }
+
+    /**
+     * Modifies data structure after merge operation
+     * @param paragraphEntry - paragraph entry
+     * @return - returns true if merge can be done
+     */
+    private boolean modifyDataStructureAfterMergeOperation(ParagraphEntry paragraphEntry) {
+        int paragraphEntryIndex = getParagraphEntryIndex(paragraphEntry);
+        Block firstBlock = root.getChild(paragraphEntryIndex);
+        Block secondBlock = root.getChild(paragraphEntryIndex + 1);
+
+        return firstBlock.merge(secondBlock);
+    }
+
+    /**
      * Splits paragraphs entries content
      *
-     * @param lineNumber
+     * @param lineNumber - line number
      */
     public void splitParagraphEntriesContent(int lineNumber) {
         List<ParagraphEntry> checkedParagraphs = getCheckedParagraphs();
 
         for (ParagraphEntry checkedParagraph : checkedParagraphs) {
             splitParagraphEntryContent(checkedParagraph, lineNumber);
+            modifyDataStructureAfterSplitOperation(checkedParagraph, lineNumber);
         }
+    }
+
+    /**
+     * Updates the data structure after operation made in UI
+     *
+     * @param checkedParagraph - checked paragraphs
+     * @param lineNumber - line number
+     */
+    private void modifyDataStructureAfterSplitOperation(ParagraphEntry checkedParagraph, int lineNumber) {
+        int paragraphEntryIndex = getParagraphEntryIndex(checkedParagraph);
+        Block block = root.getChild(paragraphEntryIndex);
+        block.split(lineNumber);
     }
 
     /**
      * Split paragraph entry content
      *
-     * @param checkedParagraph
-     * @param lineNumber
+     * @param checkedParagraph - checked paragraphs
+     * @param lineNumber - line number
      */
     public void splitParagraphEntryContent(ParagraphEntry checkedParagraph, int lineNumber) {
         JTextArea textArea = checkedParagraph.getTextArea();
@@ -162,8 +269,8 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     /**
      * Gets the paragraphEntry index from paragraphs entries list
      *
-     * @param paragraphEntry
-     * @return
+     * @param paragraphEntry - paragraph entry
+     * @return - returns index of paragraph
      */
     private int getParagraphEntryIndex(ParagraphEntry paragraphEntry) {
         for (int i = 0; i < paragraphs.size(); i++) {
@@ -175,11 +282,23 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
         return -1;
     }
 
+    public ParagraphEntry getParagraphAtIndex(int index) {
+        return paragraphs.get(index);
+    }
+
+    public boolean isParagraphTheFirst(int index) {
+        return index == 0;
+    }
+
+    public boolean isParagraphTheLast(int index) {
+        return index == paragraphs.size() - 1;
+    }
+
     /**
-     * Returns the number of lines of a text
+     * Returns the number of lines from a text
      *
-     * @param text
-     * @return
+     * @param text - text
+     * @return - returns number of line from a text
      */
     public int getNumberOfLines(String text) {
         int numberOfAppearances = 0;
@@ -196,21 +315,21 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     /**
      * Returns lines from 0 to lineNumber
      *
-     * @param paragraphText
-     * @param lineNumber
-     * @return
+     * @param paragraphText - paragraph text
+     * @param lineNumber - line number
+     * @return - returns line from 0 to lineNumber
      */
     private String getFirstLines(String paragraphText, int lineNumber) {
         int endPosition = getIndexForSplitting(paragraphText, lineNumber);
-        return paragraphText.substring(0, endPosition - 1);
+        return paragraphText.substring(0, endPosition);
     }
 
     /**
      * Returns lines from lineNumber to number of lines
      *
-     * @param paragraphText
-     * @param lineNumber
-     * @return
+     * @param paragraphText - paragraph text
+     * @param lineNumber - line number
+     * @return - returns line from 0 to lineNumber
      */
     private String getLastLines(String paragraphText, int lineNumber) {
         int startPosition = getIndexForSplitting(paragraphText, lineNumber);
@@ -220,32 +339,20 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
     /**
      * Returns the index where the split should start
      *
-     * @param paragraphText
-     * @param lineNumber
-     * @return
+     * @param paragraphText - paragraph text
+     * @param lineNumber - line number
+     * @return - returns the position from where split should start
      */
     private int getIndexForSplitting(String paragraphText, int lineNumber) {
+        final String LINE_SEPARATOR_TEXT = "line.separator";
         int position = 0;
+        int lineSeparatorLength = System.getProperty(LINE_SEPARATOR_TEXT).length();
 
         for (int i = 0; i < lineNumber; i++) {
-            position = paragraphText.indexOf('\n', position) + 1;
+            position = paragraphText.indexOf(System.getProperty(LINE_SEPARATOR_TEXT), position) + lineSeparatorLength;
         }
 
         return position;
-    }
-
-    /**
-     * Appends newline character if text is not empty
-     *
-     * @param text
-     * @return
-     */
-    private String addNewLineCharacter(String text) {
-        if (!text.isEmpty()) {
-            text += "\n";
-        }
-
-        return text;
     }
 
     /**
@@ -261,5 +368,22 @@ public class ParagraphEditingScreen extends BottomPaneTemplate {
 
     public JPanel getContainingPanel() {
         return containingPanel;
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for ( Observer observer : observers ) {
+            observer.update(root);
+        }
     }
 }

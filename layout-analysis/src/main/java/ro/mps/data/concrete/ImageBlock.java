@@ -12,5 +12,4 @@ public class ImageBlock extends CompoundNode {
     public ImageBlock(Compound parent, int x, int y, int height, int width) {
         super(parent, "ImageBlock", x, y, height, width);
     }
-
 }

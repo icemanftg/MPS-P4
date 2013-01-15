@@ -1,4 +1,4 @@
-package ro.mps.gui.screens.lines;
+package ro.mps.gui.screens.generators;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class LinesTextGenerator {
     /**
      * Returns a list of text lines
      *
-     * @param numberOfLines
+     * @param numberOfLines - number of lines
      * @return list of text lines
      */
     public static List<String> getLinesText(int numberOfLines) {

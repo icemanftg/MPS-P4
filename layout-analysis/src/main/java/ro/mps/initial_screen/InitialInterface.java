@@ -2,12 +2,6 @@ package ro.mps.initial_screen;
 
 import ro.mps.gui.TabbedPannel;
 import ro.mps.gui.base.Screen;
-import ro.mps.gui.screens.SelectionScreen;
-import ro.mps.gui.screens.lines.CharacterEditingScreen;
-import ro.mps.gui.screens.lines.LinesEditingScreen;
-import ro.mps.gui.screens.lines.LinesTextGenerator;
-import ro.mps.gui.screens.paragraph.ParagraphEditingScreen;
-import ro.mps.gui.screens.paragraph.ParagraphsTextGenerator;
 
 import javax.swing.*;
 

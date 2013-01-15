@@ -4,7 +4,7 @@
  */
 package ro.mps.smart.frame;
 
-import ro.mps.data.base.Node;
+import ro.mps.screen.base.Node;
 import ro.mps.smart.textbox.SmartTextBox;
 
 import javax.swing.*;

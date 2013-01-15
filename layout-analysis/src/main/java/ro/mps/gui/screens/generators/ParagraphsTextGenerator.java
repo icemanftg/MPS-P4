@@ -1,4 +1,4 @@
-package ro.mps.gui.screens.paragraph;
+package ro.mps.gui.screens.generators;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ParagraphsTextGenerator {
     /**
      * Returns a list of paragraphs
      *
-     * @param numberOfParagraphs
+     * @param numberOfParagraphs - number of paragraphs
      * @return list of paragraphs
      */
     public static List<String> getParagraphsText(int numberOfParagraphs) {

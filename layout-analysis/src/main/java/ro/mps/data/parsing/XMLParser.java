@@ -58,19 +58,28 @@ public class XMLParser {
             /* Get list of all TextBlocks */
             NodeList nList = doc.getElementsByTagName("TextBlock");
             if(nList != null && nList.getLength() > 0) {
-			for(int i = 0 ; i < nList.getLength();i++) {
+                for(int i = 0 ; i < nList.getLength();i++) {
                                 /* Get only the TextBlock elements that
                                    are immediate children of Root
                                  */
-				Element el = (Element)nList.item(i);
-                                if(el.getParentNode().getNodeName().equals("Document")) {
+                    Element el = (Element)nList.item(i);
+                    if(el.getParentNode().getNodeName().equals("Document")) {
                                     /* Put the information in a Block */
-                                    Block b = getBlock(el, root);
+                        Block b = getBlock(el, root);
                                     /* Add that Block as a child of root */
-                                    root.addChild(b);
-                                }
-			}
-		}
+                        root.addChild(b);
+                    }
+                }
+            }
+            /* Get list of all ImageBlocks */
+            nList = doc.getElementsByTagName("ImageBlock");
+            if(nList != null && nList.getLength() > 0) {
+                for(int i = 0; i < nList.getLength(); i++) {
+                    Element el = (Element)nList.item(i);
+                    ImageBlock b = getImageBlock(el, root);
+                    root.addChild(b);
+                }
+            }
 
         } catch (SAXException ex) {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,27 +101,27 @@ public class XMLParser {
 
         /* Get all the block attributes */
         int left = Integer.parseInt(el.getAttribute("left"));
-	int top = Integer.parseInt(el.getAttribute("top"));
-	int right = Integer.parseInt(el.getAttribute("right"));
+        int top = Integer.parseInt(el.getAttribute("top"));
+        int right = Integer.parseInt(el.getAttribute("right"));
         int bottom = Integer.parseInt(el.getAttribute("bottom"));
 
 	/* Create a new Block with the attributes read from the xml nodes
            and root as parent
          */
-	Block b = new Block(root, left, top, bottom-top, right-left);
+        Block b = new Block(root, left, top, bottom-top, right-left);
 
         /* Iterate through all the lines of the block */
         NodeList nList = el.getElementsByTagName("TextLine");
         if(nList != null && nList.getLength() > 0) {
-			for(int i = 0 ; i < nList.getLength();i++) {
+            for(int i = 0 ; i < nList.getLength();i++) {
                                 /* Get the TextLine element */
-				Element elem = (Element)nList.item(i);
+                Element elem = (Element)nList.item(i);
                                 /* Get the Line object */
-				Line line = getLine(elem, b);
+                Line line = getLine(elem, b);
                                 /* Add it to the Block's children */
-				b.addChild(line);
-			}
-		}
+                b.addChild(line);
+            }
+        }
         return b;
     }
 
@@ -126,8 +135,8 @@ public class XMLParser {
 
         /* Get all the line attributes */
         int left = Integer.parseInt(elem.getAttribute("left"));
-	int top = Integer.parseInt(elem.getAttribute("top"));
-	int right = Integer.parseInt(elem.getAttribute("right"));
+        int top = Integer.parseInt(elem.getAttribute("top"));
+        int right = Integer.parseInt(elem.getAttribute("right"));
         int bottom = Integer.parseInt(elem.getAttribute("bottom"));
 
 	/* Create a new Line with the attributes read from the xml , parent and content */
@@ -143,15 +152,15 @@ public class XMLParser {
      * @return          the string value
      */
     private String getTextValue(Element ele, String tagName) {
-		String textVal = null;
-		NodeList nl = ele.getElementsByTagName(tagName);
-		if(nl != null && nl.getLength() > 0) {
-			Element el = (Element)nl.item(0);
-			textVal = el.getFirstChild().getNodeValue();
-		}
+        String textVal = null;
+        NodeList nl = ele.getElementsByTagName(tagName);
+        if(nl != null && nl.getLength() > 0) {
+            Element el = (Element)nl.item(0);
+            textVal = el.getFirstChild().getNodeValue();
+        }
 
-		return textVal;
-	}
+        return textVal;
+    }
 
 
     /** Calls getTextValue and returns a int value
@@ -159,7 +168,7 @@ public class XMLParser {
      * @ return     the int value of the parsed string
      */
     private int getIntValue(Element ele, String tagName) {
-	return Integer.parseInt(getTextValue(ele,tagName));
+        return Integer.parseInt(getTextValue(ele,tagName));
     }
 
 
@@ -182,7 +191,28 @@ public class XMLParser {
         /* Get the Block object from the TextBlock */
         Block block = getBlock(textBlock, cBlock);
 
-        cBlock.setBlock(block);
+        //cBlock.setBlock(block);
         return cBlock;
+    }
+
+    /** Creates an ImageBlock from a ImageBlock element of the xml
+     *
+     * @param el        the Element we will analyze
+     * @param root      the parent of the newly created ImageBlock
+     * @return          the ImageBlock object
+     */
+    private ImageBlock getImageBlock(Element el, Root root) {
+        /* Get all the block attributes */
+        int left = Integer.parseInt(el.getAttribute("left"));
+        int top = Integer.parseInt(el.getAttribute("top"));
+        int right = Integer.parseInt(el.getAttribute("right"));
+        int bottom = Integer.parseInt(el.getAttribute("bottom"));
+
+	/* Create a new Block with the attributes read from the xml nodes
+           and root as parent
+         */
+        ImageBlock b = new ImageBlock(root, left, top, bottom-top, right-left);
+
+        return b;
     }
 }

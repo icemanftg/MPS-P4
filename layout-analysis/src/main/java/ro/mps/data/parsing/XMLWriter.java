@@ -2,6 +2,7 @@ package ro.mps.data.parsing;
 
 import java.util.logging.*;
 import ro.mps.data.concrete.*;
+import ro.mps.data.base.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -82,14 +83,18 @@ public class XMLWriter {
             attr.setValue(root.getDirection());
             rootElement.setAttributeNode(attr);
 
-            ArrayList<Block> textBlockList = (ArrayList)root.getChildren();
-            if(textBlockList != null && textBlockList.size() > 0) {
-			for(int i = 0 ; i < textBlockList.size();i++) {
-                                /* Create an Element from each TextBlock */
-				Element el = getBlockElement(textBlockList.get(i));
+            ArrayList<CompoundNode> blockList = (ArrayList)root.getChildren();
+            if(blockList != null && blockList.size() > 0) {
+                for(int i = 0 ; i < blockList.size();i++) {
+                                /* Create an Element from each TextBlock or ImageBlock */
+                    Element el;
+                    if(blockList.get(i) instanceof ImageBlock)
+                        el = getImageBlockElement(blockList.get(i));
+                    else
+                        el = getBlockElement(blockList.get(i));
                                 /* Add Element to rootElement */
-				rootElement.appendChild(el);
-			}
+                    rootElement.appendChild(el);
+                }
 
 			/* Create the Composed Block element and add it 
             Element cBlockElement = doc.createElement("ComposedBlock");
@@ -100,7 +105,7 @@ public class XMLWriter {
             cBlockElement.appendChild(getBlockElement(cBlockObject.getBlock()));
             rootElement.appendChild(cBlockElement);
             */
-		}
+            }
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLWriter.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -112,7 +117,7 @@ public class XMLWriter {
      * @param block     the TextBlock we are processing
      * @return          the Element we will append to the DOM's root element
      */
-    private Element getBlockElement(Block block) {
+    private Element getBlockElement(CompoundNode block) {
 
         Element blockElement = doc.createElement("TextBlock");
 
@@ -136,13 +141,13 @@ public class XMLWriter {
         /* Get all the TextLines and create elements from them */
         ArrayList<Line> textLineList = (ArrayList)block.getChildren();
         if(textLineList != null && textLineList.size() > 0) {
-			for(int i = 0 ; i < textLineList.size();i++) {
+            for(int i = 0 ; i < textLineList.size();i++) {
                                 /* Create an Element from each TextLine */
-				Element lineElement = getLineElement(textLineList.get(i));
+                Element lineElement = getLineElement(textLineList.get(i));
                                 /* Add Element to blockElement */
-				blockElement.appendChild(lineElement);
-			}
-		}
+                blockElement.appendChild(lineElement);
+            }
+        }
         return blockElement;
     }
 
@@ -181,6 +186,36 @@ public class XMLWriter {
 
         return lineElement;
 
+    }
+
+    /** Extracts information from an ImageBlock and puts it in an Element we will
+     *  attach to the DOM's root element
+     *
+     * @param block     the ImageBlock we are processing
+     * @return          the Element we will append to the DOM's root element
+     */
+    private Element getImageBlockElement(CompoundNode block) {
+
+        Element blockElement = doc.createElement("ImageBlock");
+
+        /* Set element attributes */
+        Attr attr = doc.createAttribute("left");
+        attr.setValue(Integer.toString(block.getLeftUpperCornerX()));
+        blockElement.setAttributeNode(attr);
+
+        attr = doc.createAttribute("top");
+        attr.setValue(Integer.toString(block.getLeftUpperCornerY()));
+        blockElement.setAttributeNode(attr);
+
+        attr = doc.createAttribute("bottom");
+        attr.setValue(Integer.toString(block.getLeftUpperCornerY()+block.getHeight()));
+        blockElement.setAttributeNode(attr);
+
+        attr = doc.createAttribute("right");
+        attr.setValue(Integer.toString(block.getLeftUpperCornerX()+block.getWidth()));
+        blockElement.setAttributeNode(attr);
+
+        return blockElement;
     }
 
 }
