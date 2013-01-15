@@ -22,8 +22,8 @@ public class ParagraphEntry {
     /**
      * Generate a container that has a textarea and a checkbox
      *
-     * @param text
-     * @return
+     * @param text - text of the paragraph
+     * @return - return the panel
      */
     private JPanel makeInnerContainer(String text) {
         textArea = makeJTextArea(text);
@@ -42,8 +42,8 @@ public class ParagraphEntry {
     /**
      * Builds a text area
      *
-     * @param text
-     * @return text area
+     * @param text - text of the paragraph
+     * @return - returns text area
      */
     private JTextArea makeJTextArea(String text) {
         JTextArea textArea = new JTextArea(text);

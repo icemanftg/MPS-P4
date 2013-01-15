@@ -1,8 +1,7 @@
-package ro.mps.data.base;
+package ro.mps.screen.base;
 
-import ro.mps.data.api.Compound;
-import ro.mps.data.api.HasParent;
-import ro.mps.data.api.HasPosition;
+import ro.mps.screen.api.Compound;
+import ro.mps.screen.api.HasParent;
 
 /**
  * A compoundNode has as children a compoundNode of type C
@@ -13,13 +12,6 @@ import ro.mps.data.api.HasPosition;
 public abstract class CompoundNode<T extends Node, C extends Node> extends OrphanCompoundNode<C> implements HasParent<T> {
 
     private Compound<T> parent;
-
-	/**
-     * Default constructor - only used by ComposedBlock
-     */
-    public CompoundNode() {
-
-    }
 
     public CompoundNode(String label, int x, int y, int height, int width) {
         super(label, x, y, height, width);
@@ -39,5 +31,4 @@ public abstract class CompoundNode<T extends Node, C extends Node> extends Orpha
     public void setParent(Compound<T> p) {
         parent = p;
     }
-    
 }

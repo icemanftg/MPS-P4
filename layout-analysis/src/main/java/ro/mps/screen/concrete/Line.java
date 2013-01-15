@@ -1,9 +1,9 @@
-package ro.mps.data.concrete;
+package ro.mps.screen.concrete;
 
-import ro.mps.data.api.Compound;
-import ro.mps.data.api.HasContent;
-import ro.mps.data.api.HasParent;
-import ro.mps.data.base.Node;
+import ro.mps.screen.api.Compound;
+import ro.mps.screen.api.HasContent;
+import ro.mps.screen.api.HasParent;
+import ro.mps.screen.base.Node;
 
 public class Line extends Node implements HasContent, HasParent<Line> {
 
@@ -11,7 +11,7 @@ public class Line extends Node implements HasContent, HasParent<Line> {
     private String content;
 
     public Line(int x, int y, int height, int width) {
-        super("Line", x, y, height, width);
+        super("line", x, y, height, width);
     }
 
     public Line(Compound<Line> p, int x, int y, int height, int width) {

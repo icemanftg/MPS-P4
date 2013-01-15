@@ -1,34 +1,13 @@
-package ro.mps.data.concrete;
+package ro.mps.screen.concrete;
 
-import ro.mps.data.api.HasPosition;
-import ro.mps.data.base.OrphanCompoundNode;
+import ro.mps.screen.base.OrphanCompoundNode;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Root extends OrphanCompoundNode<Block> {
 
-    private String imageName;
-    private String direction;
-
-
-    public String getImageName() {
-        return imageName;
-    }
-
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
-    }
-
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
-
     public Root(int width, int height) {
-        super("Document", 0, 0, height, width);
+        super("document", 0, 0, height, width);
     }
 
     /**

@@ -17,9 +17,11 @@ public class LinesPopupMenu {
     private static final String SPLIT_AT_POSITION = "Split at position";
     private static final String EDIT_LINES = "Edit lines";
     private static final String SPLIT = "Split";
+    private static final String ERROR_MESSAGE_FOR_MERGE = "Lines aren't in the same block. Couldn't merge them.";
+    private static final String ERROR_MESSAGE_FOR_SPLIT = "Line couldn't be split there is no space left.";
 
     private PositionSpinner positionSpinner;
-    private LinesEditingScreen linesEditingScreen;
+    //private LinesEditingScreen linesEditingScreen;
     private JPopupMenu rightClickMenu;
 
     public LinesPopupMenu(LinesEditingScreen linesEditingScreen) {
@@ -29,7 +31,7 @@ public class LinesPopupMenu {
     /**
      * Returns the Popup Menu
      *
-     * @return popup menu
+     * @return - returns popup menu
      */
     public JPopupMenu getRightClickMenu() {
         return rightClickMenu;
@@ -46,10 +48,10 @@ public class LinesPopupMenu {
         }
 
         /**
-         * Returns the component that triggerd the envent
+         * Returns the component that triggered the event
          *
-         * @param event
-         * @return
+         * @param event - event
+         * @return - component that triggerd the event
          */
         private Component getInvoker(ActionEvent event) {
             JMenuItem source = (JMenuItem) event.getSource();
@@ -71,16 +73,22 @@ public class LinesPopupMenu {
             Component componentInvoker = getInvoker(e);
             int index = linesEditingScreen.getComponentIndex(componentInvoker);
             int numberOfComponents = linesEditingScreen.getNumberOfComponents();
+            boolean displayMessage = false;
 
             if (e.getActionCommand().equals(MERGE_WITH_PREVIOUS_LINE) && index != 0) {
-                linesEditingScreen.mergeWithPreviousLine(index);
+                displayMessage = !linesEditingScreen.mergeWithPreviousLine(index);
             }
 
             if (e.getActionCommand().equals(MERGE_WITH_NEXT_LINE) && index != numberOfComponents - 1) {
-                linesEditingScreen.mergeWithNextLine(index);
+                displayMessage = !linesEditingScreen.mergeWithNextLine(index);
+            }
+
+            if ( displayMessage ) {
+                JOptionPane.showMessageDialog(linesEditingScreen, ERROR_MESSAGE_FOR_MERGE);
             }
 
             repaintMyPanel();
+            linesEditingScreen.notifyObservers();
         }
     }
 
@@ -101,7 +109,7 @@ public class LinesPopupMenu {
     /**
      * Builds the right click menu
      *
-     * @return right click menu
+     * @return - returns right click menu
      */
     private JPopupMenu buildPopupMenu(LinesEditingScreen linesEditingScreen) {
         rightClickMenu = new JPopupMenu(EDIT_LINES);
@@ -125,8 +133,8 @@ public class LinesPopupMenu {
 
     /**
      * Builds a panel that contains a spinner and a button
-     *
-     * @return panel
+     * @param linesEditingScreen - editing screen
+     * @return - returns the panel
      */
     private JPanel getSplitContainer(LinesEditingScreen linesEditingScreen) {
         JPanel splitContainer = new JPanel();
@@ -153,8 +161,8 @@ public class LinesPopupMenu {
         /**
          * Returns the component that triggered the event
          *
-         * @param event
-         * @return
+         * @param event - action event
+         * @return - returns component that triggerd the event
          */
         private Component getInvoker(ActionEvent event) {
             JButton button = (JButton) event.getSource();
@@ -168,7 +176,7 @@ public class LinesPopupMenu {
         /**
          * Splits the text content when split button is pressed
          *
-         * @param e
+         * @param e - action event
          */
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -176,7 +184,13 @@ public class LinesPopupMenu {
             int wordNumber = Integer.parseInt(spinnerNumberModel.getValue().toString());
             int index = linesEditingScreen.getComponentIndex(getInvoker(e));
 
-            linesEditingScreen.splitAtWord(wordNumber, index);
+            boolean displayMessage = linesEditingScreen.splitAtWord(wordNumber, index);
+
+            if ( displayMessage ) {
+                JOptionPane.showMessageDialog(linesEditingScreen, ERROR_MESSAGE_FOR_SPLIT);
+            }
+
+            linesEditingScreen.notifyObservers();
         }
     }
 }

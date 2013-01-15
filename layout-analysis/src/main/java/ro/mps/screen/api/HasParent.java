@@ -1,6 +1,6 @@
-package ro.mps.data.api;
+package ro.mps.screen.api;
 
-import ro.mps.data.base.Node;
+import ro.mps.screen.base.Node;
 
 /**
  * Interface implemented by nodes that sit witin a Copound node e.g. Lines within Blocks

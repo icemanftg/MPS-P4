@@ -1,0 +1,104 @@
+package ro.mps.data.base;
+
+import ro.mps.data.api.Compound;
+import ro.mps.data.api.HasPosition;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class OrphanCompoundNode<T extends Node> extends Node implements Compound<T> {
+
+    private List<T> children = new ArrayList<T>();
+
+	/**
+     * Default constructor - only used by ComposedBlock
+     */
+    public OrphanCompoundNode() {
+    }
+
+    public OrphanCompoundNode(String label, int x, int y, int height, int width) {
+        super(label, x, y, height, width);
+    }
+
+    @Override
+    public void addChildAtIndex(int index, T child) {
+        children.add(index, child);
+    }
+
+    @Override
+    public List<T> getChildren() {
+        return children;
+    }
+
+<<<<<<< HEAD
+    public void addChild(Node child) {
+        children.add(child);
+    }
+    
+    @Override
+    public boolean fits(HasPosition p) {
+    	/*
+    	 * Check if fits inside the container (i.e parent)
+    	 */
+    	if (! (
+    			(getLeftUpperCornerX() <= p.getLeftUpperCornerX()) &&
+    			(getLeftUpperCornerX() + getWidth() >= p.getLeftUpperCornerX() + p.getWidth()) &&
+    			(getLeftUpperCornerY() <= p.getLeftUpperCornerY()) &&
+    			(getLeftUpperCornerY() + getHeight() >= p.getLeftUpperCornerY() + p.getHeight())))
+    			return false;
+    	/**
+    	 * Checks overlapping with children
+    	 */
+    	for (HasPosition child : getChildren()) {
+    		if (! child.clears(p))
+    			return false;
+    	}
+    	
+    	/**
+    	 * No overlapping with the children or the block itself
+    	 */
+    	return true;
+    }
+
+=======
+    @Override
+    public T getChild(int index) {
+        return children.get(index);
+    }
+
+    @Override
+    public void addChild(T child) {
+        children.add(child);
+    }
+
+    @Override
+    public void addChildren(List<T> childrenToBeAdded) {
+        children.addAll(childrenToBeAdded);
+    }
+
+    public void removeChild(int index) {
+        children.remove(index);
+    }
+
+    @Override
+    public void removeChild(T child) {
+        children.remove(child);
+    }
+
+    @Override
+    public void removeChildren(List<T> children) {
+        children.removeAll(children);
+    }
+
+    @Override
+    public int getIndexOfChildFromChildrenList(T child) {
+        for ( int i = 0; i < children.size(); i++ ) {
+            if ( child == children.get(i) ) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+>>>>>>> development_v0.2
+}

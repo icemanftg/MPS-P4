@@ -1,18 +1,18 @@
-package ro.mps.data.concrete;
+package ro.mps.screen.concrete;
 
-import ro.mps.data.api.Compound;
-import ro.mps.data.base.CompoundNode;
+import ro.mps.screen.api.Compound;
+import ro.mps.screen.base.CompoundNode;
 
 import java.util.List;
 
 public class Block extends CompoundNode<Block, Line> {
 
     public Block(int x, int y, int height, int width) {
-        super("Block", x, y, height, width);
+        super("block", x, y, height, width);
     }
 
     public Block(Compound parent, int x, int y, int height, int width) {
-        super(parent, "Block", x, y, height, width);
+        super(parent, "block", x, y, height, width);
     }
 
     /**

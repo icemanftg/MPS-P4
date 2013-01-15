@@ -12,7 +12,7 @@ import java.awt.*;
  * Time: 19:22
  */
 public class BottomPaneTemplate extends Screen {
-    public static final String PAGINA_NR = "Pagina nr:";
+    public static final String PAGE_NUMBER = "Pagina nr:";
     public static final String GENERATE = "Generate";
     public final String windowTitle;
 
@@ -69,7 +69,7 @@ public class BottomPaneTemplate extends Screen {
      */
     private void addPageNumber() {
         pageNumber = new JPanel(new FlowLayout());
-        pageNumberLabel = new JLabel(PAGINA_NR);
+        pageNumberLabel = new JLabel(PAGE_NUMBER);
         pageNumberSpinner = new JSpinner(pageNumberSpinner());
         pageNumber.add(pageNumberLabel, BorderLayout.WEST);
         pageNumber.add(pageNumberSpinner, BorderLayout.EAST);
