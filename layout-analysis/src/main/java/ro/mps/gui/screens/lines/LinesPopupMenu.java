@@ -21,7 +21,6 @@ public class LinesPopupMenu {
     private static final String ERROR_MESSAGE_FOR_SPLIT = "LineUsedInEditingScreen couldn't be split there is no space left.";
 
     private PositionSpinner positionSpinner;
-    //private LinesEditingScreen linesEditingScreen;
     private JPopupMenu rightClickMenu;
 
     public LinesPopupMenu(LinesEditingScreen linesEditingScreen) {

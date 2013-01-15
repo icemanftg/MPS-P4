@@ -1,9 +1,22 @@
 package ro.mps.gui.screens;
 
+import ro.mps.data.concrete.ComposedBlock;
+import ro.mps.data.concrete.PageNumberBlock;
+import ro.mps.data.concrete.Root;
+import ro.mps.data.parsing.XMLWriter;
+import ro.mps.gui.UserInterface;
 import ro.mps.gui.base.Screen;
+import ro.mps.screen.concrete.RootUsedInEditingScreen;
+import ro.mps.screen.transformer.DataStructureTransformer;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,9 +26,9 @@ import java.awt.*;
  */
 public class BottomPaneTemplate extends Screen {
     public static final String PAGE_NUMBER = "Pagina nr:";
-    public static final String GENERATE = "Generate";
+    public static final String EXPORT_TO_XML = "Export to XML";
     public final String windowTitle;
-
+    protected RootUsedInEditingScreen root;
     private JScrollPane scrollPane;
 
     private JPanel pageNumber;
@@ -25,9 +38,10 @@ public class BottomPaneTemplate extends Screen {
     private JSpinner pageNumberSpinner;
     private JButton generateButton;
 
-    public BottomPaneTemplate(String windowTitle) {
+    public BottomPaneTemplate(String windowTitle, RootUsedInEditingScreen root) {
         super();
         this.windowTitle = windowTitle;
+        this.root = root;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -37,7 +51,7 @@ public class BottomPaneTemplate extends Screen {
     protected void addBottomPane() {
         bottomPane = new JPanel();
         addPageNumber();
-        addGenerateButton();
+        addExportToXmlButton();
         add(bottomPane, BorderLayout.LINE_END);
     }
 
@@ -56,6 +70,15 @@ public class BottomPaneTemplate extends Screen {
         add(scrollPane);
     }
 
+    public RootUsedInEditingScreen getRootUsedInEditingScreen() {
+        return root;
+    }
+
+    public Root getRoot() {
+        System.out.println("Test");
+        return DataStructureTransformer.transformRootUsedInEditingScreenToRoot(root);
+    }
+
     /**
      * repaints the scroll pane
      */
@@ -71,18 +94,52 @@ public class BottomPaneTemplate extends Screen {
         pageNumber = new JPanel(new FlowLayout());
         pageNumberLabel = new JLabel(PAGE_NUMBER);
         pageNumberSpinner = new JSpinner(pageNumberSpinner());
+        pageNumberSpinner.addChangeListener(new ChangeListenerForSpinner());
         pageNumber.add(pageNumberLabel, BorderLayout.WEST);
         pageNumber.add(pageNumberSpinner, BorderLayout.EAST);
         pageNumber.setAlignmentX(Component.LEFT_ALIGNMENT);
         bottomPane.add(pageNumber);
     }
 
-    /**
-     * Adds the Generate button to the bottom panel
-     */
-    private void addGenerateButton() {
-        generateButton = new JButton(GENERATE);
+    class ChangeListenerForSpinner implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent changeEvent) {
+            JSpinner source = (JSpinner)changeEvent.getSource();
+            String pageNumber = source.getValue().toString();
+            ComposedBlock composedBlock = root.getComposedBlock();
+            PageNumberBlock pageNumberBlock = (PageNumberBlock) composedBlock.getBlock();
+
+            pageNumberBlock.setPageNumber(pageNumber);
+
+        }
+    }
+
+    class ExportToXmlListener implements ActionListener {
+        BottomPaneTemplate bottomPaneTemplate;
+
+        ExportToXmlListener(BottomPaneTemplate bottomPaneTemplate) {
+            this.bottomPaneTemplate = bottomPaneTemplate;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            XMLWriter writer = new XMLWriter();
+            try {
+                Root root = bottomPaneTemplate.getRoot();
+                writer.writeFile(bottomPaneTemplate.getRoot(), "exported.xml");
+            } catch (TransformerConfigurationException e) {
+                e.printStackTrace();
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void addExportToXmlButton() {
+        generateButton = new JButton(EXPORT_TO_XML);
         generateButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        generateButton.addActionListener(new ExportToXmlListener(this));
         bottomPane.add(generateButton);
     }
 

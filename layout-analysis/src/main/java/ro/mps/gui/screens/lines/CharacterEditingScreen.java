@@ -24,23 +24,17 @@ import java.util.List;
  */
 public class CharacterEditingScreen extends BottomPaneTemplate implements Observer, Subject {
     private static final String WINDOW_TILE = "Edit characters in textFields";
-    protected RootUsedInEditingScreen root;
     protected List<JTextField> textFields;
     protected List<LineUsedInEditingScreen> lines;
     protected JPanel containingPanel;
     private List<Observer> observers = new ArrayList<Observer>();
 
-    public CharacterEditingScreen(List<String> textLines) {
-        super(WINDOW_TILE);
-        initPanel();
-        addLines(textLines);
-        super.addBottomPane();
-    }
-
     public CharacterEditingScreen(RootUsedInEditingScreen root) {
-        this(root.getTextFromLines());
+        super(WINDOW_TILE, root);
+        initPanel();
+        addLines(root.getTextFromLines());
+        super.addBottomPane();
         this.lines = root.getLines();
-        this.root = root;
     }
 
     public CharacterEditingScreen(Root root) {
@@ -57,14 +51,6 @@ public class CharacterEditingScreen extends BottomPaneTemplate implements Observ
 
     public JPanel getContainingPanel() {
         return containingPanel;
-    }
-
-    public RootUsedInEditingScreen getRootUsedInEditingScreen() {
-        return root;
-    }
-
-    public Root getRoot() {
-        return DataStructureTransformer.transformRootUsedInEditingScreenToRoot(root);
     }
 
     private void initPanel() {
