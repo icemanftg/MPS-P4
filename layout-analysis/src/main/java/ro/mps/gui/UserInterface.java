@@ -1,5 +1,6 @@
 package ro.mps.gui;
 
+import ro.mps.data.concrete.Root;
 import ro.mps.gui.base.Screen;
 import ro.mps.gui.screens.SelectionScreen;
 import ro.mps.gui.screens.generators.TreeGenerator;
@@ -15,10 +16,14 @@ public class UserInterface extends JFrame {
     private ParagraphEditingScreen paragraphEditingScreen;
     private LinesEditingScreen linesEditingScreen;
     private CharacterEditingScreen characterEditingScreen;
-    private RootUsedInEditingScreen root;
+    private Root root;
 
     public UserInterface() {
+        this.init();
+    }
 
+    public UserInterface(Root root) {
+        this.root = root;
         this.init();
     }
 
@@ -29,7 +34,6 @@ public class UserInterface extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(Screen.WINDOW_WIDTH, Screen.WINDOW_HEIGHT);
         this.setVisible(true);
-        generateTree();
         createScreens();
         registerObservers();
 
@@ -40,11 +44,6 @@ public class UserInterface extends JFrame {
         paragraphEditingScreen = new ParagraphEditingScreen(root);
         linesEditingScreen = new LinesEditingScreen(root);
         characterEditingScreen = new CharacterEditingScreen(root);
-    }
-
-    private void generateTree() {
-        TreeGenerator treeGenerator = new TreeGenerator(5);
-        this.root = treeGenerator.buildTree();
     }
 
     private void registerObservers() {
@@ -65,7 +64,6 @@ public class UserInterface extends JFrame {
 
         tabbedPannel.addPane(paragraphEditingScreen);
         tabbedPannel.addPane(linesEditingScreen);
-        tabbedPannel.addPane(new SelectionScreen());
         tabbedPannel.addPane(characterEditingScreen);
 
         getContentPane().add(tabbedPannel);

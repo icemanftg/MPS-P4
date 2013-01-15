@@ -29,20 +29,15 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
     private ParagraphPopupMenu popupMenu;
     private List<Observer> observers = new ArrayList<Observer>();
 
-    private ParagraphEditingScreen(List<String> paragraphsText) {
-        super(WINDOW_TITLE);
-        setPanel();
-        addParagraphs(paragraphsText);
-        super.addBottomPane();
-    }
-
     /**
      * Builds the editing screen based on the root
      * @param root - root of the tree
      */
     public ParagraphEditingScreen(RootUsedInEditingScreen root) {
-        this(root.getTextFromParagraphs());
-        this.root = root;
+        super(WINDOW_TITLE, root);
+        setPanel();
+        addParagraphs(root.getTextFromParagraphs());
+        super.addBottomPane();
     }
 
     public ParagraphEditingScreen(Root root) {
@@ -69,14 +64,6 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
         containingPanel.setLayout(new BoxLayout(containingPanel, BoxLayout.Y_AXIS));
         containingPanel.setBorder(BorderFactory.createTitledBorder("Paragraphs"));
         super.addScrollPanel(containingPanel);
-    }
-
-    public RootUsedInEditingScreen getRootUsedInEditingScreen() {
-        return root;
-    }
-
-    public Root getRoot() {
-        return DataStructureTransformer.transformRootUsedInEditingScreenToRoot(root);
     }
 
     /**
