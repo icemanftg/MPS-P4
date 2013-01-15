@@ -51,9 +51,10 @@ public class XMLParser {
             root.setDirection(doc.getDocumentElement().getAttribute("direction"));
 
             /* Get the page number ComposedBlock */
-            //ComposedBlock cBlock = getPageNumberComposedBlock(doc);
+            ComposedBlock cBlock = getPageNumberComposedBlock(doc);
+            if (cBlock.getChildren().size() > 0)
+            	root.addChild(cBlock.getChildren().get(0));
             
-            //root.setPageNumber(cBlock);
 
             /* Get list of all TextBlocks */
             NodeList nList = doc.getElementsByTagName("TextBlock");
@@ -182,7 +183,7 @@ public class XMLParser {
         /* Get the Block object from the TextBlock */
         Block block = getBlock(textBlock, cBlock);
 
-        cBlock.setBlock(block);
+        cBlock.addChild(block);
         return cBlock;
     }
 }

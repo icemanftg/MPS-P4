@@ -15,6 +15,7 @@ public class Block extends CompoundNode {
     
     public boolean isPageNumber(){
     	return false;
+    	
     }
 
 }

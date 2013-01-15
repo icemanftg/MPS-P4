@@ -9,7 +9,7 @@ import ro.mps.data.base.Node;
 import ro.mps.data.concrete.Block;
 import ro.mps.data.concrete.ImageBlock;
 import ro.mps.data.concrete.Line;
-import ro.mps.data.concrete.PageNumber;
+import ro.mps.data.concrete.PageNumberBlock;
 import ro.mps.data.concrete.Root;
 import ro.mps.error.exceptions.BadPageNumber;
 import ro.mps.error.exceptions.DoenstFitException;
@@ -124,7 +124,7 @@ public class OCRableImage extends CroppableImage {
         try {
 			String content = instance.doOCR(img.getSubimage(x, y, width, height));
 			
-			PageNumber new_block = new PageNumber(tree, x, y, height, width);
+			PageNumberBlock new_block = new PageNumberBlock(tree, x, y, height, width);
 			
 			Scanner pageFinder = new Scanner(content);
 			try {
@@ -137,7 +137,9 @@ public class OCRableImage extends CroppableImage {
 				content = "0";
 			}
 			
-			new_block.setContent(content);
+			Line pageNumber = new Line(new_block, x, y, height, width);
+			pageNumber.setContent(content);
+			new_block.addChild(pageNumber);
 			
 			if (tree.fits(new_block))
 				tree.addChild(new_block);

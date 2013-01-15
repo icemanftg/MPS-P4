@@ -88,18 +88,19 @@ public class XMLWriter {
                                 /* Create an Element from each TextBlock */
 				Element el = getBlockElement(textBlockList.get(i));
                                 /* Add Element to rootElement */
-				rootElement.appendChild(el);
+				if (! textBlockList.get(i).isPageNumber())
+					rootElement.appendChild(el);
 			}
 
-			/* Create the Composed Block element and add it 
+			/* Create the Composed Block element and add it */
             Element cBlockElement = doc.createElement("ComposedBlock");
-            ComposedBlock cBlockObject = root.getPageNumber();
+            ComposedBlock cBlockObject = new ComposedBlock();
+            cBlockObject.addChild(root.getPageNumberBlock());
             attr = doc.createAttribute("type");
             attr.setValue(cBlockObject.getType());
             cBlockElement.setAttributeNode(attr);
             cBlockElement.appendChild(getBlockElement(cBlockObject.getBlock()));
             rootElement.appendChild(cBlockElement);
-            */
 		}
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLWriter.class.getName()).log(Level.SEVERE, null, ex);
