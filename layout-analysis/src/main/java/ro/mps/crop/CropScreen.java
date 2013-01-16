@@ -77,17 +77,29 @@ class ControlsFrame extends JFrame {
 			}
 		};
 		
-		ActionListener next = new ActionListener() {
+		ActionListener motion = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MotionScreen.startMotionSCreen(attatched.getRoot());
-//                System.out.println("Dechid ecrane");
-//                EventQueue.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        UserInterface layoutGUI = new UserInterface(attatched.getRoot());
-//                    }
-//                });
+                System.out.println("Dechid ecrane");
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                    	MotionScreen.startMotionSCreen(attatched.getRoot());
+                    }
+                });
+			}
+		};
+		
+		ActionListener edit = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+                System.out.println("Dechid ecrane");
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        UserInterface layoutGUI = new UserInterface(attatched.getRoot());
+                    }
+                });
 			}
 		};
 		
@@ -141,9 +153,13 @@ class ControlsFrame extends JFrame {
     	blockPanel.setBorder(BorderFactory.createTitledBorder("Choose block type"));
     	panel.addTab("Block Type", blockPanel);
     	
-    	JButton btn = new JButton("Ok");
+    	JButton btn = new JButton("Edit");
     	buttonsPanel.add(btn);
-		btn.addActionListener(next);
+		btn.addActionListener(edit);
+		
+		btn = new JButton("Rearrange");
+    	buttonsPanel.add(btn);
+		btn.addActionListener(motion);
 		
 		btn = new JButton("Reset");
 		buttonsPanel.add(btn);
