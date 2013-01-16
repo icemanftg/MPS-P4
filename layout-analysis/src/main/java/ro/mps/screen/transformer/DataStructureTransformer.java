@@ -21,9 +21,7 @@ public class DataStructureTransformer {
                 root.getHeight());
         addBlocksToRootUsedInEditingScreen(rootUsedInEditingScreen, root);
         rootUsedInEditingScreen.setImageBlockList(getImageBlockFromRoot(root));
-        if ( rootContainsComposedBlock(root) ) {
-            setComposedBlockToRootUsedInEditingScreen(rootUsedInEditingScreen, root);
-        }
+        rootUsedInEditingScreen.setPageNumberBlock(root.getPageNumberBlock());
 
         return rootUsedInEditingScreen;
     }
@@ -31,7 +29,7 @@ public class DataStructureTransformer {
     public static Root transformRootUsedInEditingScreenToRoot(RootUsedInEditingScreen rootUsedInEditingScreen) {
         Root root = new Root(rootUsedInEditingScreen.getWidth(), rootUsedInEditingScreen.getHeight());
         addImageBlocks(root, rootUsedInEditingScreen);
-        addComposedBlock(root, rootUsedInEditingScreen);
+        addPageNumberBlock(root, rootUsedInEditingScreen);
         addBlocks(root, rootUsedInEditingScreen);
 
         return root;
@@ -44,8 +42,9 @@ public class DataStructureTransformer {
         }
     }
 
-    private static void addComposedBlock(Root root, RootUsedInEditingScreen rootUsedInEditingScreen) {
-        root.addChild(rootUsedInEditingScreen.getComposedBlock());
+    private static void addPageNumberBlock(Root root, RootUsedInEditingScreen rootUsedInEditingScreen) {
+        if ( rootUsedInEditingScreen.hasPageNumberBlock() )
+        root.addChild(rootUsedInEditingScreen.getPageNumberBlock());
     }
 
     private static void addBlocks(Root root, RootUsedInEditingScreen rootUsedInEditingScreen) {
@@ -77,7 +76,7 @@ public class DataStructureTransformer {
         List<BlockUsedInEditingScreen> blocksUsedInEditingScreen = new ArrayList<BlockUsedInEditingScreen>();
 
         for ( Node node : root.getChildren()) {
-            if ( node instanceof Block) {
+            if ( node instanceof Block && !(node instanceof PageNumberBlock) && !(node instanceof ImageBlock) ) {
                 BlockUsedInEditingScreen blockUsedInEditingScreen = new BlockUsedInEditingScreen((Block) node);
                 blockUsedInEditingScreen.setParent(rootUsedInEditingScreen);
                 addLinesToABlockUsedInEditingScreen(blockUsedInEditingScreen, (Block) node);
@@ -107,30 +106,6 @@ public class DataStructureTransformer {
         lineUsedInEditingScreen.setContent(line.getContent());
 
         return lineUsedInEditingScreen;
-    }
-
-    private  static void setComposedBlockToRootUsedInEditingScreen(RootUsedInEditingScreen rootUsedInEditingScreen,
-                                                              Root root) {
-        rootUsedInEditingScreen.setComposedBlock(getComposedBlock(root));
-    }
-    private static ComposedBlock getComposedBlock(Root root) {
-        for ( Node node : root.getChildren() ) {
-            if ( node instanceof ComposedBlock ) {
-                return (ComposedBlock) node;
-            }
-        }
-
-        return null;
-    }
-
-    private static boolean rootContainsComposedBlock(Root root) {
-        for ( Node node : root.getChildren() ) {
-            if ( node instanceof ComposedBlock ) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private static List<ImageBlock> getImageBlockFromRoot(Root root) {

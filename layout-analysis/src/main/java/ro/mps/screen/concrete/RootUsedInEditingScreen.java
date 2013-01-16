@@ -1,31 +1,33 @@
 package ro.mps.screen.concrete;
 
-import ro.mps.data.concrete.ComposedBlock;
 import ro.mps.data.concrete.ImageBlock;
+import ro.mps.data.concrete.PageNumberBlock;
 import ro.mps.screen.base.OrphanCompoundNode;
 import java.util.LinkedList;
 import java.util.List;
 
 public class RootUsedInEditingScreen extends OrphanCompoundNode<BlockUsedInEditingScreen> {
-    private ComposedBlock composedBlock;
+    private PageNumberBlock pageNumberBlock;
     private List<ImageBlock> imageBlockList;
-    private boolean hasComposedBlock = false;
+    private boolean hasPageNumberBlock = false;
 
     public RootUsedInEditingScreen(int width, int height) {
         super("Document", 0, 0, height, width);
     }
 
-    public ComposedBlock getComposedBlock() {
-        return composedBlock;
+    public PageNumberBlock getPageNumberBlock() {
+        return pageNumberBlock;
     }
 
-    public void setComposedBlock(ComposedBlock composedBlock) {
-        this.composedBlock = composedBlock;
-        hasComposedBlock = true;
+    public void setPageNumberBlock(PageNumberBlock pageNumberBlock) {
+        if ( pageNumberBlock != null ) {
+            this.pageNumberBlock = pageNumberBlock;
+            hasPageNumberBlock = true;
+        }
     }
 
-    public boolean isHasComposedBlock() {
-        return hasComposedBlock;
+    public boolean hasPageNumberBlock() {
+        return hasPageNumberBlock;
     }
 
     public List<ImageBlock> getImageBlockList() {

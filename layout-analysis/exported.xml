@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Document direction="descending" image="test.tif">
-<TextBlock bottom="677" left="382" right="690" top="88">
-<TextLine bottom="137" left="382" right="690" top="88">
-<String>_u1uvvu] 11UAj_</String>
+<Document direction="" image="">
+<TextBlock bottom="425" left="211" right="457" top="251">
+<TextLine bottom="309" left="211" right="457" top="251">
+<String>scimelle” E</String>
 </TextLine>
-<TextLine bottom="186" left="382" right="690" top="137">
-<String>,456.78 &lt;lazy&gt;</String>
+<TextLine bottom="367" left="211" right="457" top="309">
+<String>den faulen é</String>
 </TextLine>
-<TextLine bottom="235" left="382" right="690" top="186">
-<String>1, as 12.5% of</String>
+<TextLine bottom="425" left="211" right="457" top="367">
+<String>de» saute p:</String>
 </TextLine>
-<TextLine bottom="284" left="382" right="690" top="235">
-<String>er@website.co1</String>
+</TextBlock>
+<TextBlock bottom="263" left="554" right="931" top="62">
+<TextLine bottom="112" left="554" right="931" top="62">
+<String>{fox} jumps!</String>
 </TextLine>
-<TextLine bottom="333" left="382" right="690" top="284">
-<String>W’ braune Fuch</String>
+<TextLine bottom="162" left="554" right="931" top="112">
+<String>&lt;lazy&gt; #90 dog</String>
 </TextLine>
-<TextLine bottom="382" left="382" right="690" top="333">
-<String>en Hund. Le r</String>
+<TextLine bottom="212" left="554" right="931" top="162">
+<String>5% of E-mail</String>
 </TextLine>
-<TextLine bottom="431" left="382" right="690" top="382">
-<String>e par-dessus l:</String>
+<TextLine bottom="262" left="554" right="931" top="212">
+<String>site.com is spam.</String>
 </TextLine>
-<TextLine bottom="480" left="382" right="690" top="431">
-<String>, volpe matron</String>
+</TextBlock>
+<TextBlock bottom="566" left="525" right="879" top="416">
+<TextLine bottom="466" left="525" right="879" top="416">
+<String>marrone rapida</String>
 </TextLine>
-<TextLine bottom="529" left="382" right="690" top="480">
-<String>cane pigro. E</String>
+<TextLine bottom="516" left="525" right="879" top="466">
+<String>éaigro. El zorro</String>
 </TextLine>
-<TextLine bottom="578" left="382" right="690" top="529">
-<String>a salta sobre e</String>
-</TextLine>
-<TextLine bottom="627" left="382" right="690" top="578">
-<String>Aaposa marrom</String>
-</TextLine>
-<TextLine bottom="676" left="382" right="690" top="627">
-<String>e50 preguiqosc</String>
+<TextLine bottom="566" left="525" right="879" top="516">
+<String>sobre el perro</String>
 </TextLine>
 </TextBlock>
 </Document>

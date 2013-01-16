@@ -87,6 +87,7 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
      */
     private void setPopupMenuToJTextArea(JTextArea textArea) {
         textArea.setComponentPopupMenu(getRightClickMenu());
+        textArea.setEnabled(false);
     }
 
     /**

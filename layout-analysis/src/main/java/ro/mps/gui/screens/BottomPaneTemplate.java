@@ -4,7 +4,6 @@ import ro.mps.data.concrete.ComposedBlock;
 import ro.mps.data.concrete.PageNumberBlock;
 import ro.mps.data.concrete.Root;
 import ro.mps.data.parsing.XMLWriter;
-import ro.mps.gui.UserInterface;
 import ro.mps.gui.base.Screen;
 import ro.mps.screen.concrete.RootUsedInEditingScreen;
 import ro.mps.screen.transformer.DataStructureTransformer;
@@ -27,6 +26,7 @@ import java.awt.event.ActionListener;
 public class BottomPaneTemplate extends Screen {
     public static final String PAGE_NUMBER = "Pagina nr:";
     public static final String EXPORT_TO_XML = "Export to XML";
+    public static final String PAGE_NUMBER_ERROR = "Page number coudn't be set";
     public final String windowTitle;
     protected RootUsedInEditingScreen root;
     private JScrollPane scrollPane;
@@ -75,7 +75,6 @@ public class BottomPaneTemplate extends Screen {
     }
 
     public Root getRoot() {
-        System.out.println("Test");
         return DataStructureTransformer.transformRootUsedInEditingScreenToRoot(root);
     }
 
@@ -105,29 +104,27 @@ public class BottomPaneTemplate extends Screen {
 
         @Override
         public void stateChanged(ChangeEvent changeEvent) {
-            JSpinner source = (JSpinner)changeEvent.getSource();
-            String pageNumber = source.getValue().toString();
-            ComposedBlock composedBlock = root.getComposedBlock();
-            PageNumberBlock pageNumberBlock = (PageNumberBlock) composedBlock.getBlock();
+            if ( root.hasPageNumberBlock() ) {
+                JSpinner source = (JSpinner)changeEvent.getSource();
+                String pageNumber = source.getValue().toString();
 
-            pageNumberBlock.setPageNumber(pageNumber);
+                PageNumberBlock pageNumberBlock = root.getPageNumberBlock();
+
+                pageNumberBlock.setPageNumber(pageNumber);
+            }
+            else {
+                JOptionPane.showMessageDialog(pageNumber, PAGE_NUMBER_ERROR);
+            }
 
         }
     }
 
     class ExportToXmlListener implements ActionListener {
-        BottomPaneTemplate bottomPaneTemplate;
-
-        ExportToXmlListener(BottomPaneTemplate bottomPaneTemplate) {
-            this.bottomPaneTemplate = bottomPaneTemplate;
-        }
-
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             XMLWriter writer = new XMLWriter();
             try {
-                Root root = bottomPaneTemplate.getRoot();
-                writer.writeFile(bottomPaneTemplate.getRoot(), "exported.xml");
+                writer.writeFile(getRoot(), "exported.xml");
             } catch (TransformerConfigurationException e) {
                 e.printStackTrace();
             } catch (TransformerException e) {
@@ -139,7 +136,7 @@ public class BottomPaneTemplate extends Screen {
     private void addExportToXmlButton() {
         generateButton = new JButton(EXPORT_TO_XML);
         generateButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        generateButton.addActionListener(new ExportToXmlListener(this));
+        generateButton.addActionListener(new ExportToXmlListener());
         bottomPane.add(generateButton);
     }
 
