@@ -420,21 +420,103 @@ public class MotionScreen extends JComponent {
     	return root;
     }
     
+    /**
+     * Size increase
+     */
     public void incHeight(){
-    	
+    	if (selected != null)
+			if (selected instanceof Line){
+				incHLine(selected);
+			} else {
+				incHBlock(selected);
+			}
     }
     
     public void incWidth(){
-    	
+    	if (selected != null)
+			if (selected instanceof Line){
+				incWLine(selected);
+			} else {
+				incWBlock(selected);
+			}
     }
     
+    private void incHLine(HasPosition l){
+		Line b = (Line)l;
+		b.incHeight();
+		if (! b.getParent().fits(b))
+			b.decHeight();
+	}
+	
+	private void incWLine(HasPosition l){
+		Line b = (Line)l;
+		b.incWidth();
+		if (! b.getParent().fits(b))
+			b.decWidth();
+	}
+	
+	private void incHBlock(HasPosition l){
+		Block b = (Block)l;
+		b.incHeight();
+		if (! b.getParent().fits(b))
+			b.decHeight();
+	}
+	
+	private void incWBlock(HasPosition l){
+		Block b = (Block)l;
+		b.incWidth();
+		if (! b.getParent().fits(b))
+			b.decWidth();
+	}
+    
+    /**
+     * Size decrease
+     */
     public void decHeight(){
-    	
+    	if (selected != null)
+			if (selected instanceof Line){
+				decHLine(selected);
+			} else {
+				decHBlock(selected);
+			}
     }
     
     public void decWidth(){
-    	
+    	if (selected != null)
+			if (selected instanceof Line){
+				decWLine(selected);
+			} else {
+				decWBlock(selected);
+			}
     }
+    
+    private void decHLine(HasPosition l){
+		Line b = (Line)l;
+		b.decHeight();
+	}
+	
+	private void decWLine(HasPosition l){
+		Line b = (Line)l;
+		b.decWidth();
+	}
+	
+	private void decHBlock(HasPosition l){
+		Block b = (Block)l;
+		b.decHeight();
+		for (Node c : b.getChildren())
+			if (! b.fits(c)){
+				incHBlock(l);
+			}
+	}
+	
+	private void decWBlock(HasPosition l){
+		Block b = (Block)l;
+		b.decWidth();
+		for (Node c : b.getChildren())
+			if (! b.fits(c)){
+				incWBlock(l);
+			}
+	}
     
     /**
      * Up & down movement

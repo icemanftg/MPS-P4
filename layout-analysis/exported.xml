@@ -1,86 +1,76 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Document direction="" image="">
-<TextBlock bottom="592" left="605" right="923" top="81">
-<TextLine bottom="117" left="605" right="923" top="81">
-<String>3x} Jumps!</String>
+<TextBlock bottom="598" left="497" right="784" top="89">
+<TextLine bottom="128" left="497" right="784" top="89">
+<String>110x; _|ulllpS!</String>
 </TextLine>
-<TextLine bottom="153" left="605" right="923" top="117">
-<String>azy&gt; #90 dog</String>
-</TextLine>
-<TextLine bottom="189" left="605" right="923" top="153">
-<String>5 of E-mail</String>
-</TextLine>
-<TextLine bottom="225" left="605" right="923" top="189">
-<String>e.com is spam.</String>
-</TextLine>
-<TextLine bottom="261" left="605" right="923" top="225">
-<String>‘uchs springt</String>
-</TextLine>
-<TextLine bottom="297" left="605" right="923" top="261">
-<String>Le renard brun</String>
-</TextLine>
-<TextLine bottom="333" left="605" right="923" top="297">
-<String>us le chien</String>
-</TextLine>
-<TextLine bottom="369" left="605" right="923" top="333">
-<String>rrone rapida</String>
-</TextLine>
-<TextLine bottom="405" left="605" right="923" top="369">
+<TextLine bottom="167" left="497" right="784" top="128">
 <String/>
 </TextLine>
-<TextLine bottom="441" left="605" right="923" top="405">
-<String>o. El zorro</String>
+<TextLine bottom="206" left="497" right="784" top="167">
+<String>&lt;lazy&gt; #90 1</String>
 </TextLine>
-<TextLine bottom="477" left="605" right="923" top="441">
+<TextLine bottom="245" left="497" right="784" top="206">
+<String>.5% of E-mai</String>
+</TextLine>
+<TextLine bottom="284" left="497" right="784" top="245">
+<String>rsite.com is s]</String>
+</TextLine>
+<TextLine bottom="323" left="497" right="784" top="284">
+<String>1e Fuchs sprix</String>
+</TextLine>
+<TextLine bottom="362" left="497" right="784" top="323">
+<String>d. Le renard</String>
+</TextLine>
+<TextLine bottom="401" left="497" right="784" top="362">
+<String>essus le chier</String>
+</TextLine>
+<TextLine bottom="440" left="497" right="784" top="401">
+<String>marrone rapix</String>
+</TextLine>
+<TextLine bottom="479" left="497" right="784" top="440">
+<String>Aigro. El zorrc</String>
+</TextLine>
+<TextLine bottom="518" left="497" right="784" top="479">
+<String>sobre el perrc</String>
+</TextLine>
+<TextLine bottom="557" left="497" right="784" top="518">
 <String/>
 </TextLine>
-<TextLine bottom="513" left="605" right="923" top="477">
-<String>re el perro</String>
-</TextLine>
-<TextLine bottom="549" left="605" right="923" top="513">
-<String/>
-</TextLine>
-<TextLine bottom="585" left="605" right="923" top="549">
-<String>rnnm rcinirln</String>
+<TextLine bottom="596" left="497" right="784" top="557">
+<String>nnrrnm rénirlu</String>
 </TextLine>
 </TextBlock>
-<TextBlock bottom="569" left="122" right="396" top="65">
-<TextLine bottom="115" left="122" right="396" top="65">
-<String>‘he (quick) [l</String>
+<TextBlock bottom="600" left="203" right="368" top="272">
+<TextLine bottom="313" left="203" right="368" top="272">
+<String>,schnell</String>
 </TextLine>
-<TextLine bottom="165" left="122" right="396" top="115">
-<String>)ver the $43,</String>
+<TextLine bottom="354" left="203" right="368" top="313">
+<String/>
 </TextLine>
-<TextLine bottom="215" left="122" right="396" top="165">
-<String>t duck/goose,</String>
+<TextLine bottom="395" left="203" right="368" top="354">
+<String>den fau</String>
 </TextLine>
-<TextLine bottom="265" left="122" right="396" top="215">
-<String>rom aspammc</String>
+<TextLine bottom="436" left="203" right="368" top="395">
+<String>de» sau</String>
 </TextLine>
-<TextLine bottom="315" left="122" right="396" top="265">
-<String>)er ,,schnelle’</String>
+<TextLine bottom="477" left="203" right="368" top="436">
+<String>‘seux. L;</String>
 </TextLine>
-<TextLine bottom="365" left="122" right="396" top="315">
-<String>ber den faule</String>
+<TextLine bottom="518" left="203" right="368" top="477">
+<String>sopra i</String>
 </TextLine>
-<TextLine bottom="415" left="122" right="396" top="365">
-<String>rapide» saute</String>
+<TextLine bottom="559" left="203" right="368" top="518">
+<String>in répid</String>
 </TextLine>
-<TextLine bottom="465" left="122" right="396" top="415">
-<String>aresseux. La</String>
-</TextLine>
-<TextLine bottom="515" left="122" right="396" top="465">
-<String>alta sopra i]</String>
-</TextLine>
-<TextLine bottom="565" left="122" right="396" top="515">
-<String>larrén répido</String>
+<TextLine bottom="600" left="203" right="368" top="559">
+<String>\oso. A</String>
 </TextLine>
 </TextBlock>
-<ImageBlock bottom="613" left="443" right="583" top="256"/>
 <ComposedBlock type="page_number">
-<TextBlock bottom="159" left="485" right="537" top="111">
-<TextLine bottom="159" left="485" right="537" top="111">
-<String>78</String>
+<TextBlock bottom="247" left="340" right="482" top="157">
+<TextLine bottom="208" left="373" right="450" top="178">
+<String>456</String>
 </TextLine>
 </TextBlock>
 </ComposedBlock>
