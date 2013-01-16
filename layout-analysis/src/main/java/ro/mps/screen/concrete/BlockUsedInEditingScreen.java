@@ -118,6 +118,7 @@ public class BlockUsedInEditingScreen extends CompoundNode<BlockUsedInEditingScr
      */
     private void addChildrenToNewBlock(BlockUsedInEditingScreen newBlock, List<LineUsedInEditingScreen> children) {
         newBlock.addChildren(children);
+        setParentToBlocks(newBlock);
     }
 
     /**
@@ -160,6 +161,13 @@ public class BlockUsedInEditingScreen extends CompoundNode<BlockUsedInEditingScr
     private void addChildrenFromAnotherBlock(BlockUsedInEditingScreen block) {
         List<LineUsedInEditingScreen> children = block.getChildren();
         this.addChildren(children);
+        setParentToBlocks(this);
+    }
+
+    private void setParentToBlocks(BlockUsedInEditingScreen block) {
+        for ( LineUsedInEditingScreen line : block.getChildren() ) {
+            line.setParent(block);
+        }
     }
 
     /**

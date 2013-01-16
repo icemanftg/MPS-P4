@@ -95,6 +95,7 @@ class ControlsFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
                 System.out.println("Dechid ecrane");
+                ((JButton)arg0.getSource()).setEnabled(false);
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {

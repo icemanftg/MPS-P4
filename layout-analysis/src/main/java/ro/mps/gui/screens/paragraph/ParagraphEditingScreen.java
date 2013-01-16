@@ -24,7 +24,6 @@ public class ParagraphEditingScreen extends BottomPaneTemplate implements Observ
 
     private static final String WINDOW_TITLE = "Edit Blocks";
     private List<ParagraphEntry> paragraphs;
-    private RootUsedInEditingScreen root;
     private JPanel containingPanel;
     private ParagraphPopupMenu popupMenu;
     private List<Observer> observers = new ArrayList<Observer>();

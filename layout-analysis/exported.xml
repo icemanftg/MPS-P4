@@ -1,39 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Document direction="" image="">
-<TextBlock bottom="425" left="211" right="457" top="251">
-<TextLine bottom="309" left="211" right="457" top="251">
-<String>scimelle” E</String>
+<TextBlock bottom="523" left="331" right="599" top="222">
+<TextLine bottom="265" left="331" right="599" top="222">
+<String>1mer@websit</String>
 </TextLine>
-<TextLine bottom="367" left="211" right="457" top="309">
-<String>den faulen é</String>
+<TextLine bottom="308" left="331" right="599" top="265">
+<String>lle” braune 1</String>
 </TextLine>
-<TextLine bottom="425" left="211" right="457" top="367">
-<String>de» saute p:</String>
+<TextLine bottom="351" left="331" right="599" top="308">
+<String>aulen Hund.</String>
 </TextLine>
-</TextBlock>
-<TextBlock bottom="263" left="554" right="931" top="62">
-<TextLine bottom="112" left="554" right="931" top="62">
-<String>{fox} jumps!</String>
+<TextLine bottom="394" left="331" right="599" top="351">
+<String/>
 </TextLine>
-<TextLine bottom="162" left="554" right="931" top="112">
-<String>&lt;lazy&gt; #90 dog</String>
+<TextLine bottom="437" left="331" right="599" top="394">
+<String>nute par-dess</String>
 </TextLine>
-<TextLine bottom="212" left="554" right="931" top="162">
-<String>5% of E-mail</String>
+<TextLine bottom="480" left="331" right="599" top="437">
+<String>La volpe ma</String>
 </TextLine>
-<TextLine bottom="262" left="554" right="931" top="212">
-<String>site.com is spam.</String>
+<TextLine bottom="523" left="331" right="599" top="480">
+<String>i] cane pigr</String>
 </TextLine>
 </TextBlock>
-<TextBlock bottom="566" left="525" right="879" top="416">
-<TextLine bottom="466" left="525" right="879" top="416">
-<String>marrone rapida</String>
+<TextBlock bottom="608" left="107" right="305" top="337">
+<TextLine bottom="382" left="107" right="305" top="337">
+<String>W... uun</String>
 </TextLine>
-<TextLine bottom="516" left="525" right="879" top="466">
-<String>éaigro. El zorro</String>
+<TextLine bottom="427" left="107" right="305" top="382">
+<String>Krapide» :</String>
 </TextLine>
-<TextLine bottom="566" left="525" right="879" top="516">
-<String>sobre el perro</String>
+<TextLine bottom="472" left="107" right="305" top="427">
+<String>paresseux.</String>
+</TextLine>
+<TextLine bottom="517" left="107" right="305" top="472">
+<String>aalta sopr</String>
+</TextLine>
+<TextLine bottom="562" left="107" right="305" top="517">
+<String>narrén ré</String>
+</TextLine>
+<TextLine bottom="607" left="107" right="305" top="562">
+<String>Jerezoso.</String>
+</TextLine>
+</TextBlock>
+<TextBlock bottom="418" left="756" right="958" top="116">
+<TextLine bottom="159" left="756" right="958" top="116">
+<String>)0 dog</String>
+</TextLine>
+<TextLine bottom="202" left="756" right="958" top="159">
+<String>mail</String>
+</TextLine>
+<TextLine bottom="245" left="756" right="958" top="202">
+<String/>
+</TextLine>
+<TextLine bottom="288" left="756" right="958" top="245">
+<String>s spam.</String>
+</TextLine>
+<TextLine bottom="331" left="756" right="958" top="288">
+<String>pringt</String>
+</TextLine>
+<TextLine bottom="374" left="756" right="958" top="331">
+<String>Lfd brun</String>
+</TextLine>
+<TextLine bottom="417" left="756" right="958" top="374">
+<String>mien</String>
 </TextLine>
 </TextBlock>
 </Document>

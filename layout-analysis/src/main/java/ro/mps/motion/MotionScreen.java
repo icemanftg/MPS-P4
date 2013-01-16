@@ -14,6 +14,7 @@ import ro.mps.data.parsing.XMLWriter;
 import ro.mps.error.exceptions.BadPageNumber;
 import ro.mps.error.exceptions.DoenstFitException;
 import ro.mps.error.gui.ErrorThrower;
+import ro.mps.gui.UserInterface;
 import ro.mps.move_resize.RootResizeProcessor;
 import ro.mps.properties.Properties;
 
@@ -69,7 +70,13 @@ class ControlsFrame extends JFrame {
 		ActionListener editScreen = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+                ((JButton)arg0.getSource()).setEnabled(false);
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        UserInterface layoutGUI = new UserInterface(attatched.getRoot());
+                    }
+                });
 			}
 		};
 		
