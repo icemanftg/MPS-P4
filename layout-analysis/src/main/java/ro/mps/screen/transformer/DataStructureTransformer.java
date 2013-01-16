@@ -40,6 +40,7 @@ public class DataStructureTransformer {
     private static void addImageBlocks(Root root, RootUsedInEditingScreen rootUsedInEditingScreen) {
         for ( ImageBlock imageBlock : rootUsedInEditingScreen.getImageBlockList() ) {
             root.addChild(imageBlock);
+            // TODO
         }
     }
 
@@ -53,9 +54,10 @@ public class DataStructureTransformer {
                     blockUsedInEditingScreen.getLeftUpperCornerY(),
                     blockUsedInEditingScreen.getHeight(),
                     blockUsedInEditingScreen.getWidth());
+            root.addChild(block);
             block.setParent(root);
             addLinesToABlock(block, blockUsedInEditingScreen);
-
+            
         }
     }
 
