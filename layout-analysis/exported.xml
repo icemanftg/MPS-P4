@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Document direction="" image="">
-<TextBlock bottom="635" left="449" right="826" top="129">
-<TextLine bottom="179" left="449" right="826" top="129">
-<String>/zs &lt;1azy&gt; #90 &lt;</String>
+<Document direction="descending" image="test.tif">
+<TextBlock bottom="643" left="505" right="830" top="39">
+<TextLine bottom="85" left="505" right="830" top="39">
+<String>n] {fox} jumps!</String>
 </TextLine>
-<TextLine bottom="229" left="449" right="826" top="179">
-<String>s 12.5% of E-maié</String>
+<TextLine bottom="131" left="505" right="830" top="85">
+<String>'8 &lt;lazy&gt; #90 C</String>
 </TextLine>
-<TextLine bottom="279" left="449" right="826" top="229">
-<String>Qwebsitexom is s]</String>
+<TextLine bottom="177" left="505" right="830" top="131">
+<String>2.5% of E-mail</String>
 </TextLine>
-<TextLine bottom="329" left="449" right="826" top="279">
-<String>vraune Fuchs sprix</String>
+<TextLine bottom="223" left="505" right="830" top="177">
+<String>ebsite.com is s;</String>
 </TextLine>
-<TextLine bottom="379" left="449" right="826" top="329">
-<String>Hund. Le renard</String>
+<TextLine bottom="269" left="505" right="830" top="223">
+<String>une Fuchs sprin</String>
 </TextLine>
-<TextLine bottom="429" left="449" right="826" top="379">
-<String>ar-dessus le chien</String>
+<TextLine bottom="315" left="505" right="830" top="269">
+<String>md. Le renard 1</String>
 </TextLine>
-<TextLine bottom="479" left="449" right="826" top="429">
-<String>»lpe marrone rapic</String>
+<TextLine bottom="361" left="505" right="830" top="315">
+<String>-dessus le chien</String>
 </TextLine>
-<TextLine bottom="529" left="449" right="826" top="479">
-<String>ne pigro. El zorrc</String>
+<TextLine bottom="407" left="505" right="830" top="361">
+<String>a marrone rapid</String>
 </TextLine>
-<TextLine bottom="579" left="449" right="826" top="529">
-<String>alta sobre cl perrc</String>
+<TextLine bottom="453" left="505" right="830" top="407">
+<String>pigro. El zorro</String>
 </TextLine>
-<TextLine bottom="629" left="449" right="826" top="579">
-<String>asa marrom répida</String>
+<TextLine bottom="499" left="505" right="830" top="453">
+<String>l sobre el perro</String>
+</TextLine>
+<TextLine bottom="545" left="505" right="830" top="499">
+<String>marrom répida</String>
+</TextLine>
+<TextLine bottom="591" left="505" right="830" top="545">
+<String/>
+</TextLine>
+<TextLine bottom="637" left="505" right="830" top="591">
+<String>rPUIIiPﬂCﬁ</String>
 </TextLine>
 </TextBlock>
 </Document>

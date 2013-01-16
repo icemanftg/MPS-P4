@@ -11,9 +11,11 @@ import java.io.IOException;
 public class CroppableImage {
 
     protected BufferedImage img;
+    protected String imageName;
 
     public CroppableImage(String path) throws IOException {
         img = ImageIO.read(new File(path));
+        imageName = new File(path).getName();
     }
 
     public Image asImage() {

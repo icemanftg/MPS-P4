@@ -13,7 +13,7 @@ public class Root extends OrphanCompoundNode {
     public String getImageName() {
         return imageName;
     }
-
+    
     public String getDirection() {
         return direction;
     }

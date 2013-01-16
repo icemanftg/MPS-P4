@@ -81,6 +81,7 @@ class ControlsFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
                 System.out.println("Dechid ecrane");
+                ((JButton)arg0.getSource()).setEnabled(false);
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -207,7 +208,7 @@ public class CropScreen extends JComponent {
 	                System.exit(1);
 	            }
 	
-	            JFrame controls = new ControlsFrame("OCR Controlls",g);
+	            JFrame controls = new ControlsFrame("OCR Controls",g);
         		controls.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	            
 	            f.setBounds(0, 0, g.inputImage.asImage().getWidth(null),

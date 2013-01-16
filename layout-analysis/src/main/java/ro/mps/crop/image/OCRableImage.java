@@ -40,6 +40,8 @@ public class OCRableImage extends CroppableImage {
     public OCRableImage(String path) throws IOException{
         super(path);
         tree = new Root(img.getWidth(), img.getHeight());
+        tree.setDirection("descending");
+        tree.setImageName(imageName);
     }
 
     public void setLanguage(String language){
