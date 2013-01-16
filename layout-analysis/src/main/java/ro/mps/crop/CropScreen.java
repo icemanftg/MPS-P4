@@ -9,6 +9,7 @@ import ro.mps.error.exceptions.BadPageNumber;
 import ro.mps.error.exceptions.DoenstFitException;
 import ro.mps.error.gui.ErrorThrower;
 import ro.mps.gui.UserInterface;
+import ro.mps.motion.MotionScreen;
 import ro.mps.properties.Properties;
 
 import javax.swing.*;
@@ -79,13 +80,14 @@ class ControlsFrame extends JFrame {
 		ActionListener next = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-                System.out.println("Dechid ecrane");
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        UserInterface layoutGUI = new UserInterface(attatched.getRoot());
-                    }
-                });
+				MotionScreen.startMotionSCreen(attatched.getRoot());
+//                System.out.println("Dechid ecrane");
+//                EventQueue.invokeLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        UserInterface layoutGUI = new UserInterface(attatched.getRoot());
+//                    }
+//                });
 			}
 		};
 		

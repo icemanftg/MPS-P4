@@ -101,7 +101,10 @@ public class XMLWriter {
 			/* Create the Composed Block element and add it */
             Element cBlockElement = doc.createElement("ComposedBlock");
             ComposedBlock cBlockObject = new ComposedBlock();
-            cBlockObject.addChild(root.getPageNumberBlock());
+            if (root.getPageNumberBlock() != null)
+            	cBlockObject.addChild(root.getPageNumberBlock());
+            else
+            	return;
             attr = doc.createAttribute("type");
             attr.setValue(cBlockObject.getType());
             cBlockElement.setAttributeNode(attr);
@@ -110,6 +113,8 @@ public class XMLWriter {
             
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLWriter.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+        	// Flush the changes
         }
     }
 

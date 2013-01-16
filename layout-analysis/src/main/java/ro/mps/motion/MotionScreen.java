@@ -436,13 +436,58 @@ public class MotionScreen extends JComponent {
     	
     }
     
-    public void down(){
-    	
-    }
+    /**
+     * Up & down movement
+     */
+	public void down(){
+		if (selected != null)
+			if (selected instanceof Line){
+				downLine(selected);
+			} else {
+				downBlock(selected);
+			}
+	}
 
-    public void up(){
-    	
-    }
+	public void up(){
+		if (selected != null)
+			if (selected instanceof Line){
+				upLine(selected);
+			} else {
+				upBlock(selected);
+			}
+	}
+	
+	private void downLine(HasPosition l){
+		Line b = (Line)l;
+		b.down();
+		if (! b.getParent().fits(l))
+			upLine(l);
+	}
+	
+	private void upLine(HasPosition l){
+		Line b = (Line)l;
+		b.up();
+		if (! b.getParent().fits(l))
+			downLine(l);
+	}
+	
+	private void downBlock(HasPosition l){
+		Block b = (Block)l;
+		b.down();
+		for (Node c : b.getChildren())
+			c.down();
+		if (! root.fits(l))
+			upBlock(l);
+	}
+	
+	private void upBlock(HasPosition l){
+		Block b = (Block)l;
+		b.up();
+		for (Node c : b.getChildren())
+			c.up();
+		if (! root.fits(l))
+			downBlock(l);
+	}
 
     
     /**
