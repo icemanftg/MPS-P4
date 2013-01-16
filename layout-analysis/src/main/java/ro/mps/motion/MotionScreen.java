@@ -276,7 +276,7 @@ public class MotionScreen extends JComponent {
 	                System.exit(1);
 	            }
 	
-	            JFrame controls = new ControlsFrame("Resize Controlls",g);
+	            JFrame controls = new ControlsFrame("Resize Controls",g);
         		controls.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	            
 	            f.setBounds(0, 0, root.getWidth(),
